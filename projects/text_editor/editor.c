@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "editor.h"
 #include <stdlib.h>
 #include <string.h>
@@ -15,6 +16,18 @@ void text_buffer_free(TextBuffer *buffer) {
         free(buffer->lines[i]);
     }
         free(buffer->lines);
+}
+void text_buffer_save(TextBuffer *buffer, const char *filename) {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        return; 
+    }
+
+    for (int i = 0; i < buffer->line_count; i++) {
+        fprintf(file, "%s\n", buffer->lines[i]);
+    }
+
+    fclose(file);
 }
 void buffer_insert_newline(TextBuffer *buffer) {
     if (buffer->line_count >= buffer->line_capacity) {

@@ -8,6 +8,7 @@ extern "C" {
 
 #define APP_STATE_RUNNING       1
 #define APP_STATE_EXIT          0
+#define APP_STATE_EXIT          0
 
 // ============================================================================
 // APPLICATION FUNCTIONS

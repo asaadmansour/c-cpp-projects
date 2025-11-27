@@ -18,9 +18,9 @@ extern "C" {
 
 void menu_draw_item(int x, int y, const char* text, int is_selected);
 
-void menu_draw_all(int selected_index);
+void menu_draw_all(const char** items, int count, int selected_index);
 
-int menu_run(void);
+int menu_run(const char** items, int count);
 
 #ifdef __cplusplus
 }

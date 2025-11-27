@@ -1,3 +1,6 @@
+#ifndef EDITOR_H
+#define EDITOR_H
+
 #define INITIAL_LINE_LENGTH 128
 typedef struct TextBuffer {
     char ** lines;
@@ -11,3 +14,6 @@ void buffer_insert_newline(TextBuffer *buffer);
 void buffer_insert_char(TextBuffer *buffer, char c);
 void buffer_delete_char(TextBuffer *buffer);
 void text_buffer_free();
+void text_buffer_save(TextBuffer *buffer,const char*filename);
+
+#endif

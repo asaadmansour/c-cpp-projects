@@ -1,4 +1,5 @@
 #include "app.h"
+#include "editor.h"
 #include "terminal.h"
 #include "menu.h"
 #include "screen.h"
@@ -11,12 +12,19 @@ static int app_state = APP_STATE_RUNNING;
 // ============================================================================
 
 static void handle_new_screen(void) {
-    int result = screen_show_editor();
+    TextBuffer buffer;
+    text_buffer_init(&buffer, 16);
+
+    int result = screen_show_editor(&buffer);
     
-    if (result == KEY_ESC) {
+    if (result == EDITOR_SAVE) {
+        text_buffer_save(&buffer, "output.txt"); 
+        app_state = APP_STATE_EXIT;
+    } else if(result == EDITOR_DISCARD) {
         app_state = APP_STATE_EXIT;
     }
     
+    text_buffer_free(&buffer);
 }
 
 static void handle_display_screen(void) {
@@ -60,8 +68,13 @@ void app_init(void) {
 void app_run(void) {
     int user_choice;
     
+    const char* main_menu_items[] = {
+        "|   New    |",
+        "| Display  |",
+        "|   Exit   |"
+    };
     while (is_app_running()) {
-        user_choice = menu_run();
+        user_choice = menu_run(main_menu_items, 3);
         process_menu_choice(user_choice);
     }
 }
