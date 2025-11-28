@@ -1,29 +1,34 @@
-# Console Application 3 (C)
+# Vi-like Text Editor (C)
 
-Extended console menu application with form data handling and additional features.
+A terminal-based text editor inspired by vi, featuring text editing, cursor navigation, and file operations.
 
 ## Features
 
-- **Form data management** - Handle user input forms
-- **Enhanced menu system** - Extended menu functionality
-- **Screen management** - Multiple screen states
-- **Input processing** - Advanced keyboard handling
-- **Terminal UI** - Full terminal control
+- **Text editing** - Write and modify text in the terminal
+- **Cursor navigation** - Move through text with arrow keys
+- **File operations** - Save your work to files
+- **Menu system** - Access editor functions through menus
+- **Form data handling** - Manage editor state and content
+- **Terminal UI** - Full-screen editing interface
 
 ## Components
 
-- `app` - Main application logic
-- `menu` - Menu rendering and navigation
-- `screen` - Screen state management
+- `app` - Main application logic and editor state
+- `menu` - Menu system for file operations
+- `screen` - Display management and rendering
 - `input` - Keyboard input processing
-- `formData` - Form data structures and handling
-- `create` - Creation/editing functionality
+- `formData` - Text data structures and handling
+- `create` - Document creation and editing functionality
 - `terminal` - Terminal control library
 
-## Architecture
+## Key Operations
 
-Builds upon console_app_2 with added form handling capabilities and more complex application state management.
+- Arrow keys - Navigate cursor through text
+- Character keys - Insert text at cursor position
+- Backspace/Delete - Remove characters
+- Enter - New line
+- Menu - Access save and other operations
 
 ## Usage
 
-Navigate menus, fill forms, and interact with the application using keyboard controls.
+Launch the editor, write your text using the keyboard, navigate with arrow keys, and save your work through the menu system.
