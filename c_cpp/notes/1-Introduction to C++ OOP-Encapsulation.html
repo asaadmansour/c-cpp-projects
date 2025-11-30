@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>1-Introduction to C++ OOP-Encapsulation.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<ul>
+<li><a href="#default-value">Default Value</a>
+<ul>
+<li><a href="#1-default-arguments-must-be-at-the-end-only">1. Default Arguments Must Be at the End Only</a></li>
+<li><a href="#default-arguments-work-only-in-function-declarations-not-in-calls">Default Arguments Work Only in Function Declarations, Not in Calls</a></li>
+<li><a href="#default-arguments-are-copied-into-every-call-site">Default Arguments Are “Copied” into Every Call Site</a></li>
+<li><a href="#cannot-use-default-arguments-before-they-are-declared">Cannot Use Default Arguments Before They Are Declared</a></li>
+<li><a href="#how-default-arguments-work-in-c-compile-time-binding-vs-run-time-evaluation">How Default Arguments Work in C++: Compile-Time Binding vs Run-Time Evaluation</a>
+<ul>
+<li><a href="#how-default-arguments-actually-work"><strong>How Default Arguments Actually Work</strong></a></li>
+<li><a href="#what-compile-time-actually-refers-to"><strong>What “compile-time” actually refers to</strong></a></li>
+<li><a href="#default-argument-evaluation-timing-python-vs-c">Default argument evaluation timing Python vs C++</a>
+<ul>
+<li><a href="#sidebyside-comparison-default-argument-evaluation-timing-python-vs-c"><strong>Side‑by‑side comparison Default argument evaluation timing Python vs C++</strong></a></li>
+<li><a href="#the-python-analogue">The Python analogue</a></li>
+<li><a href="#why-python-behaves-differently">Why Python behaves differently</a></li>
+<li><a href="#the-idiomatic-python-fix">The idiomatic Python fix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#default-arguments--function-pointers">Default Arguments + Function Pointers</a></li>
+<li><a href="#overloading-vs-default-arguments-ambiguity">Overloading vs Default Arguments Ambiguity</a></li>
+<li><a href="#virtual-functions-and-default-arguments">Virtual Functions and Default Arguments</a></li>
+</ul>
+</li>
+<li><a href="#references-vs-pointers">References VS Pointers</a>
+<ul>
+<li><a href="#pointers">Pointers</a>
+<ul>
+<li><a href="#characteristics">Characteristics:</a></li>
+<li><a href="#common-mistakes">Common Mistakes:</a>
+<ul>
+<li><a href="#dereferencing-null-pointers">Dereferencing Null Pointers:</a></li>
+<li><a href="#memory-leaks">Memory Leaks:</a></li>
+<li><a href="#dangling-pointers">Dangling Pointers:</a></li>
+<li><a href="#pointer-arithmetic">Pointer Arithmetic:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#references">References</a>
+<ul>
+<li><a href="#what-is-reference">What is Reference</a></li>
+<li><a href="#characteristics-1">Characteristics:</a></li>
+<li><a href="#use-case">use Case</a>
+<ul>
+<li><a href="#pass-by-reference-to-modify">Pass-by-reference to modify</a></li>
+<li><a href="#pass-by-const-reference-to-avoid-copies">Pass-by-const-reference to avoid copies</a></li>
+<li><a href="#returning-reference-from-functions">Returning Reference from Functions</a></li>
+<li><a href="#return-by-reference-be-careful-with-lifetimes">Return by reference (be careful with lifetimes!)</a></li>
+<li><a href="#modify-data-in-range-based-loops">Modify Data in Range Based Loops</a></li>
+</ul>
+</li>
+<li><a href="#common-mistakes-1">Common Mistakes:</a>
+<ul>
+<li><a href="#reference-immutability-binding">Reference Immutability (Binding).</a></li>
+<li><a href="#references-lvalue">References Lvalue</a></li>
+<li><a href="#uninitialized-references">Uninitialized References:</a></li>
+<li><a href="#lifetime-issues">Lifetime Issues:</a></li>
+<li><a href="#confusing-references-and-pointers">Confusing References and Pointers:</a></li>
+</ul>
+</li>
+<li><a href="#the-three-main-types-of-references">The Three Main Types of References</a>
+<ul>
+<li><a href="#a-non-const-l-value-reference-int-">A. Non-const L-value Reference (int &amp;)</a></li>
+<li><a href="#b-const-l-value-reference-const-int-">B. Const L-value Reference (const int &amp;)</a></li>
+<li><a href="#c-r-value-reference-int---advanced-c11">C. R-value Reference (int &amp;&amp;) — Advanced (C++11)</a></li>
+</ul>
+</li>
+<li><a href="#pointer--reference">Pointer &amp; Reference</a></li>
+</ul>
+</li>
+<li><a href="#call-by-value-vs-call-by-pointer-vs-call-by-reference">Call by value vs Call by pointer vs Call by Reference</a></li>
+<li><a href="#the-three-ways-to-pass-data">The Three Ways to Pass Data</a>
+<ul>
+<li><a href="#a-call-by-value-the-photocopy">A. Call by Value (The &quot;Photocopy&quot;)</a></li>
+<li><a href="#b-call-by-address-the-gps-location---c-style">B. Call by Address (The &quot;GPS Location&quot;) - C Style</a></li>
+<li><a href="#c-call-by-reference-the-nickname---c-style">C. Call by Reference (The &quot;Nickname&quot;) - C++ Style</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#overloading">Overloading</a></li>
+<li><a href="#paradigm-c-vs-c">Paradigm C Vs C++</a>
+<ul>
+<li><a href="#c-procedural">C (Procedural)</a></li>
+<li><a href="#c-multiparadigm-procedural--oop--generic--raii">C++ (Multi‑paradigm: Procedural + OOP + Generic + RAII)</a></li>
+</ul>
+</li>
+<li><a href="#encpsulation">Encpsulation</a>
+<ul>
+<li><a href="#1%EF%B8%8F%E2%83%A3-problems-data-is-not-well-protected-poor-encapsulation">1️⃣ Problems Data is Not Well Protected (Poor Encapsulation)</a>
+<ul>
+<li><a href="#procedural-programming">Procedural Programming</a>
+<ul>
+<li><a href="#1-global-state-and-side-effects">1. Global State and Side Effects:</a></li>
+<li><a href="#2free-functions-c-style">2.Free functions (C-style)</a></li>
+<li><a href="#3-tight-coupling">3. Tight Coupling:</a></li>
+</ul>
+</li>
+<li><a href="#oop-solutions-encpsulation">OOP Solutions Encpsulation</a>
+<ul>
+<li><a href="#1-class-vs-object-the-container"><strong>1. Class vs. Object (The Container)</strong></a></li>
+<li><a href="#2-access-modifiers-the-security-guards"><strong>2. Access Modifiers (The Security Guards)</strong></a></li>
+<li><a href="#3-setters-and-getters-the-controlled-gates"><strong>3. Setters and Getters (The Controlled Gates)</strong></a></li>
+<li><a href="#why-using-setter--getter">Why Using Setter &amp; Getter</a>
+<ul>
+<li><a href="#disadvantages-of-direct-attribute-access">Disadvantages of Direct Attribute Access</a></li>
+<li><a href="#using-getters-and-setters">Using Getters and Setters</a></li>
+</ul>
+</li>
+<li><a href="#write-only-attribute-by-providing-a-setter-but-no-getter">Write-Only attribute by providing a Setter but no Getter.</a></li>
+<li><a href="#class-vs-struct-in-c-vs-struct-in-c">Class Vs struct in C++ Vs Struct in c</a>
+<ul>
+<li><a href="#struct-in-c-c90c99c11">struct in C (C90/C99/C11)</a></li>
+<li><a href="#struct-in-c">struct in C++</a></li>
+<li><a href="#class-in-c">class in C++</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2%EF%B8%8F%E2%83%A3-problem-no-clear-mapping-to-real-world-concepts">2️⃣ Problem: No Clear Mapping to Real-World Concepts</a></li>
+<li><a href="#problem--hard-to-model-real-world-things-in-procedural-code">Problem : Hard to Model Real-World Things in Procedural Code</a>
+<ul>
+<li><a href="#procedural-code-solves-tasks-with-functions-only">Procedural code solves tasks with functions only.</a></li>
+<li><a href="#-how-oop-solved-it-objects-represent-real-things">✔ How OOP Solved It: Objects Represent Real Things</a></li>
+</ul>
+</li>
+<li><a href="#3%EF%B8%8F%E2%83%A3-problem-code-becomes-hard-to-maintain-as-the-program-grows">3️⃣ Problem: Code Becomes Hard to Maintain as the Program Grows</a></li>
+<li><a href="#problem-spaghetti-code--oop-modularity">Problem: Spaghetti Code → OOP Modularity</a>
+<ul>
+<li><a href="#procedural-programs-tend-to-turn-into-spaghetti-code">Procedural programs tend to turn into spaghetti code:</a></li>
+<li><a href="#-how-oop-solved-it-modularity">✔ How OOP Solved It: Modularity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#procedural-problem-difficult-team-collaboration">Procedural Problem: Difficult Team Collaboration</a>
+<ul>
+<li><a href="#procedural-code-has">Procedural code has:</a></li>
+<li><a href="#oop-solution-clear-boundaries">OOP Solution: Clear Boundaries</a>
+<ul>
+<li><a href="#the-real-world-analogy-the-office-whiteboard"><strong>The Real-World Analogy: The Office Whiteboard</strong></a>
+<ul>
+<li><a href="#example-code">Example Code</a>
+<ul>
+<li><a href="#the-procedural-way-the-wild-west">The Procedural Way: &quot;The Wild West&quot;</a></li>
+</ul>
+</li>
+<li><a href="#the-oop-way-gated-communities">The OOP Way: &quot;Gated Communities&quot;</a>
+<ul>
+<li><a href="#why-this-is-better-for-teams">Why this is better for Teams:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="default-value">Default Value</h2>
+<h3 id="1-default-arguments-must-be-at-the-end-only">1. Default Arguments Must Be at the End Only</h3>
+<ul>
+<li>You cannot give a default value to a parameter on the left while a parameter to its right does not have a default.</li>
+<li>Once you start giving defaults, all parameters to the right must also have defaults.</li>
+<li>C++ cannot skip parameters in the middle. Default parameters must be right-aligned.</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+A[Start Using Default Arguments] --> B{Does a parameter<br>have a default?}
+
+B -->|No| C[Next parameter OK]
+B -->|Yes| D{Do ALL parameters<br>to the RIGHT also have defaults?}
+
+D -->|Yes| E[VALID ✔]
+D -->|No| F[INVALID ❌]
+
+style E fill:#c4f0c4,stroke:#3f8f3f,color:black
+style F fill:#ffcccc,stroke:#cc0000,color:black
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>, <span class="hljs-keyword">int</span> y)</span></span>;  <span class="hljs-comment">//❌Wrong</span>
+<span class="hljs-comment">//Because x(right parameter) does not have a default, but y does.</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x , <span class="hljs-keyword">int</span> y= <span class="hljs-number">10</span>)</span></span>; <span class="hljs-comment">//✔Correct</span>
+<span class="hljs-comment">//Defaults start at y (right side).</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>,<span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> z)</span></span>;  <span class="hljs-comment">//❌Wrong</span>
+<span class="hljs-comment">//x has default → but y,z (right) doesn't.</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>,<span class="hljs-keyword">int</span> y=<span class="hljs-number">5</span>, <span class="hljs-keyword">int</span> z)</span></span>;  <span class="hljs-comment">//❌Wrong</span>
+<span class="hljs-comment">//z is on the right without a default.</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>,<span class="hljs-keyword">int</span> y, <span class="hljs-keyword">int</span> z=<span class="hljs-number">5</span>)</span></span>;  <span class="hljs-comment">//❌Wrong</span>
+<span class="hljs-comment">//y is between defaults → not allowed.</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x , <span class="hljs-keyword">int</span> y,<span class="hljs-keyword">int</span> z=<span class="hljs-number">10</span>)</span></span>; <span class="hljs-comment">//✔Correct</span>
+<span class="hljs-comment">//Default starts at rightmost parameter only.</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x , <span class="hljs-keyword">int</span> y= <span class="hljs-number">10</span>,<span class="hljs-keyword">int</span> z=<span class="hljs-number">10</span>)</span>)</span>; <span class="hljs-comment">//✔Correct.</span>
+<span class="hljs-comment">//Defaults start at y (middle) → z also has default.</span>
+<span class="hljs-comment">//Valid pattern: parameters right of first default also have defaults.</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x=<span class="hljs-number">10</span> , <span class="hljs-keyword">int</span> y= <span class="hljs-number">10</span>,<span class="hljs-keyword">int</span> z=<span class="hljs-number">10</span>)</span></span>; <span class="hljs-comment">//✔Correct</span>
+<span class="hljs-comment">//All parameters have defaults → valid.</span>
+</div></code></pre>
+<pre><code class="language-mermaid"><div class="mermaid">classDiagram
+    class Valid {
+        +fun(int a, int b=5, int c=10)
+        +fun(int a, int b, int c=10)
+        +fun(int a=1, int b=2, int c=3)
+    }
+
+    class Invalid {
+        +fun(int a=10, int b)
+        +fun(int a=10, int b, int c=20)
+        +fun(int a, int b=10, int c)
+    }
+</div></code></pre>
+<h3 id="default-arguments-work-only-in-function-declarations-not-in-calls">Default Arguments Work Only in Function Declarations, Not in Calls</h3>
+<ul>
+<li>fun(10, =20);  // ❌ invalid syntax</li>
+<li>Only function prototype provides defaults.</li>
+</ul>
+<h3 id="default-arguments-are-copied-into-every-call-site">Default Arguments Are “Copied” into Every Call Site</h3>
+<ul>
+<li>When a function is declared multiple times (header + source),
+default args must appear only once.</li>
+<li>Only write defaults in declaration</li>
+<li>Default Arguments Are Not Allowed in Both Declaration &amp; Definition (Repeated)</li>
+<li>Default arguments must appear only once.</li>
+<li>❌ Wrong (duplicated defaults)<pre class="hljs"><code><div>    <span class="hljs-comment">// header file</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>)</span></span>;
+
+    <span class="hljs-comment">// source file</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>)</span> </span>{   <span class="hljs-comment">// ❌ ERROR</span>
+        <span class="hljs-built_in">cout</span> &lt;&lt; a;
+    }
+</div></code></pre>
+</li>
+<li>✔ Correct<pre class="hljs"><code><div>    <span class="hljs-comment">// header file</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>)</span></span>;
+
+    <span class="hljs-comment">// source file</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span> </span>{
+        <span class="hljs-built_in">cout</span> &lt;&lt; a;
+    }
+</div></code></pre>
+</li>
+<li>✔ Correct<pre class="hljs"><code><div>    <span class="hljs-comment">// Declaration with default argument</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>)</span></span>;
+
+    <span class="hljs-comment">// Definition without default argument</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span>
+    </span>{
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Value: "</span> &lt;&lt; x &lt;&lt; <span class="hljs-built_in">endl</span>;
+    }
+</div></code></pre>
+</li>
+<li>❌ Wrong Default Arguments Cannot Be Modified<pre class="hljs"><code><div>    <span class="hljs-comment">// Declaration</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>)</span></span>;
+
+    <span class="hljs-comment">// This definintion will throw and error</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a = <span class="hljs-number">222</span>)</span>
+    </span>{
+        <span class="hljs-comment">// statements</span>
+    }
+</div></code></pre>
+</li>
+<li>Reason: C++ injects the default argument into the call, not the function.</li>
+</ul>
+<h3 id="cannot-use-default-arguments-before-they-are-declared">Cannot Use Default Arguments Before They Are Declared</h3>
+<p>❌ Wrong</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = value)</span></span>;  <span class="hljs-comment">// value not declared yet</span>
+<span class="hljs-keyword">int</span> value = <span class="hljs-number">10</span>;
+</div></code></pre>
+<p>✔ Correct</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> value = <span class="hljs-number">10</span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = value)</span></span>;
+</div></code></pre>
+<h3 id="how-default-arguments-work-in-c-compile-time-binding-vs-run-time-evaluation">How Default Arguments Work in C++: Compile-Time Binding vs Run-Time Evaluation</h3>
+<ul>
+<li>Default argument selection is compile-time; evaluation of its expression is run-time.</li>
+<li>default argument is fixed at compile time,  if the expression is dynamic.
+<ul>
+<li>Compile-time: Which default argument applies is decided.</li>
+<li>Run-time: The actual expression (if any) is evaluated.</li>
+</ul>
+</li>
+</ul>
+<h4 id="how-default-arguments-actually-work"><strong>How Default Arguments Actually Work</strong></h4>
+<ul>
+<li>Binding (which default to use) happens at compile time: The compiler decides which default argument is associated with the function based on the declaration visible at the call site. This is a compile-time decision.</li>
+<li>Evaluation of the default argument expression happens at run time: If the default argument is an expression like getValue(), that expression is evaluated each time the function is called (at runtime), not “assigned once” at compile time.</li>
+</ul>
+<pre class="hljs"><code><div>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getValue</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> rand() % <span class="hljs-number">10</span>; }
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = getValue())</span> </span>{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    show(); <span class="hljs-comment">// calls show(getValue()); -&gt; prints a random number</span>
+    show(); <span class="hljs-comment">// calls show(getValue()); -&gt; prints another random number</span>
+}
+</div></code></pre>
+<ul>
+<li>C++: You can use a function call in the default argument, but many teams prefer the sentinel pattern for clarity:</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = <span class="hljs-number">-1</span>)</span> </span>{
+    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span>) x = getValue();
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    show(); <span class="hljs-comment">// calls show(getValue()); -&gt; prints a random number</span>
+    show(); <span class="hljs-comment">// calls show(getValue()); -&gt; prints another random number</span>
+}
+
+</div></code></pre>
+<ul>
+<li>Each show() call is effectively transformed by the compiler into show(getValue()); at the call site. Since getValue() calls rand(), which changes across calls, you correctly get different outputs (like 3 then 6).</li>
+</ul>
+<h4 id="what-compile-time-actually-refers-to"><strong>What “compile-time” actually refers to</strong></h4>
+<ul>
+<li>
+<p>Default arguments are not part of the function type. They’re more like syntactic sugar the compiler uses to fill in missing arguments at the call site.</p>
+</li>
+<li>
+<p>The choice of default argument is fixed at compile time based on what declaration the caller sees.</p>
+</li>
+<li>
+<p>The value of that default argument expression can be constant or dynamic. If it’s dynamic (e.g., rand(), reading a global, calling a function), it’s evaluated at run time.</p>
+</li>
+</ul>
+<h4 id="default-argument-evaluation-timing-python-vs-c">Default argument evaluation timing Python vs C++</h4>
+<ul>
+<li>Python: “Default args are like constants captured at definition time.”</li>
+<li>C++: “Default args are like syntactic sugar—compiler plugs them in at each call site, then they run.”</li>
+</ul>
+<h5 id="side%E2%80%91by%E2%80%91side-comparison-default-argument-evaluation-timing-python-vs-c"><strong>Side‑by‑side comparison Default argument evaluation timing Python vs C++</strong></h5>
+<ul>
+<li><strong>Python:</strong>
+<ul>
+<li>Default expressions are evaluated once at function definition.</li>
+<li>Any stateful call (like random, reading time, etc.) will happen only once, producing the same default value for all calls unless explicitly overridden.</li>
+</ul>
+</li>
+<li><strong>C++:</strong>
+<ul>
+<li>Default arguments are substituted at call sites during compilation, and the expression is evaluated at runtime for each call where the argument is omitted.</li>
+<li>A function call used as a default (e.g., getValue()) will run every time you call the function without that argument.</li>
+</ul>
+</li>
+</ul>
+<h5 id="the-python-analogue">The Python analogue</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> random
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_value</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">9</span>)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(x=get_value<span class="hljs-params">()</span>)</span>:</span>
+    print(x)
+show()  <span class="hljs-comment"># prints one number</span>
+show()  <span class="hljs-comment"># prints THE SAME number again</span>
+</div></code></pre>
+<h5 id="why-python-behaves-differently">Why Python behaves differently</h5>
+<ul>
+<li>In Python, default argument expressions are evaluated once—at function definition time, not at call time.</li>
+<li>So get_value() runs only once when show is defined; x’s default becomes that single value, which is reused for every call that omits x.</li>
+</ul>
+<h5 id="the-idiomatic-python-fix">The idiomatic Python fix</h5>
+<p>To get a fresh value each call, compute inside the function (use a sentinel default):</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> random
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_value</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">9</span>)
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span><span class="hljs-params">(x=None)</span>:</span>
+    <span class="hljs-keyword">if</span> x <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        x = get_value()   <span class="hljs-comment"># evaluated on each call when x not provided</span>
+    print(x)
+show()  <span class="hljs-comment"># new random value</span>
+show()  <span class="hljs-comment"># another random value</span>
+</div></code></pre>
+<h3 id="default-arguments--function-pointers">Default Arguments + Function Pointers</h3>
+<ul>
+<li>Default arguments belong to the function declaration, NOT the function pointer.<pre class="hljs"><code><div>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>)</span> </span>{ <span class="hljs-built_in">cout</span> &lt;&lt; a; }
+
+    <span class="hljs-keyword">void</span> (*ptr)(<span class="hljs-keyword">int</span>) = fun;
+
+    ptr();      <span class="hljs-comment">// ❌ ERROR: you must pass an argument</span>
+    ptr(<span class="hljs-number">5</span>);     <span class="hljs-comment">// ✔ OK</span>
+</div></code></pre>
+</li>
+<li>Reason: Default is inserted at call site, not inside the function pointer.</li>
+</ul>
+<h3 id="overloading-vs-default-arguments-ambiguity">Overloading vs Default Arguments Ambiguity</h3>
+<ul>
+<li>Default parameters can create ambiguous function calls.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y = <span class="hljs-number">20</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">fun</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>;
+    
+fun(<span class="hljs-number">10</span>);   <span class="hljs-comment">// ❌ ambiguous </span>
+<span class="hljs-comment">//Which one should be used?</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// Valid</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>, <span class="hljs-keyword">int</span> b = <span class="hljs-number">20</span>)</span></span>;
+<span class="hljs-comment">// Will throw error as the signature is same</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a = <span class="hljs-number">22</span>, <span class="hljs-keyword">int</span> b = <span class="hljs-number">2</span>)</span></span>;
+<span class="hljs-comment">// Will also throw error</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>;
+<span class="hljs-comment">// Will also throw an error</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, b)</span>
+</span></div></code></pre>
+<h3 id="virtual-functions-and-default-arguments">Virtual Functions and Default Arguments</h3>
+<ul>
+<li>
+<p>Default arguments in virtual functions are bound at compile time,
+but virtual dispatch (overriding) happens at run-time — dangerous combo!</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>)</span> </span>{ <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Base: "</span> &lt;&lt; x &lt;&lt; <span class="hljs-built_in">endl</span>; }
+};
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span> :</span> <span class="hljs-keyword">public</span> Base {
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x = <span class="hljs-number">20</span>)</span> <span class="hljs-keyword">override</span> </span>{ <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Derived: "</span> &lt;&lt; x &lt;&lt; <span class="hljs-built_in">endl</span>; }
+};
+
+Derived d;
+Base* pb = &amp;d;
+d.show(); <span class="hljs-comment">// static type: Derived -&gt; default is 20; dynamic call: Derived::show -&gt; prints "Derived: 20"</span>
+<span class="hljs-comment">// Uses Derived's default: prints "Derived: 20"</span>
+
+pb-&gt;show(); <span class="hljs-comment">// static type: Base*  -&gt; default is 10; dynamic call: Derived::show -&gt; prints "Derived: 10"</span>
+<span class="hljs-comment">// Virtual dispatch to Derived::show, BUT default chosen as Base's: prints "Derived: 10"</span>
+
+Base* ptr = <span class="hljs-keyword">new</span> Derived();
+ptr-&gt;show();   <span class="hljs-comment">// // Derived: 10</span>
+
+ptr-&gt;show(<span class="hljs-number">20</span>);  <span class="hljs-comment">// Derived: 20</span>
+
+
+</div></code></pre>
+<ul>
+<li>Virtual call → Derived::show</li>
+<li>Default argument → taken from Base (static binding)</li>
+<li>This confuses many programmers!</li>
+</ul>
+<h2 id="references-vs-pointers">References VS Pointers</h2>
+<h3 id="pointers">Pointers</h3>
+<h4 id="characteristics">Characteristics:</h4>
+<ul>
+<li>Pointers store the memory address of a variable.</li>
+<li>Pointers can be null, meaning they may not point to any object.</li>
+<li>Pointers can be reassigned to point to different objects or changed.</li>
+<li>You use the * operator to declare a pointer and the &amp; operator to get the address of a variable.</li>
+</ul>
+<h4 id="common-mistakes">Common Mistakes:</h4>
+<h5 id="dereferencing-null-pointers">Dereferencing Null Pointers:</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> *ptr = <span class="hljs-literal">nullptr</span>;
+*ptr = <span class="hljs-number">10</span>; <span class="hljs-comment">// Undefined behavior</span>
+</div></code></pre>
+<h5 id="memory-leaks">Memory Leaks:</h5>
+<ul>
+<li>Allocating memory with new and forgetting to delete it can lead to memory leaks.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> *arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">10</span>];
+<span class="hljs-comment">// Forgetting to delete</span>
+</div></code></pre>
+<h5 id="dangling-pointers">Dangling Pointers:</h5>
+<ul>
+<li>When you delete a pointer but do not set it to nullptr, it becomes a dangling pointer.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> *ptr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">5</span>);
+<span class="hljs-keyword">delete</span> ptr;
+<span class="hljs-comment">// ptr is now a dangling pointer</span>
+</div></code></pre>
+<h5 id="pointer-arithmetic">Pointer Arithmetic:</h5>
+<ul>
+<li>Incorrectly calculating indices or going out of bounds can lead to undefined behavior.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> arr[<span class="hljs-number">3</span>] = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>};
+<span class="hljs-keyword">int</span> *p = arr;
+p += <span class="hljs-number">4</span>; <span class="hljs-comment">// Out of bounds access</span>
+</div></code></pre>
+<h3 id="references">References</h3>
+<h4 id="what-is-reference">What is Reference</h4>
+<ul>
+<li>A reference is an alias for an existing object—another name bound to the same memory. Once initialized, a reference must refer to something and cannot be reseated.</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+    <span class="hljs-keyword">int</span>&amp; r = a;   <span class="hljs-comment">// r is a reference to </span>
+    ar = <span class="hljs-number">20</span>;     <span class="hljs-comment">// modifies 'a'</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="hljs-string">"\n"</span>; <span class="hljs-comment">// 20Show more lines</span>
+</div></code></pre>
+<ul>
+<li>References are always initialized.</li>
+<li>References are typically implemented under the hood as pointers, but with safer syntax.</li>
+</ul>
+<h4 id="characteristics">Characteristics:</h4>
+<ul>
+<li>References act as an alias for another variable.</li>
+<li>References must be initialized when created and cannot be reassigned to refer to another variable.</li>
+<li>References cannot be null.</li>
+<li>Declared using the &amp; operator.</li>
+</ul>
+<h4 id="use-case">use Case</h4>
+<ul>
+<li>Pass-by-reference to modify arguments without copying.</li>
+<li>Avoid copying large objects.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">increment</span><span class="hljs-params">(<span class="hljs-keyword">int</span>&amp; n)</span> </span>{ 
+    n++; 
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{    
+    <span class="hljs-keyword">int</span> v = <span class="hljs-number">3</span>;    
+    increment(v); <span class="hljs-comment">// v becomes 4}Show more lines</span>
+}
+
+</div></code></pre>
+<h5 id="pass-by-reference-to-modify">Pass-by-reference to modify</h5>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">int</span>&amp; a, <span class="hljs-keyword">int</span>&amp; b)</span> </span>{ 
+    <span class="hljs-keyword">int</span> t = a; 
+    a = b; 
+    b = t; 
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">int</span> x=<span class="hljs-number">4</span>; 
+    <span class="hljs-keyword">int</span> y=<span class="hljs-number">5</span>; 
+    swap(x,y); 
+    <span class="hljs-comment">//y=4 , x=5 </span>
+}
+</div></code></pre>
+<h5 id="pass-by-const-reference-to-avoid-copies">Pass-by-const-reference to avoid copies</h5>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&amp; s)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">len</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> &amp; arr)</span></span>{
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;
+    <span class="hljs-comment">//arr[i]='s';//Assigment of readonly location</span>
+    <span class="hljs-keyword">while</span>(arr[i]!=<span class="hljs-string">'\0'</span>){
+        i++;
+    }
+    <span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Len="</span>&lt;&lt;i&lt;&lt;<span class="hljs-built_in">endl</span>;
+}
+</div></code></pre>
+<h5 id="returning-reference-from-functions">Returning Reference from Functions</h5>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">int</span>&amp; <span class="hljs-title">getMax</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;a, <span class="hljs-keyword">int</span> &amp;b)</span> </span>{ 
+    <span class="hljs-comment">// Return the larger of the two numbers</span>
+    <span class="hljs-keyword">return</span> (a &gt; b) ? a : b;  
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>, y = <span class="hljs-number">20</span>;
+    <span class="hljs-keyword">int</span> &amp;maxVal = getMax(x, y);<span class="hljs-comment">//maxVal--&gt;y</span>
+    <span class="hljs-comment">// Modify the value of the larger number</span>
+    maxVal = <span class="hljs-number">30</span>;  <span class="hljs-comment">//y=30</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"x = "</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">", y = "</span> &lt;&lt; y; <span class="hljs-comment">// x=10 , y=30</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h5 id="return-by-reference-be-careful-with-lifetimes">Return by reference (be careful with lifetimes!)</h5>
+<pre class="hljs"><code><div>
+<span class="hljs-comment">// DANGER: Returning reference to local variable (dangling)</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span>&amp; <span class="hljs-title">bad</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">42</span>;
+    <span class="hljs-keyword">return</span> x;    <span class="hljs-comment">// undefined behavior</span>
+}
+
+<span class="hljs-keyword">int</span> &amp; ref=bad();
+ref=<span class="hljs-number">10</span>; <span class="hljs-comment">//Error RunTime:: Segmentation fault</span>
+</div></code></pre>
+<h5 id="modify-data-in-range-based-loops">Modify Data in Range Based Loops</h5>
+<pre class="hljs"><code><div>    <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; vect{ <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span> };
+
+    <span class="hljs-comment">// We can modify elements if we</span>
+    <span class="hljs-comment">// use reference</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span>&amp; x : vect) {
+        x = x + <span class="hljs-number">5</span>;
+    }
+
+    <span class="hljs-comment">// Printing elements</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> x : vect) {
+        <span class="hljs-built_in">cout</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">" "</span>;
+    }
+</div></code></pre>
+<h4 id="common-mistakes">Common Mistakes:</h4>
+<h5 id="reference-immutability-binding">Reference Immutability (Binding).</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">int</span> y = <span class="hljs-number">20</span>;
+<span class="hljs-keyword">int</span> &amp;ref = x; <span class="hljs-comment">// ref is bonded to x 'ref' is now a permanent alias (nickname) for 'x'</span>
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Address of x:   "</span> &lt;&lt; &amp;x &lt;&lt; <span class="hljs-string">"\n"</span>;
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Address of ref: "</span> &lt;&lt; &amp;ref &lt;&lt; <span class="hljs-string">"\n"</span>; <span class="hljs-comment">// Same address as x</span>
+<span class="hljs-comment">// THE CONFUSING LINE</span>
+ref = y; 
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"--- After ref = y ---\n"</span>;
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Value of x:     "</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">"\n"</span>;    <span class="hljs-comment">// x changed to 20!</span>
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Address of ref: "</span> &lt;&lt; &amp;ref &lt;&lt; <span class="hljs-string">"\n"</span>; <span class="hljs-comment">// STILL the address of x!</span>
+
+<span class="hljs-comment">// If we change x now, ref sees it (because ref IS x)</span>
+x = <span class="hljs-number">99</span>;
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Value of ref:   "</span> &lt;&lt; ref &lt;&lt; <span class="hljs-string">"\n"</span>; <span class="hljs-comment">// Prints 99, not 20</span>
+</div></code></pre>
+<h5 id="references-lvalue">References Lvalue</h5>
+<ol>
+<li>Lvalue References (T&amp;)</li>
+</ol>
+<ul>
+<li>Bind to lvalues (named, addressable objects).<pre class="hljs"><code><div>
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> ca = <span class="hljs-number">2</span>;
+
+    <span class="hljs-keyword">int</span>&amp;  ref1 = a;  <span class="hljs-comment">// OK</span>
+    <span class="hljs-keyword">int</span>&amp;  ref2 = <span class="hljs-number">10</span>; <span class="hljs-comment">// ERROR:(can't bind non-const ref can't bind to rvalue (int)</span>
+    <span class="hljs-keyword">int</span>&amp;  ref3 = ca;  <span class="hljs-comment">// ERROR: can't bind non-const ref to const</span>
+  
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp; ref4 = ca;        <span class="hljs-comment">// OK</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp; ref5 = <span class="hljs-number">10</span>;        <span class="hljs-comment">// OK: const ref can bind to rvalue</span>
+
+    <span class="hljs-keyword">int</span>&amp;&amp; rr1 = <span class="hljs-number">10</span>;            <span class="hljs-comment">// OK: rvalue refs bind to temporaries</span>
+    <span class="hljs-comment">// int&amp;&amp; rr2 = a;   // ERROR: rvalue ref can't bind to lvalue</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>&amp;&amp; rr3 = <span class="hljs-number">10</span>;      <span class="hljs-comment">// OK (rarely needed)</span>
+
+</div></code></pre>
+</li>
+</ul>
+<h5 id="uninitialized-references">Uninitialized References:</h5>
+<ul>
+<li>References must always be initialized; otherwise, it leads to undefined behavior.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> &amp;ref; <span class="hljs-comment">// Error: can’t be uninitialized</span>
+</div></code></pre>
+<h5 id="lifetime-issues">Lifetime Issues:</h5>
+<ul>
+<li>If a reference is tied to a local variable that goes out of scope, accessing that reference thereafter can lead to undefined behavior.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">int</span>&amp; <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> localVar = <span class="hljs-number">5</span>;
+    <span class="hljs-keyword">return</span> localVar; <span class="hljs-comment">// Dangerous: localVar is destroyed at the end of the scope</span>
+}
+</div></code></pre>
+<h5 id="confusing-references-and-pointers">Confusing References and Pointers:</h5>
+<ul>
+<li>Developers may mistakenly use references when they meant to use pointers, especially when dealing with cases where the variable may not exist (null pointers).</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;x)</span> </span>{ <span class="hljs-comment">// Must pass a valid int</span>
+    <span class="hljs-comment">// Logic here</span>
+}
+
+<span class="hljs-keyword">int</span> *p = <span class="hljs-literal">nullptr</span>;
+func(*p); <span class="hljs-comment">// Error: trying to dereference a nullptr</span>
+</div></code></pre>
+<h4 id="the-three-main-types-of-references">The Three Main Types of References</h4>
+<ul>
+<li>In modern C++, references are categorized mainly into L-value and R-value references.</li>
+</ul>
+<h5 id="a-non-const-l-value-reference-int">A. Non-const L-value Reference (int &amp;)</h5>
+<ul>
+<li>What it binds to: Only modifiable variables (l-values).</li>
+<li>Use case: Changing a variable passed into a function.
+code</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addOne</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;n)</span> </span>{
+    n++; <span class="hljs-comment">// Modifies the actual variable passed in</span>
+}
+</div></code></pre>
+<h5 id="b-const-l-value-reference-const-int">B. Const L-value Reference (const int &amp;)</h5>
+<ul>
+<li>What it binds to: Variables (l-values) OR temporary values (r-values).</li>
+<li>Use case: Reading large data efficiently without copying it. You cannot modify the data.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Can accept a variable OR a literal like 10</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printNum</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> &amp;n)</span> </span>{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; n; 
+    <span class="hljs-comment">// n++; // ERROR: Read-only</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">5</span>;
+    printNum(x);  <span class="hljs-comment">// Works</span>
+    printNum(<span class="hljs-number">10</span>); <span class="hljs-comment">// Works (Special feature of const ref)</span>
+}
+</div></code></pre>
+<h5 id="c-r-value-reference-int---advanced-c11">C. R-value Reference (int &amp;&amp;) — Advanced (C++11)</h5>
+<ul>
+<li>What it binds to: Temporary objects that are about to be destroyed (r-values).</li>
+<li>Use case: Optimization (Move Semantics). Used to steal resources from a temporary object instead of copying them.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;&amp;n)</span> </span>{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Processing temporary: "</span> &lt;&lt; n;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">process</span>(<span class="hljs-number">10</span>); <span class="hljs-comment">// Works</span>
+    <span class="hljs-comment">// int x = 10; process(x); // ERROR: x is not a temporary</span>
+}
+</div></code></pre>
+<h4 id="pointer--reference">Pointer &amp; Reference</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Feature</th>
+<th style="text-align:center">Pointers</th>
+<th style="text-align:center">References</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Syntax</td>
+<td style="text-align:center">int *p</td>
+<td style="text-align:center">int &amp;r</td>
+</tr>
+<tr>
+<td style="text-align:center">Nullability</td>
+<td style="text-align:center">Can be null</td>
+<td style="text-align:center">Cannot be null</td>
+</tr>
+<tr>
+<td style="text-align:center">Reassignment</td>
+<td style="text-align:center">Can point to different objects</td>
+<td style="text-align:center">Cannot be changed after initialization</td>
+</tr>
+<tr>
+<td style="text-align:center">Syntax for Access</td>
+<td style="text-align:center">Use * to dereference</td>
+<td style="text-align:center">No dereference operator needed</td>
+</tr>
+<tr>
+<td style="text-align:center">Memory Management</td>
+<td style="text-align:center">Requires explicit deletion if allocated</td>
+<td style="text-align:center">Automatically managed (no new/delete)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Reference (int &amp;m = a)</th>
+<th>Pointer (int *ptr = &amp;a)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Concept</td>
+<td>A Nickname (Alias) for an existing variable.</td>
+<td>A variable that stores a Memory Address.</td>
+</tr>
+<tr>
+<td>Re-assignment</td>
+<td>Impossible. Once a reference, always that reference.</td>
+<td>Possible. Can point to Variable A, then switch to Variable B.</td>
+</tr>
+<tr>
+<td>Nullability</td>
+<td>Never Null. Must be initialized immediately.</td>
+<td>Can be Null (nullptr).</td>
+</tr>
+<tr>
+<td>Syntax</td>
+<td>Treated like a normal variable (m = 20).</td>
+<td>Needs dereferencing (*ptr = 20).</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>Shares the same address as the original.</td>
+<td>Has its own address, stores the target's address.</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">int</span> y = <span class="hljs-number">20</span>;
+
+<span class="hljs-comment">// POINTER</span>
+<span class="hljs-keyword">int</span> *ptr = &amp;x; 
+ptr = &amp;y; <span class="hljs-comment">// VALID: ptr now points to y</span>
+
+<span class="hljs-comment">// REFERENCE</span>
+<span class="hljs-keyword">int</span> &amp;ref = x;
+ref = y; <span class="hljs-comment">// WARNING: This does NOT make ref refer to y. </span>
+         <span class="hljs-comment">// It copies the VALUE of y (20) into x.</span>
+</div></code></pre>
+<h3 id="call-by-value-vs-call-by-pointer-vs-call-by-reference">Call by value vs Call by pointer vs Call by Reference</h3>
+<h3 id="the-three-ways-to-pass-data">The Three Ways to Pass Data</h3>
+<h4 id="a-call-by-value-the-%22photocopy%22">A. Call by Value (The &quot;Photocopy&quot;)</h4>
+<ul>
+<li>You photocopy the paper and give the copy to your colleague.
+<ul>
+<li>Safety: High. If they burn the paper, your original is safe.</li>
+<li>Performance: Slow for large documents (copying takes time).</li>
+<li>Result: The original variable is NOT modified.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modifyValue</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-comment">// x is a COPY</span>
+    x = <span class="hljs-number">100</span>; <span class="hljs-comment">// Only changes the copy</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+    modifyValue(a);
+    <span class="hljs-comment">// 'a' is still 10</span>
+}
+</div></code></pre>
+<h4 id="b-call-by-address-the-%22gps-location%22---c-style">B. Call by Address (The &quot;GPS Location&quot;) - C Style</h4>
+<ul>
+<li>You write the address (memory location) of your filing cabinet on a sticky note and give it to your colleague.
+<ul>
+<li>Mechanism: Uses Pointers (*).</li>
+<li>Safety: Low. They can go to that address and change the original. They can also lose the address (null pointer).</li>
+<li>Result: The original variable IS modified.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modifyAddress</span><span class="hljs-params">(<span class="hljs-keyword">int</span> *ptr)</span> </span>{ <span class="hljs-comment">// ptr holds an address</span>
+    *ptr = <span class="hljs-number">100</span>; <span class="hljs-comment">// Go to that address and change value</span>
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+    modifyAddress(&amp;a); <span class="hljs-comment">// Pass the address of 'a'</span>
+    <span class="hljs-comment">// 'a' is now 100</span>
+}
+</div></code></pre>
+<h4 id="c-call-by-reference-the-%22nickname%22---c-style">C. Call by Reference (The &quot;Nickname&quot;) - C++ Style</h4>
+<ul>
+<li>You agree that &quot;Project X&quot; is just another name for your specific file. When they mention &quot;Project X&quot;, they are talking about your actual file.
+<ul>
+<li>Mechanism: Uses References (&amp;).</li>
+<li>Safety: Medium/High. No pointer arithmetic, no null values allowed.</li>
+<li>Result: The original variable IS modified.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">modifyReference</span><span class="hljs-params">(<span class="hljs-keyword">int</span> &amp;ref)</span> </span>{ <span class="hljs-comment">// ref is an ALIAS for the caller's variable</span>
+    ref = <span class="hljs-number">100</span>; <span class="hljs-comment">// Changes the original variable directly</span>
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+    modifyReference(a); <span class="hljs-comment">// Pass 'a' directly (cleaner syntax)</span>
+    <span class="hljs-comment">// 'a' is now 100</span>
+}
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Use Pass by Value (Type ):</th>
+<th>Use Pass by Reference (Type &amp;):</th>
+<th>Use Pass by Address (Type *):</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>- For small data types (int, char, bool, float).<br>- When you do not want the function to modify your data.</td>
+<td>- Modifying Data: When the function needs to update the variable (e.g., updateScore(int &amp;score)).<br>- Efficiency: When passing large Objects or Structs to avoid copying.<br>- Tip: Use const Type &amp; if you want efficiency but don't want to allow modification.</td>
+<td>- C Compatibility: When working with C libraries.<br>- Optional Data: When &quot;No Value&quot; is a valid state (you can pass nullptr to say &quot;ignore this&quot;).<br>- Dynamic Memory: When dealing with arrays or memory manually allocated with new/malloc.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="overloading">Overloading</h2>
+<ul>
+<li>Same Action with different Input</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">( <span class="hljs-keyword">int</span> x=<span class="hljs-number">10</span> , <span class="hljs-keyword">int</span> y=<span class="hljs-number">10</span>)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Int : "</span>&lt;&lt;x+y&lt;&lt;<span class="hljs-built_in">endl</span>;}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">( <span class="hljs-keyword">float</span> x=<span class="hljs-number">10</span> , <span class="hljs-keyword">float</span> y=<span class="hljs-number">10</span>)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Float : "</span>&lt;&lt;x+y&lt;&lt;<span class="hljs-built_in">endl</span>;}
+add(<span class="hljs-number">10</span>,<span class="hljs-number">20</span>);<span class="hljs-comment">// Int : 30</span>
+add(<span class="hljs-number">10.5</span>,<span class="hljs-number">20.4</span>);<span class="hljs-comment">//Error:: call of overloaded ‘add(double, double)’ is ambiguous|</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">( <span class="hljs-keyword">int</span> x=<span class="hljs-number">10</span> , <span class="hljs-keyword">int</span> y=<span class="hljs-number">10</span>)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Int : "</span>&lt;&lt;x+y&lt;&lt;<span class="hljs-built_in">endl</span>;}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">( <span class="hljs-keyword">float</span> x=<span class="hljs-number">10</span> , <span class="hljs-keyword">float</span> y=<span class="hljs-number">10</span>)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Float : "</span>&lt;&lt;x+y&lt;&lt;<span class="hljs-built_in">endl</span>;}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">( <span class="hljs-keyword">double</span> x=<span class="hljs-number">10</span> , <span class="hljs-keyword">double</span> y=<span class="hljs-number">10</span>)</span></span>{<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"double : "</span>&lt;&lt;x+y&lt;&lt;<span class="hljs-built_in">endl</span>;}
+
+add(<span class="hljs-number">10</span>,<span class="hljs-number">20</span>); <span class="hljs-comment">// Int : 30</span>
+add(<span class="hljs-number">10.5</span>,<span class="hljs-number">20.4</span>);<span class="hljs-comment">//double : 30.9</span>
+add(<span class="hljs-number">10.5f</span>,<span class="hljs-number">20.4</span>);<span class="hljs-comment">//add((float)10.5,20.4); //double : 30.9</span>
+add(<span class="hljs-number">10.5f</span>,<span class="hljs-number">20.4f</span>);<span class="hljs-comment">//add((float)10.5,(float)20.4);Float : 30.9</span>
+
+add(<span class="hljs-number">10</span>,<span class="hljs-number">20.5</span>); <span class="hljs-comment">//Error::call of overloaded‘add(int, double)’ is ambiguous</span>
+</div></code></pre>
+<h2 id="paradigm-c-vs-c">Paradigm C Vs C++</h2>
+<h3 id="c-procedural">C (Procedural)</h3>
+<ul>
+<li>What it means: You organize your program around functions that operate on data structures. Data and behavior are separate.</li>
+<li>Typical style: Top‑down design, function calls, explicit control flow.</li>
+<li>Philosophy: The program is a list of instructions. Data and Functions are separate.</li>
+<li>Focus: &quot;What steps do I take?&quot; (Verbs).</li>
+<li>Structure: struct holds data, free functions modify that data.</li>
+<li>Drawback: You have to manually pass data into functions.</li>
+</ul>
+<pre class="hljs"><code><div>
+<span class="hljs-comment">// sum_array.c</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-comment">// Explicitly passing data to the function</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> *arr, <span class="hljs-keyword">int</span> n)</span> </span>{
+    <span class="hljs-keyword">int</span> s = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; ++i) s += arr[i];
+    <span class="hljs-keyword">return</span> s;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    <span class="hljs-keyword">int</span> a[] = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>};
+    <span class="hljs-keyword">int</span> n = <span class="hljs-keyword">sizeof</span>(a) / <span class="hljs-keyword">sizeof</span>(a[<span class="hljs-number">0</span>]);
+    <span class="hljs-comment">// Explicitly passing data to the function</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Sum = %d\n"</span>, sum(a, n));
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+
+</div></code></pre>
+<h3 id="c-multi%E2%80%91paradigm-procedural--oop--generic--raii">C++ (Multi‑paradigm: Procedural + OOP + Generic + RAII)</h3>
+<ul>
+<li>What it means: You can write procedural code, object‑oriented code (classes, inheritance, polymorphism), generic code (templates), and use resource management via RAII (constructors/destructors).</li>
+<li>Typical style: Abstractions via classes/objects and templates; data + behavior together.</li>
+<li>Philosophy: The program is a collection of interacting objects. Data and Functions are bundled together.</li>
+<li>Focus: &quot;Who is responsible for this?&quot; (Nouns/Objects).</li>
+<li>Structure: class holds both data and the functions that manipulate it.</li>
+<li>Benefit: Automatic resource management (RAII) and tighter security.</li>
+</ul>
+<pre class="hljs"><code><div>
+<span class="hljs-comment">// account.cpp</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+<span class="hljs-comment">// Data is hidden inside the object</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Account</span> {</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> owner;
+    <span class="hljs-keyword">double</span> balance;
+<span class="hljs-keyword">public</span>:
+    Account(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> name, <span class="hljs-keyword">double</span> initial) : owner(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(name)), balance(initial) {}
+    <span class="hljs-comment">// Methods act on the object's own data implicitly</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deposit</span><span class="hljs-params">(<span class="hljs-keyword">double</span> amount)</span> </span>{ balance += amount; }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">withdraw</span><span class="hljs-params">(<span class="hljs-keyword">double</span> amount)</span> </span>{ <span class="hljs-keyword">if</span> (amount &lt;= balance) balance -= amount; }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; owner &lt;&lt; <span class="hljs-string">" balance = "</span> &lt;&lt; balance &lt;&lt; <span class="hljs-string">'\n'</span>; }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Account a{<span class="hljs-string">"Mina"</span>, <span class="hljs-number">1000.0</span>};
+    a.deposit(<span class="hljs-number">250.0</span>);<span class="hljs-comment">// No need to pass 'a' manually; the object calls the method</span>
+    a.withdraw(<span class="hljs-number">100.0</span>);<span class="hljs-comment">// No need to pass 'a' manually; the object calls the method</span>
+    a.<span class="hljs-built_in">print</span>(); 
+}
+
+</div></code></pre>
+<h2 id="encpsulation">Encpsulation</h2>
+<h3 id="1%EF%B8%8F%E2%83%A3-problems-data-is-not-well-protected-poor-encapsulation">1️⃣ Problems Data is Not Well Protected (Poor Encapsulation)</h3>
+<h4 id="procedural-programming">Procedural Programming</h4>
+<p>Problem: No Encapsulation → OOP Encapsulation</p>
+<h5 id="1-global-state-and-side-effects">1. Global State and Side Effects:</h5>
+<ul>
+<li>In procedural programming, functions often rely on and modify global state, leading to hidden dependencies and side effects. This makes code harder to debug and maintain.</li>
+<li>Problem: Functions often rely on and modify global variables, creating hidden dependencies and making debugging difficult.</li>
+<li>Procedural (C) – Data is exposed everywhere.</li>
+<li>Data is often global or accessible by many functions.</li>
+<li>Any function can modify the data → causing bugs.</li>
+</ul>
+<pre><code class="language-Mermaid"><div class="mermaid">flowchart TD
+    A[Global Data] --> B[Function: moveBack]
+    A --> C[Function: moveForward]
+    A --> D[Function: printCounter]
+    B --> A
+    C --> A
+    D --> A
+</div></code></pre>
+<ul>
+<li>Example:<pre class="hljs"><code><div>    <span class="hljs-keyword">int</span> globalCounter = <span class="hljs-number">0</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">increment</span><span class="hljs-params">()</span> </span>{
+        globalCounter++;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printCounter</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, globalCounter);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+        increment();
+        printCounter(); <span class="hljs-comment">// Output: 1</span>
+        increment();
+        printCounter(); <span class="hljs-comment">// Output: 2</span>
+    }
+</div></code></pre>
+</li>
+</ul>
+<h5 id="2free-functions-c-style">2.Free functions (C-style)</h5>
+<ul>
+<li>In C, functions are &quot;free&quot;—they don't belong to the data.</li>
+<li>Problem: Functions are separate from data structures. To modify data, you must pass references explicitly, leading to tight coupling.</li>
+<li>Issue: No data protection, and functions are not logically tied to the object.</li>
+<li>Security Risk: Since the struct is open, any part of the code can set c.speed = -999 without the function knowing.</li>
+<li>Collaboration Hell: If Team A changes the struct, Team B's functions break.</li>
+<li>Examples :-<pre class="hljs"><code><div><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">car</span> {</span> <span class="hljs-comment">// Just data</span>
+    <span class="hljs-keyword">int</span> speed;
+}car; <span class="hljs-comment">// &lt;-- semicolon required</span>
+
+<span class="hljs-comment">// Free function - Requires manual pointer passing</span>
+<span class="hljs-comment">// Free functions that MODIFY the passed car (pass by reference)</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">moveBack</span><span class="hljs-params">(car * c)</span> </span>{ <span class="hljs-comment">// use reference to modify the original</span>
+    c-&gt;speed -= <span class="hljs-number">10</span>;<span class="hljs-comment">// No protection against negative speed</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"moveBack: speed="</span> &lt;&lt; c.speed &lt;&lt; <span class="hljs-string">"\n"</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">moveForward</span><span class="hljs-params">(car * c)</span> </span>{
+    c-&gt;speed += <span class="hljs-number">10</span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"moveForward: speed="</span> &lt;&lt; c.speed &lt;&lt; <span class="hljs-string">"\n"</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    car c;          <span class="hljs-comment">// create object</span>
+    c.speed = <span class="hljs-number">10</span>;   <span class="hljs-comment">// set speed</span>
+    <span class="hljs-comment">// Clunky syntax</span>
+    moveBack(&amp;c);        <span class="hljs-comment">// calls free function, modifies c</span>
+    moveForward(&amp;c);     <span class="hljs-comment">// modifies c again </span>
+    car c2;         <span class="hljs-comment">// another object</span>
+    c2.speed = <span class="hljs-number">20</span>;
+    c2.speed = <span class="hljs-number">30</span>;  <span class="hljs-comment">// overwrite (last assignment wins)</span>
+    moveBack(&amp;c2);       <span class="hljs-comment">// modifies c2</span>
+    moveForward(&amp;c2);    <span class="hljs-comment">// modifies c2</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+</li>
+</ul>
+<h5 id="3-tight-coupling">3. Tight Coupling:</h5>
+<ul>
+<li>
+<p>Functions can be tightly coupled with data structures, making it hard to change one without affecting the other.</p>
+</li>
+<li>
+<p>Problem: Changing a data structure requires updating all related functions.</p>
+</li>
+<li>
+<p>If you add a new property (e.g., z), you must modify every function that uses Point.</p>
+</li>
+<li>
+<p>Examples:</p>
+<pre class="hljs"><code><div>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span> {</span>
+        <span class="hljs-keyword">int</span> x, y;
+    };
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printPoint</span><span class="hljs-params">(Point *p)</span> </span>{
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Point(%d, %d)\n"</span>, p-&gt;x, p-&gt;y);
+    }
+</div></code></pre>
+</li>
+</ul>
+<h4 id="oop-solutions-encpsulation">OOP Solutions Encpsulation</h4>
+<ul>
+<li>OOP binds data and methods together into a single unit (an Object).</li>
+<li>Data Hiding: You can make variables private. They cannot be accessed or changed directly from outside the object.</li>
+<li>They can only be changed via public methods (like getters and setters), ensuring the data is always valid.</li>
+<li>In OOP, data is inside objects, and access is controlled.</li>
+<li>The data is safe inside the object — only methods can modify it.</li>
+</ul>
+<h5 id="1-class-vs-object-the-container"><strong>1. Class vs. Object (The Container)</strong></h5>
+<ul>
+<li>Encapsulation starts with how we organize code. We move away from loose variables and functions (Procedural) and bundle them together.
+<ul>
+<li><strong>The Class (The Blueprint):</strong> This is the definition of the capsule. It defines what data belongs together with what functions. It creates a &quot;boundary&quot; around the logic.</li>
+<li><strong>The Object (The Instance):</strong> When the program runs, the Class becomes an Object. The Object holds the actual data (state). Encapsulation ensures that one Object cannot accidentally mess up the data inside another Object.</li>
+<li><strong>Member Functions (C++-style)</strong>
+<ul>
+<li>Solution: Functions become part of the object, and the object is passed implicitly (this).</li>
+<li>Advantages:
+<ul>
+<li>Encapsulation: Data and behavior are in one unit.</li>
+<li>Maintainability: If the structure changes, only the class needs updating.</li>
+<li>Data Security: Attributes can be private, accessed via getters/setters.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">car</span> {</span>
+<span class="hljs-keyword">int</span> speed = <span class="hljs-number">0</span>;             <span class="hljs-comment">// default member initializer</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">moveBack</span><span class="hljs-params">()</span> </span>{          <span class="hljs-comment">// member function modifies *this</span>
+    speed -= <span class="hljs-number">10</span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"moveBack: speed="</span> &lt;&lt; speed &lt;&lt; <span class="hljs-string">"\n"</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">moveForward</span><span class="hljs-params">()</span> </span>{
+    speed += <span class="hljs-number">10</span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"moveForward: speed="</span> &lt;&lt; speed &lt;&lt; <span class="hljs-string">"\n"</span>;
+}
+};
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    car c;         
+    c.speed = <span class="hljs-number">10</span>;
+    c.moveBack();  
+    c.moveForward();
+    car c2;        <span class="hljs-comment">// another object</span>
+    c2.speed = <span class="hljs-number">20</span>;
+    c2.speed = <span class="hljs-number">30</span>; <span class="hljs-comment">// overwrite value</span>
+    c.moveBack();
+    c2.moveBack();
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+}
+
+</div></code></pre>
+<h5 id="2-access-modifiers-the-security-guards"><strong>2. Access Modifiers (The Security Guards)</strong></h5>
+<ul>
+<li>Once we have a Class, we need to control visibility. We don't want the outside world (the main function or other classes) to touch sensitive internal data directly. We use Access Modifiers to enforce this.
+<ul>
+<li><strong>private (The Vault):</strong>
+<ul>
+<li>Variables or functions marked private cannot be accessed from outside the class.</li>
+<li>This is the core of Encapsulation. You hide the internal state here.</li>
+<li>Rule of Thumb: Almost all member variables (data) should be private.</li>
+</ul>
+</li>
+<li><strong>public (The Counter/Interface):</strong>
+<ul>
+<li>Variables or functions marked public can be accessed by anyone.</li>
+<li>These are the buttons and levers we provide to the user to interact with the object.</li>
+</ul>
+</li>
+<li><strong>protected:</strong> (Used in Inheritance) Similar to private, but allows Child classes to access the data.</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-setters-and-getters-the-controlled-gates"><strong>3. Setters and Getters (The Controlled Gates)</strong></h5>
+<ul>
+<li>If data is private, how do we read it or change it? We use Setters and Getters. These are public functions that act as &quot;gatekeepers.&quot;
+<ul>
+<li><strong>Getters (Accessors):</strong>
+<ul>
+<li>Allow &quot;Read-Only&quot; access.</li>
+<li>You can look at the value, but you can't touch it.</li>
+<li>Benefit: You can format the data before sending it out (e.g., returning &quot;$100&quot; instead of just integer 100).</li>
+</ul>
+</li>
+<li><strong>Setters (Mutators) with Validation:</strong>
+<ul>
+<li>Allow &quot;Write&quot; access, but only if the rules are met.</li>
+<li>This prevents the object from entering an invalid state (like a negative age or a speed of 5,000 mph).</li>
+<li>Benefit: This is the most practical reason for Encapsulation—Protection.</li>
+</ul>
+</li>
+<li><strong>Summary of Access Combinations</strong>
+<table>
+<thead>
+<tr>
+<th>Combination</th>
+<th>Name</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Getter + Setter</td>
+<td>Read-Write</td>
+<td>Standard data (e.g., user.name).</td>
+</tr>
+<tr>
+<td>Getter Only</td>
+<td>Read-Only</td>
+<td>Immutable data (e.g., math.PI, user.id).</td>
+</tr>
+<tr>
+<td>Setter Only</td>
+<td>Write-Only</td>
+<td>Sensitive data (e.g., user.password).</td>
+</tr>
+<tr>
+<td>Neither</td>
+<td>Hidden State</td>
+<td>Internal logic variables strictly for the class's own calculations.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li><strong>Summary</strong>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Role in Encapsulation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Class/Object</td>
+<td>The wrapper that bundles data and logic together.</td>
+</tr>
+<tr>
+<td>Access Modifiers</td>
+<td>The locks that hide sensitive data (private) and expose safe methods (public).</td>
+</tr>
+<tr>
+<td>Setters/Getters</td>
+<td>The security checkpoint that validates input before allowing changes to the data.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<pre><code class="language-Mermaid"><div class="mermaid">classDiagram
+    class Car {
+        - speed : int
+        + moveBack() : void
+        + moveForward() : void
+        + getSpeed() : int
+        + setSpeed(int) : void
+    }
+    Car <|-- Object1
+    Car <|-- Object2
+
+</div></code></pre>
+<ul>
+<li><strong>To make Above code safe and encapsulated, we need to:</strong>
+<ul>
+<li>Make speed private so it cannot be accessed directly.</li>
+<li>Add a Setter to check for invalid values (like negative numbers or impossible speeds).</li>
+<li>Add a Getter to read the value.</li>
+<li>Update the move functions to use the validation logic.</li>
+</ul>
+</li>
+<li><strong>Key Changes Explained:</strong>
+<ul>
+<li><strong>private: int speed:</strong>
+<ul>
+<li>In a C++ struct, members are public by default. Adding private: ensures that main() cannot write myCar.speed = -50.</li>
+</ul>
+</li>
+<li><strong>Validation in setSpeed:</strong>
+<ul>
+<li>The setter acts as a gatekeeper. It enforces the rule that a car cannot go below 0 mph or above 200 mph.</li>
+</ul>
+</li>
+<li><strong>Reuse in moveForward/Back:</strong>
+<ul>
+<li>Notice I changed moveForward to call setSpeed(speed + 10). This is a best practice. It ensures that even the internal functions respect the safety limits (preventing the speed from going to -10 if you call moveBack while stopped).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/*
+private: int speed:
+    In a C++ struct, members are public by default. Adding private: ensures that main() cannot write myCar.speed = -50.
+Validation in setSpeed:
+    The setter acts as a gatekeeper. It enforces the rule that a car cannot go below 0 mph or above 200 mph.
+*/</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">car</span> {</span>
+    <span class="hljs-keyword">private</span>: 
+    <span class="hljs-comment">// DATA HIDING: We make speed private so outside code can't break it.</span>
+    <span class="hljs-keyword">int</span> speed = <span class="hljs-number">0</span>;             <span class="hljs-comment">// default member initializer</span>
+    <span class="hljs-keyword">public</span> :
+    <span class="hljs-comment">// GETTER: Allows read-only access</span>
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getSpeed</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> speed;
+    }
+    <span class="hljs-comment">// SETTER: Allows modification only if the value is valid</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setSpeed</span><span class="hljs-params">(<span class="hljs-keyword">int</span> newSpeed)</span> </span>{
+        <span class="hljs-keyword">if</span> (newSpeed &lt; <span class="hljs-number">0</span>) {
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Error: Speed cannot be negative!\n"</span>;
+        } 
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (newSpeed &gt; <span class="hljs-number">200</span>) {
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Error: Speed cannot exceed 200!\n"</span>;
+        } 
+        <span class="hljs-keyword">else</span> {
+            speed = newSpeed; <span class="hljs-comment">// Only assign if checks pass</span>
+        }
+    }
+    <span class="hljs-comment">// Refactored to use setSpeed  (so validation applies here too)</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">moveBack</span><span class="hljs-params">()</span> </span>{          <span class="hljs-comment">// member function modifies *this</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Attempting to slow down... "</span>&lt;&lt;<span class="hljs-built_in">endl</span>;
+        <span class="hljs-comment">//speed -= 10;//Change Speed Without Validation </span>
+        <span class="hljs-built_in">setSpeed</span>(speed - <span class="hljs-number">10</span>);  <span class="hljs-comment">//use setSpeed (so validation applies here too)</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"moveBack: speed="</span> &lt;&lt; speed &lt;&lt; <span class="hljs-string">"\n"</span>;
+    }
+    <span class="hljs-comment">// Refactored to use setSpeed  (so validation applies here too)</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">moveForward</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Attempting to speed up... "</span>;
+        <span class="hljs-comment">//speed += 10;//Change Speed Without Validation </span>
+        <span class="hljs-built_in">setSpeed</span>(speed + <span class="hljs-number">10</span>);<span class="hljs-comment">//use setSpeed (so validation applies here too)</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"moveForward: speed="</span> &lt;&lt; speed &lt;&lt; <span class="hljs-string">"\n"</span>;
+    }
+}; <span class="hljs-comment">// semicolon after struct</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    car myCar;<span class="hljs-comment">// create object</span>
+
+    <span class="hljs-comment">// 1. Valid moves</span>
+    myCar.moveForward();    <span class="hljs-comment">// Speed becomes 10</span>
+    <span class="hljs-comment">// 2. Direct access is now blocked (Encapsulation)</span>
+    <span class="hljs-comment">// myCar.speed = -100;  // COMPILER ERROR!</span>
+    
+    <span class="hljs-comment">// 3. Using Setter with invalid data</span>
+    myCar.<span class="hljs-built_in">setSpeed</span>(<span class="hljs-number">500</span>);    <span class="hljs-comment">// Prints Error: Speed cannot exceed 200!</span>
+    
+    <span class="hljs-comment">// 4. Boundary check using internal logic</span>
+    myCar.<span class="hljs-built_in">setSpeed</span>(<span class="hljs-number">0</span>);      <span class="hljs-comment">// Stop the car</span>
+    myCar.moveBack();       <span class="hljs-comment">// Prints Error: Speed cannot be negative!</span>
+
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Final Speed: "</span> &lt;&lt; myCar.getSpeed() &lt;&lt; <span class="hljs-string">"\n"</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h5 id="why-using-setter--getter">Why Using Setter &amp; Getter</h5>
+<h6 id="disadvantages-of-direct-attribute-access">Disadvantages of Direct Attribute Access</h6>
+<ul>
+<li>When you allow direct access to object attributes (e.g., object.balance = -100), you face several issues:
+<h5 id="no-validation">No Validation</h5>
+<ul>
+<li>Anyone can assign invalid values (e.g., negative balance, invalid age).</li>
+</ul>
+<h5 id="breaks-encapsulation">Breaks Encapsulation</h5>
+<ul>
+<li>Internal representation is exposed.</li>
+<li>If you change the attribute name or logic later, all external code breaks.</li>
+</ul>
+<h5 id="hard-to-debug-and-maintain">Hard to Debug and Maintain</h5>
+<ul>
+<li>No control over when and how data changes.</li>
+<li>Difficult to track changes in large systems.</li>
+</ul>
+<h5 id="security-risks">Security Risks</h5>
+<ul>
+<li>Sensitive data can be modified without restrictions.</li>
+</ul>
+<h4 id="example">Example:</h4>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BankAccount</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">double</span> balance; <span class="hljs-comment">// Public attribute (NOT recommended)</span>
+};
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    BankAccount account;
+    account.balance = <span class="hljs-number">-500</span>; <span class="hljs-comment">// No validation --&gt;No check, breaks business rulesShow more lines</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Balance: "</span> &lt;&lt; account.balance &lt;&lt; <span class="hljs-built_in">endl</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+</li>
+</ul>
+<h6 id="using-getters-and-setters">Using Getters and Setters</h6>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart 
+    subgraph Direct Access
+    A[User] -->|balance = -100| B[Object Attribute]
+    end
+
+    subgraph Getter/Setter
+    C[User] -->|setBalance -100| D[Validation Logic]
+    D -->|Reject invalid| E[Private Attribute]
+    end
+
+</div></code></pre>
+<ul>
+<li>Getters and setters provide controlled access to attributes:
+<h4 id="validation-and-business-rules">Validation and Business Rules</h4>
+<ul>
+<li>You can enforce constraints before updating data.</li>
+</ul>
+<h4 id="encapsulation">Encapsulation</h4>
+<ul>
+<li>Internal details remain hidden.</li>
+<li>You can change implementation without affecting external code.</li>
+</ul>
+<h4 id="flexibility">Flexibility</h4>
+<ul>
+<li>Add logging, security checks, or trigger events when data changes.</li>
+</ul>
+<h4 id="maintainability">Maintainability</h4>
+<ul>
+<li>Easier to update logic later without breaking existing code.</li>
+</ul>
+<h4 id="examples">Examples</h4>
+<pre class="hljs"><code><div>    <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+    <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BankAccount</span> {</span>
+    <span class="hljs-keyword">private</span>:
+        <span class="hljs-keyword">double</span> balance; <span class="hljs-comment">// Private attribute</span>
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setBalance</span><span class="hljs-params">(<span class="hljs-keyword">double</span> amount)</span> </span>{
+            <span class="hljs-keyword">if</span> (amount &gt;= <span class="hljs-number">0</span>) {
+                balance = amount;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Invalid balance!"</span> &lt;&lt; <span class="hljs-built_in">endl</span>;
+            }
+        }
+        <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">getBalance</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> balance;
+        }
+    };
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+        BankAccount account;
+        account.setBalance(<span class="hljs-number">1000</span>);
+        account.setBalance(<span class="hljs-number">-500</span>); <span class="hljs-comment">// Invalid balance!</span>
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Balance: "</span> &lt;&lt; account.getBalance() &lt;&lt; <span class="hljs-built_in">endl</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    }
+
+</div></code></pre>
+</li>
+</ul>
+<h5 id="write-only-attribute-by-providing-a-setter-but-no-getter">Write-Only attribute by providing a Setter but no Getter.</h5>
+<ul>
+<li><strong>Why would you do this? (Use Cases)</strong>
+<ul>
+<li><strong>Security (Passwords/PINs):</strong> You want to set a user's password, but you never want other parts of the program to read the password in plain text.</li>
+<li><strong>Hardware/Drivers:</strong> You might send a command to a printer or a graphics card (setting a state), but the hardware doesn't allow you to ask &quot;what is your current state?&quot;</li>
+<li><strong>One-Way Logic:</strong> Setting a &quot;Seed&quot; for a random number generator. You set it once to start the calculation, but you don't need to read the seed back.</li>
+</ul>
+</li>
+<li><strong>Code Example: The Password System</strong>
+<ul>
+<li>In this example, we can set the password, but we cannot get (read) it. We can only ask the object to verify if a login attempt is correct.<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserAccount</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> password; <span class="hljs-comment">// Private: Totally hidden</span>
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// SETTER ONLY (Write-Only access)</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setPassword</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> newPass)</span> </span>{
+        <span class="hljs-keyword">if</span> (newPass.length() &lt; <span class="hljs-number">6</span>) {
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Error: Password too short.\n"</span>;
+        } <span class="hljs-keyword">else</span> {
+            password = newPass;
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Password updated successfully.\n"</span>;
+        }
+    }
+
+    <span class="hljs-comment">// NO GETTER HERE! </span>
+    <span class="hljs-comment">// If you try to write 'user.getPassword()', it will fail.</span>
+
+    <span class="hljs-comment">// We can still USE the private data internally</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">login</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> inputPass)</span> </span>{
+        <span class="hljs-keyword">return</span> (inputPass == password);
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    UserAccount user;
+
+    <span class="hljs-comment">// 1. We can SET the data</span>
+    user.setPassword(<span class="hljs-string">"SuperSecret123"</span>);
+
+    <span class="hljs-comment">// 2. We CANNOT GET the data</span>
+    <span class="hljs-comment">// std::cout &lt;&lt; user.password;      // Error: Private</span>
+    <span class="hljs-comment">// std::cout &lt;&lt; user.getPassword(); // Error: Function doesn't exist</span>
+
+    <span class="hljs-comment">// 3. We can only test against it</span>
+    <span class="hljs-keyword">if</span> (user.login(<span class="hljs-string">"WrongGuess"</span>)) {
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Login Success!\n"</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Login Failed!\n"</span>; <span class="hljs-comment">// This prints</span>
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li><strong>Summary of Access Combinations</strong>
+<table>
+<thead>
+<tr>
+<th>Combination</th>
+<th>Name</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Getter + Setter</td>
+<td>Read-Write</td>
+<td>Standard data (e.g., user.name).</td>
+</tr>
+<tr>
+<td>Getter Only</td>
+<td>Read-Only</td>
+<td>Immutable data (e.g., math.PI, user.id).</td>
+</tr>
+<tr>
+<td>Setter Only</td>
+<td>Write-Only</td>
+<td>Sensitive data (e.g., user.password).</td>
+</tr>
+<tr>
+<td>Neither</td>
+<td>Hidden State</td>
+<td>Internal logic variables strictly for the class's own calculations.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h5 id="class-vs-struct-in-c-vs-struct-in-c">Class Vs struct in C++ Vs Struct in c</h5>
+<h6 id="struct-in-c-c90c99c11">struct in C (C90/C99/C11)</h6>
+<ul>
+<li>Characteristics
+<ul>
+<li>Data only: stores fields; no member functions.</li>
+<li>No access control: everything is effectively public.</li>
+<li>No constructors/destructors.</li>
+<li>No inheritance or polymorphism.</li>
+<li>Can simulate behavior using free functions or function pointers.</li>
+</ul>
+</li>
+</ul>
+<h6 id="struct-in-c">struct in C++</h6>
+<ul>
+<li>Characteristics
+<ul>
+<li>Full OOP features: methods, constructors, destructors, operator overloading, templates, inheritance, access control.</li>
+<li>Default member access: public.</li>
+<li>Default inheritance access: public.</li>
+<li>Ideal for plain data types (POD/standard-layout) where you want public fields by default.</li>
+</ul>
+</li>
+</ul>
+<h6 id="class-in-c">class in C++</h6>
+<ul>
+<li>Characteristics
+<ul>
+<li>Same capabilities as struct in C++.</li>
+<li>Default member access: private.</li>
+<li>Default inheritance access: private.</li>
+<li>Preferred when you want encapsulation (hide internals, expose an API).</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Feature</th>
+<th style="text-align:center">C struct</th>
+<th style="text-align:center">C++ struct</th>
+<th style="text-align:center">C++ class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Default member access</td>
+<td style="text-align:center">(no control)</td>
+<td style="text-align:center">public</td>
+<td style="text-align:center">private</td>
+</tr>
+<tr>
+<td style="text-align:center">Methods (member functions)</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Constructors/Destructors</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Operator overloading</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Inheritance</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Virtual functions/polymorphism</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Encapsulation (private/protected)</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Templates</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td style="text-align:center">Designated initializers</td>
+<td style="text-align:center">✅ (C99+)</td>
+<td style="text-align:center">✅ (C++20 for aggregates)</td>
+<td style="text-align:center">✅ (C++20 for aggregates)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2%EF%B8%8F%E2%83%A3-problem-no-clear-mapping-to-real-world-concepts">2️⃣ Problem: No Clear Mapping to Real-World Concepts</h3>
+<h3 id="problem--hard-to-model-real-world-things-in-procedural-code">Problem : Hard to Model Real-World Things in Procedural Code</h3>
+<h4 id="procedural-code-solves-tasks-with-functions-only">Procedural code solves tasks with functions only.</h4>
+<ul>
+<li>
+<p>Procedural programming uses:</p>
+<ul>
+<li>structs for data</li>
+<li>separate functions for behavior</li>
+</ul>
+</li>
+<li>
+<p>It’s not always intuitive.</p>
+</li>
+<li>
+<p>That leads to messy designs.</p>
+</li>
+<li>
+<p>Example: modeling a Student procedurally:</p>
+<ul>
+<li><strong>No connection between Student data and Student functions.</strong><pre class="hljs"><code><div>    +-----------+       +-------------------+
+    | struct    |       | printStudent()    |
+    | Student   |       | updateAge()       |
+    +-----------+       +-------------------+
+</div></code></pre>
+<pre class="hljs"><code><div>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span> {</span>
+        <span class="hljs-keyword">char</span> name[<span class="hljs-number">30</span>];
+        <span class="hljs-keyword">int</span> age;
+    };
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printStudent</span><span class="hljs-params">(struct Student s)</span> </span>{
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%s %d"</span>, s.name, s.age);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">updateAge</span><span class="hljs-params">(struct Student* s, <span class="hljs-keyword">int</span> age)</span> </span>{
+        s-&gt;age = age;
+    }
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>You must write functions separately.</p>
+</li>
+</ul>
+<h4 id="%E2%9C%94-how-oop-solved-it-objects-represent-real-things">✔ How OOP Solved It: Objects Represent Real Things</h4>
+<ul>
+<li><strong>OOP (C++): Bundles data + behavior → Objects</strong></li>
+</ul>
+<pre class="hljs"><code><div>+----------------------+
+|        Student       |
++----------------------+
+| private name, age    |
+| -------------------- |
+| print(), updateAge() |
++----------------------+
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-built_in">string</span> name;
+    <span class="hljs-keyword">int</span> age;
+
+<span class="hljs-keyword">public</span>:
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span>{
+        <span class="hljs-built_in">cout</span> &lt;&lt; name &lt;&lt; <span class="hljs-string">" "</span> &lt;&lt; age;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">updateAge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>{
+        age = a;
+    }
+};
+</div></code></pre>
+<ul>
+<li>Objects represent real-world entities naturally.</li>
+<li>The class now represents a real-world entity, making the design more natural.</li>
+</ul>
+<h3 id="3%EF%B8%8F%E2%83%A3-problem-code-becomes-hard-to-maintain-as-the-program-grows">3️⃣ Problem: Code Becomes Hard to Maintain as the Program Grows</h3>
+<h3 id="problem-spaghetti-code-%E2%86%92-oop-modularity">Problem: Spaghetti Code → OOP Modularity</h3>
+<h5 id="procedural-programs-tend-to-turn-into-spaghetti-code">Procedural programs tend to turn into spaghetti code:</h5>
+<ul>
+<li>Many functions</li>
+<li>Global variables</li>
+<li>Difficult to track dependencies</li>
+<li>Procedural programs share global data and long scripts.</li>
+</ul>
+<pre class="hljs"><code><div>Procedural:
++-------------------------------------------+
+|   main()                                  |
+|   1000 lines mixed logic…                 |
++-------------------------------------------+
+</div></code></pre>
+<h5 id="%E2%9C%94-how-oop-solved-it-modularity">✔ How OOP Solved It: Modularity</h5>
+<ul>
+<li>OOP breaks code into well-defined modules<pre class="hljs"><code><div>    +-----------+   +-----------+   +-----------+
+    | Car       |   | Engine    |   | Driver    |
+    +-----------+   +-----------+   +-----------+
+    Each class has one responsibility → maintainable.
+</div></code></pre>
+</li>
+</ul>
+<ul>
+<li>OOP organizes code into classes (logical units).</li>
+<li>Each class handles one responsibility:
+<ul>
+<li>Car</li>
+<li>Engine</li>
+<li>Driver</li>
+</ul>
+</li>
+<li>Changes are isolated → maintainability improves.</li>
+</ul>
+<h2 id="procedural-problem-difficult-team-collaboration">Procedural Problem: Difficult Team Collaboration</h2>
+<h3 id="procedural-code-has">Procedural code has:</h3>
+<ul>
+<li>Shared global state</li>
+<li>Many functions touching the same data</li>
+<li>functions modifying same variables</li>
+<li>tight coupling</li>
+<li>Teams collide and cause conflicts.</li>
+</ul>
+<h3 id="oop-solution-clear-boundaries">OOP Solution: Clear Boundaries</h3>
+<ul>
+<li>Classes define ownership:
+<ul>
+<li>One team manages User class</li>
+<li>Another manages Order class</li>
+</ul>
+</li>
+<li>Less conflict, better scaling.</li>
+</ul>
+<pre class="hljs"><code><div>Team A → works on User class  
+Team B → works on Order class  
+Team C → works on Payment class
+</div></code></pre>
+<ul>
+<li>Clear boundaries → fewer conflicts.</li>
+</ul>
+<h4 id="the-real-world-analogy-the-office-whiteboard"><strong>The Real-World Analogy: The Office Whiteboard</strong></h4>
+<ul>
+<li>
+<p><strong>The Procedural Way (Shared Global State):</strong>
+Imagine an office with one giant whiteboard in the hallway.</p>
+<ul>
+<li>Team A writes user phone numbers on the bottom left corner.</li>
+<li>Team B needs space for order tracking, so they erase the bottom left corner to write order IDs.</li>
+<li>Result: Team A comes back, finds the phone numbers gone, and the system crashes.</li>
+</ul>
+</li>
+<li>
+<p><strong>The OOP Way (Clear Boundaries):</strong>
+Imagine Team A and Team B have their own locked offices.</p>
+<ul>
+<li>Team A keeps user data in their filing cabinet (Private Class Data).</li>
+<li>Team B keeps order data in their filing cabinet.</li>
+<li>Interaction: If Team B needs a user's phone number, they walk to Team A’s door and ask (Method Call). They cannot walk in and burn Team A's files.</li>
+</ul>
+</li>
+</ul>
+<h5 id="example-code">Example Code</h5>
+<h6 id="the-procedural-way-%22the-wild-west%22">The Procedural Way: &quot;The Wild West&quot;</h6>
+<ul>
+<li>Problem: In procedural C++, data is often held in global structs. Both Team A and Team B access the raw data directly. If Team A changes the data structure, Team B's code breaks immediately.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+<span class="hljs-comment">// --- SHARED GLOBAL STATE (The "Wild West") ---</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">GlobalUserData</span> {</span>
+    <span class="hljs-keyword">int</span> id;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> full_name; <span class="hljs-comment">// Team B relies on this specific field name</span>
+    <span class="hljs-keyword">double</span> balance;
+};
+<span class="hljs-comment">// Global instance accessible by everyone</span>
+GlobalUserData db_user = {<span class="hljs-number">1</span>, <span class="hljs-string">"John Doe"</span>, <span class="hljs-number">100.00</span>};
+<span class="hljs-comment">// --- TEAM A (User Management) ---</span>
+<span class="hljs-comment">// Team A decides to change how names are stored.</span>
+<span class="hljs-comment">// They delete "full_name" and split it.</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update_user_structure</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// In a real scenario, Team A changes the struct definition above.</span>
+    <span class="hljs-comment">// For this example, imagine "full_name" is now considered "legacy/deprecated"</span>
+    <span class="hljs-comment">// and they start using new logic that Team B doesn't know about.</span>
+    
+    <span class="hljs-comment">// Direct manipulation of global state</span>
+    db_user.full_name = <span class="hljs-string">""</span>; <span class="hljs-comment">// Clearing it to simulate a schema change or data wipe</span>
+    <span class="hljs-comment">// db_user.first_name = "John"; // (New fields Team B doesn't know about)</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"[Team A] User data structure updated internally.\n"</span>;
+}
+<span class="hljs-comment">// --- TEAM B (Order Processing) ---</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process_order</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Team B writes code assuming "full_name" is still the valid way to identify a user.</span>
+    <span class="hljs-comment">// They reach directly into the struct.</span>
+    <span class="hljs-keyword">if</span> (db_user.full_name.empty()) {
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"[Team B] ERROR: User has no name! Cannot print label.\n"</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"[Team B] Shipping to: "</span> &lt;&lt; db_user.full_name &lt;&lt; <span class="hljs-string">"\n"</span>;
+    }
+    <span class="hljs-comment">// Team B modifies balance directly (dangerous!)</span>
+    db_user.balance -= <span class="hljs-number">50.00</span>; 
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    update_user_structure(); <span class="hljs-comment">// Team A changes the data</span>
+    process_order();         <span class="hljs-comment">// Team B crashes or fails</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<p>The Conflict: Team B relied on full_name. Team A removed/changed it. The build breaks, or runtime errors occur.</p>
+<h5 id="the-oop-way-%22gated-communities%22">The OOP Way: &quot;Gated Communities&quot;</h5>
+<ul>
+<li>Solution: Team A wraps their data in a class. They provide a public function (API) for Team B to use. Team B never touches the variables directly.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+<span class="hljs-comment">// --- TEAM A (Owns the User Class) ---</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// DATA HIDING: Team B cannot see or touch these variables.</span>
+    <span class="hljs-comment">// Team A is free to rename/refactor these however they want.</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> first_name;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> last_name;
+    <span class="hljs-keyword">double</span> balance;
+<span class="hljs-keyword">public</span>:
+    User(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> first, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> last, <span class="hljs-keyword">double</span> bal) 
+        : first_name(first), last_name(last), balance(bal) {}
+    <span class="hljs-comment">// THE INTERFACE (The Contract)</span>
+    <span class="hljs-comment">// Team A guarantees this function will always return a string,</span>
+    <span class="hljs-comment">// regardless of how they store the name internally.</span>
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> <span class="hljs-title">get_printable_name</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> last_name + <span class="hljs-string">", "</span> + first_name;
+    }
+
+    <span class="hljs-comment">// Encapsulated logic: Team B cannot accidentally set balance to -100</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">try_deduct_funds</span><span class="hljs-params">(<span class="hljs-keyword">double</span> amount)</span> </span>{
+        <span class="hljs-keyword">if</span> (balance &gt;= amount) {
+            balance -= amount;
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+    }
+};
+<span class="hljs-comment">// --- TEAM B (Owns the Order Class) ---</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Order</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">int</span> order_id;
+    <span class="hljs-keyword">double</span> amount;
+<span class="hljs-keyword">public</span>:
+    Order(<span class="hljs-keyword">int</span> id, <span class="hljs-keyword">double</span> cost) : order_id(id), amount(cost) {}
+    <span class="hljs-comment">// Team B interacts with User via references/methods only</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">(User&amp; user)</span> </span>{
+        <span class="hljs-comment">// Team B asks: "Can we deduct funds?"</span>
+        <span class="hljs-keyword">if</span> (user.try_deduct_funds(amount)) {
+            <span class="hljs-comment">// Team B asks: "Give me the name for the label."</span>
+            <span class="hljs-comment">// Team B doesn't care if User stores it as one string or two.</span>
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"[Team B] Order #"</span> &lt;&lt; order_id 
+                      &lt;&lt; <span class="hljs-string">" approved for "</span> &lt;&lt; user.get_printable_name() &lt;&lt; <span class="hljs-string">"\n"</span>;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"[Team B] Payment failed for Order #"</span> &lt;&lt; order_id &lt;&lt; <span class="hljs-string">"\n"</span>;
+        }
+    }
+};
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Setup</span>
+    <span class="hljs-function">User <span class="hljs-title">myUser</span><span class="hljs-params">(<span class="hljs-string">"John"</span>, <span class="hljs-string">"Doe"</span>, <span class="hljs-number">100.00</span>)</span></span>; <span class="hljs-comment">// Team A's Logic</span>
+    <span class="hljs-function">Order <span class="hljs-title">myOrder</span><span class="hljs-params">(<span class="hljs-number">505</span>, <span class="hljs-number">40.00</span>)</span></span>;          <span class="hljs-comment">// Team B's Logic</span>
+    <span class="hljs-comment">// Interaction</span>
+    myOrder.<span class="hljs-built_in">process</span>(myUser);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h6 id="why-this-is-better-for-teams">Why this is better for Teams:</h6>
+<p><strong>1. Refactoring Safety (Team A):</strong></p>
+<ul>
+<li>Team A can decide tomorrow to store the name in a std::vector<string> or a char[].</li>
+<li>As long as they update the implementation of get_printable_name(), Team B's code in main or Order does not need to change.</li>
+</ul>
+<p><strong>2. Logic Protection (Team A):</strong></p>
+<ul>
+<li>In the procedural example, Team B could accidentally write db_user.balance = -500;.</li>
+<li>In the OOP example, balance is private. Team B must go through try_deduct_funds(), which prevents invalid states.</li>
+</ul>
+<p><strong>3. Conflict Reduction:</strong></p>
+<ul>
+<li>Team A works inside User.cpp.</li>
+<li>Team B works inside Order.cpp.</li>
+<li>They rarely edit the same lines of code.</li>
+</ul>
+
+</body>
+</html>

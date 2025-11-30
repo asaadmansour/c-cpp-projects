@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>0-Notes2026-SetupTools.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="essential-extensions">Essential Extensions:</h1>
+<p>C/C++ by Microsoft: This is the foundational extension, providing crucial features like IntelliSense (code completion, parameter info), debugging, code navigation, and basic formatting for C and C++.
+Clangd: An alternative to the Microsoft C/C++ extension's language server, Clangd offers fast and accurate code completion, diagnostics, navigation, and refactoring capabilities, often preferred for larger projects due to its performance.
+CMake Tools: If using CMake for your build system, this extension provides seamless integration, allowing you to configure, build, and debug CMake-based projects directly within VS Code.
+Code Runner: A lightweight extension for quickly executing snippets of C++ code or entire files without needing to set up a full build system, ideal for testing algorithms or small functions.
+codeLLDB: For debugging, codeLLDB offers a powerful and flexible debugger experience, especially useful for projects that require advanced debugging features.</p>
+<h1 id="helpful-additions">Helpful Additions:</h1>
+<p>GitLens: Integrates Git functionality deeply into VS Code, providing insights into code authorship, commit history, and more, which is invaluable for version control.
+GitHub Pull Requests and Issues: Streamlines the workflow for managing GitHub pull requests and issues directly within the VS Code environment.
+Live Share: Facilitates collaborative coding by allowing you to share your workspace with others in real-time for pair programming or remote assistance.
+Todo Tree: Collects and displays all &quot;TODO&quot; comments and similar tags in your codebase, providing a centralized overview of pending tasks.</p>
+<h1 id="all-extensions">All Extensions :-</h1>
+<p>https://terminalroot.com/top-10-vscode-extensions-for-c-cpp/</p>
+<p>Terminal › External: Linux Exec
+Customizes which terminal to run on Linux.</p>
+<p>x-terminal-emulator
+konsole
+gnome-terminal</p>
+<h3 id="installing-tools">Installing Tools</h3>
+<h4 id="download-and-install-vs-code">download and install VS-Code</h4>
+<pre class="hljs"><code><div> sudo apt install  ./Downloads/code.........
+</div></code></pre>
+<h4 id="install-compiler-----gcc-compiler">Install Compiler ---&gt; Gcc Compiler</h4>
+<pre class="hljs"><code><div> sudo apt install build-essential 
+</div></code></pre>
+<ul>
+<li><strong>what it is :</strong> build-essential is A meta-package that installs the basic tools required to compile C and C++ programs on Linux.</li>
+<li><strong>It includes:</strong>
+<ul>
+<li>gcc — GNU Compiler Collection (for C)</li>
+<li>g++ — C++ compiler</li>
+<li>make — Tool to automate the build process using Makefiles.</li>
+<li>Other necessary libraries and header files</li>
+</ul>
+</li>
+</ul>
+<h4 id="install-debugger">Install debugger</h4>
+<pre class="hljs"><code><div> sudo apt install gdb
+</div></code></pre>
+<ul>
+<li>
+<p><strong>What it is:</strong> GDB = GNU Debugger - A powerful debugging tool for C and C++ programs.</p>
+</li>
+<li>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>
+<p>Lets you pause program execution (breakpoints)</p>
+</li>
+<li>
+<p>Step through your code line by line</p>
+</li>
+<li>
+<p>Inspect variable values while the program is running</p>
+</li>
+<li>
+<p>Find bugs like segmentation faults or logic errors</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Why you need it:</strong></p>
+<ul>
+<li>It’s essential for diagnosing and fixing bugs in your code. It helps you understand exactly what's happening when your program runs.</li>
+</ul>
+</li>
+</ul>
+<h4 id="install-cmake">Install CMake</h4>
+<pre class="hljs"><code><div> sudo apt install cmake
+</div></code></pre>
+<ul>
+<li><strong>What it is:</strong>
+<ul>
+<li>A family of tools designed to build, test, and package software. It is an open-source, cross-platform build system generator.</li>
+<li>CMake is a cross-platform build system generator.</li>
+</ul>
+</li>
+<li><strong>Purpose:</strong>
+<ul>
+<li>
+<p>For small &quot;hello world&quot; projects, you can compile with a single compiler command. For larger, real-world projects with many files, libraries, and configurations (e.g., building on Windows vs. Linux), a build system is essential. CMake generates native build files (like Makefiles or Visual Studio projects) that the compiler uses to compile the entire project correctly, making the build process consistent across different operating systems and environments.</p>
+</li>
+<li>
+<p>Creates platform-specific build files (like Makefiles or Visual Studio projects)</p>
+</li>
+<li>
+<p>Simplifies building large projects</p>
+</li>
+<li>
+<p>Allows modular configuration of dependencies</p>
+</li>
+</ul>
+</li>
+<li><strong>Why you need it:</strong>
+<ul>
+<li>It’s widely used in open-source and large-scale C/C++ projects. Instead of writing Makefiles manually, you write a CMakeLists.txt file and let CMake handle the rest.</li>
+</ul>
+</li>
+</ul>
+<h4 id="install-git">Install git</h4>
+<pre class="hljs"><code><div> sudo apt install git
+</div></code></pre>
+<ul>
+<li>
+<p><strong>What it is:</strong> The most widely used Version Control System (VCS).</p>
+</li>
+<li>
+<p><strong>Purpose:</strong> It is used to track changes in your source code over time. Key functionalities include:</p>
+<ul>
+<li>
+<p>Collaboration: Allows multiple developers to work on the same project without overriding each other's changes.</p>
+</li>
+<li>
+<p>History: You can view a complete history of changes and revert to a previous, stable version of the code if needed.</p>
+</li>
+<li>
+<p>Branching: Allows developers to work on new features or bug fixes in isolation before merging them into the main codebase.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>What it does:</strong></p>
+<ul>
+<li>Tracks changes in your code over time</li>
+<li>Lets you go back to previous versions</li>
+<li>Makes collaboration easy by syncing code between multiple developers</li>
+<li>Integrates with platforms like GitHub, GitLab, Bitbucket</li>
+</ul>
+</li>
+<li>
+<p><strong>Why you need it:</strong></p>
+<ul>
+<li>It’s essential for managing code in any real-world project, especially when working in teams.</li>
+</ul>
+</li>
+</ul>
+<h4 id="install-clang-format">Install clang-format</h4>
+<pre class="hljs"><code><div>sudo apt install clang-format
+</div></code></pre>
+<ul>
+<li><strong>What is clang-format?</strong>
+<ul>
+<li>clang-format is a tool that automatically formats your source code according to a defined coding style.</li>
+<li>It works with several programming languages, especially: C , C++ , Java , JavaScript , Objective-C</li>
+<li>It’s part of the LLVM/Clang project.</li>
+</ul>
+</li>
+<li><strong>What Does clang-format Do?</strong>
+<ul>
+<li>It takes messy or inconsistently formatted code and reformats it to follow a consistent, readable style.</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Before formatting:</th>
+<th style="text-align:center">After running clang-format:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int main(){std::cout&lt;&lt;&quot;Hello&quot;;return 0;}</td>
+<td style="text-align:center">int main() {<br>  std::cout &lt;&lt; &quot;Hello&quot;;<br>  return 0;<br>}</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Purpose</strong>
+<ul>
+<li>Main purpose: Automatically formats code</li>
+<li>Keeps your code clean and consistent</li>
+<li>Saves time by automating formatting</li>
+<li>Makes it easier to work in teams, since everyone follows the same style</li>
+<li>Helps with code reviews — focus on logic, not formatting</li>
+</ul>
+</li>
+</ul>
+<h4 id="install-clang-tidy">Install clang-tidy</h4>
+<pre class="hljs"><code><div>sudo apt install clang-tidy
+</div></code></pre>
+<ul>
+<li><strong>What is clang-tidy?</strong>
+<ul>
+<li>
+<p>clang-tidy is a C/C++ &quot;linter&quot; and static analysis tool that helps you:</p>
+<ul>
+<li>
+<p>Catch bugs and potential issues early</p>
+</li>
+<li>
+<p>Enforce coding standards</p>
+</li>
+<li>
+<p>Apply modern C++ best practices</p>
+</li>
+<li>
+<p>Automatically refactor or fix parts of your code</p>
+</li>
+</ul>
+</li>
+<li>
+<p>It’s part of the LLVM/Clang tooling suite, just like clang-format, but while clang-format focuses on formatting, clang-tidy focuses on code quality and correctness.</p>
+</li>
+</ul>
+</li>
+<li><strong>Purpose :</strong>
+Linting, static analysis, bug detection, code improvements.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Feature</th>
+<th style="text-align:center">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">🐛 Detect bugs</td>
+<td style="text-align:center">Use of uninitialized variables, memory issues</td>
+</tr>
+<tr>
+<td style="text-align:center">🔒 Catch undefined behavior</td>
+<td style="text-align:center">Dangerous pointer operations, bad casts</td>
+</tr>
+<tr>
+<td style="text-align:center">🎯 Enforce coding standards</td>
+<td style="text-align:center">Google style, LLVM style, custom rules</td>
+</tr>
+<tr>
+<td style="text-align:center">🚀 Suggest modern C++ replacements</td>
+<td style="text-align:center">Replace for loops with range-based loops, use auto smartly</td>
+</tr>
+<tr>
+<td style="text-align:center">🔧 Auto-fix code (when safe)</td>
+<td style="text-align:center">Add missing includes, simplify expressions, fix naming conventions</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>clang-tidy vs clang-format</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Tool</th>
+<th style="text-align:center">Purpose</th>
+<th style="text-align:center">Modifies Code?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">clang-format</td>
+<td style="text-align:center">Code style &amp; formatting</td>
+<td style="text-align:center">Yes</td>
+</tr>
+<tr>
+<td style="text-align:center">clang-tidy</td>
+<td style="text-align:center">Code quality &amp; analysis</td>
+<td style="text-align:center">Yes (optional auto-fix)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="install-all-in-one-command">Install all in one Command</h4>
+<pre class="hljs"><code><div>sudo apt install build-essential gdb cmake git clang-format clang-tidy
+</div></code></pre>
+<h3 id="tools">Tools :-</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Update package list</span>
+sudo apt update
+
+<span class="hljs-comment"># Install build-essential (includes g++, gcc, make, etc.)</span>
+sudo apt install build-essential
+
+<span class="hljs-comment"># Verify installation</span>
+g++ --version
+gcc --version
+make --version
+<span class="hljs-comment">#What's included in build-essential:</span>
+<span class="hljs-comment">#g++ - C++ compiler</span>
+<span class="hljs-comment">#gcc - C compiler</span>
+<span class="hljs-comment">#make - Build automation tool</span>
+<span class="hljs-comment">#libc-dev - C standard library</span>
+<span class="hljs-comment">#dpkg-dev - Package building tools</span>
+<span class="hljs-comment">#=================================================================</span>
+<span class="hljs-comment">#Install GDB - GNU Debugger</span>
+sudo apt install gdb
+<span class="hljs-comment"># Verify installation</span>
+gdb --version
+<span class="hljs-comment"># Basic usage</span>
+gdb ./your_program <span class="hljs-comment">#-tui </span>
+<span class="hljs-comment"># Common commands: run, break, next, step, print, backtrace</span>
+<span class="hljs-comment">#=================================================================</span>
+<span class="hljs-comment"># CMake - Build System Generator</span>
+sudo apt install cmake 
+<span class="hljs-comment"># Verify installation</span>
+cmake --version
+
+<span class="hljs-comment"># Optional: Install latest version via snap if needed</span>
+sudo snap install cmake --classic
+<span class="hljs-comment">#=================================================================</span>
+sudo apt install git 
+sudo apt install clang-format
+sudo apt install clang-tidy
+
+
+<span class="hljs-comment">#🚀 Advanced Setup Options</span>
+<span class="hljs-comment"># Code coverage</span>
+sudo apt install lcov gcovr
+
+<span class="hljs-comment"># Static analysis</span>
+sudo apt install clang-tidy cppcheck
+
+<span class="hljs-comment"># Profiling tools</span>
+sudo apt install valgrind
+
+<span class="hljs-comment"># Documentation</span>
+sudo apt install doxygen graphviz
+</div></code></pre>
+<h3 id="%F0%9F%93%81-sample-project-structure">📁 Sample Project Structure</h3>
+<pre class="hljs"><code><div>my_project/
+├── CMakeLists.txt
+├── src/
+│   ├── main.cpp
+│   └── utils.cpp
+├── include/
+│   └── utils.h
+└── build/
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// main.cpp</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello, Build Tools!"</span> &lt;&lt; <span class="hljs-built_in">endl</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+
+<span class="hljs-comment">//-------------------# Compile directly-------------------------</span>
+<span class="hljs-comment">/*
+g++ -o hello main.cpp
+
+# Compile with debugging info
+g++ -g -o hello_debug main.cpp
+
+# Compile with optimizations
+g++ -O2 -o hello_optimized main.cpp
+
+# Run the program
+./hello
+*/</span>
+
+<span class="hljs-comment">//-------------------#CMake Example------------------------------</span>
+<span class="hljs-comment">// CMakeLists.txt</span>
+<span class="hljs-comment">/*
+cmake_minimum_required(VERSION 3.10)
+project(MyProject)
+
+set(CMAKE_CXX_STANDARD 14)
+
+# Add executable
+add_executable(hello src/main.cpp src/utils.cpp)
+
+# Include directories
+target_include_directories(hello PRIVATE include)
+*/</span>
+
+
+<span class="hljs-comment">//---------------# Compile with debug symbols--------------</span>
+<span class="hljs-comment">/*
+g++ -g -o debug_example debug_example.cpp
+
+# Debug with GDB
+gdb ./debug_example
+
+# Inside GDB:
+# (gdb) break main
+# (gdb) run
+# (gdb) next
+# (gdb) print result
+# (gdb) backtrace
+*/</span>
+</div></code></pre>
+<h3 id="vs-code-extension">VS Code Extension</h3>
+<ul>
+<li>C/C++ Microsoft : microsoft.com</li>
+<li>Clang-Format v1.9.0 : Xaver Hellauer</li>
+<li>Clang-tidy</li>
+<li>CMake Tools v1.21.36 Microsoft :microsoft.com</li>
+</ul>
+<h3 id="vs-setting">VS Setting</h3>
+<ul>
+<li>clang setting
+<ul>
+<li>Check format on save</li>
+</ul>
+</li>
+<li>Rulers</li>
+<li>Whitespace Display
+<ul>
+<li>View -&gt; Appearance -&gt; Render Whitespace.</li>
+<li>workbench.colorCustomizations in settings.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-string">"workbench.colorCustomizations"</span>: {
+  <span class="hljs-attr">"editorWhitespace.foreground"</span>: <span class="hljs-string">"#ffa500"</span>
+}
+</div></code></pre>
+</li>
+</ul>
+<pre class="hljs"><code><div>- makeFile 
+  - touch CMakeLists.txt
+	```c  
+	  project(cpp_course)
+	  add_executable(ex_1 ex1.cc)
+	```
+- Build 
+``` bash  
+g++ file.cc -o main 
+</div></code></pre>
+<ul>
+<li>Build with Debugging</li>
+</ul>
+<pre class="hljs"><code><div>g++ -g file.cc -o main 
+
+gdb -tui main <span class="hljs-comment">#: Starts the GNU Debugger in text user interface mode for the executable main.</span>
+	- file main <span class="hljs-comment">#: Loads the main executable file into GDB.</span>
+	- layout asm <span class="hljs-comment">#: Switches the TUI display to show assembly code.</span>
+	- layout src <span class="hljs-comment">#: Switches the TUI display back to show the source code.</span>
+	- b 5 <span class="hljs-comment">#: Sets a breakpoint at line 5 of the source code.</span>
+	- r <span class="hljs-comment">#: Runs the program under the debugger, stopping at breakpoints.</span>
+	- p varname <span class="hljs-comment">#: Prints the value of the variable varname at the current point of execution.</span>
+</div></code></pre>
+
+</body>
+</html>

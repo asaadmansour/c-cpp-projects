@@ -1,0 +1,2602 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2.1-Constructor-Destructor-Poylomorphism Overloaing in C++-Static in C++.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<ul>
+<li><a href="#constructor">Constructor</a>
+<ul>
+<li><a href="#1-default-constructor">1. Default Constructor</a></li>
+<li><a href="#2-parameterized-constructor">2. Parameterized Constructor</a></li>
+<li><a href="#3-copy-constructor">3. Copy Constructor</a></li>
+<li><a href="#4move-constructor-modern-c--c11">4.Move Constructor (Modern C++ / C++11)</a></li>
+<li><a href="#delegating-constructor-c11">Delegating Constructor (C++11)</a></li>
+<li><a href="#constructor-characteristics">Constructor Characteristics</a></li>
+</ul>
+</li>
+<li><a href="#private-constructor">Private Constructor</a>
+<ul>
+<li><a href="#here-are-the-three-main-reasons-patterns-used-for-private-constructors">Here are the three main reasons (patterns) used for Private Constructors:</a>
+<ul>
+<li><a href="#the-singleton-pattern">The Singleton Pattern</a></li>
+<li><a href="#the-factory-pattern">The Factory Pattern</a></li>
+<li><a href="#static-utility-classes">Static Utility Classes</a></li>
+<li><a href="#summary-table">Summary Table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#how-objects-are-created">How Objects Are Created</a>
+<ul>
+<li><a href="#the-under-the-hood-process-2-steps">The &quot;Under the Hood&quot; Process (2 Steps)</a></li>
+<li><a href="#1-automatic-objects-stack-allocation">1. Automatic Objects (Stack Allocation)</a></li>
+<li><a href="#2-dynamic-objects-heap-allocation">2. Dynamic Objects (Heap Allocation)</a>
+<ul>
+<li><a href="#a-old-style-raw-pointers">A. Old Style (Raw Pointers):</a></li>
+<li><a href="#b-modern-style-smart-pointers---c11">B. Modern Style (Smart Pointers - C++11):</a></li>
+</ul>
+</li>
+<li><a href="#3-static-objects">3. Static Objects</a></li>
+<li><a href="#4-temporary-objects-r-values">4. Temporary Objects (R-Values)</a></li>
+<li><a href="#5factory-methods-object-creation-pattern">5.Factory Methods (Object Creation Pattern)</a>
+<ul>
+<li><a href="#comparison-constructor-vs-factory">Comparison: Constructor vs Factory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#destructor-wish-for-something-before-i-die">Destructor (wish for something before I die)</a>
+<ul>
+<li><a href="#characteristics">Characteristics</a></li>
+<li><a href="#syntax">Syntax</a></li>
+<li><a href="#purpose-of-a-destructor">Purpose of a Destructor:</a></li>
+</ul>
+</li>
+<li><a href="#what-is-polymorphism">What is Polymorphism?</a>
+<ul>
+<li><a href="#1-what-is-compile-time-polymorphism">1. What is Compile-time Polymorphism?</a></li>
+<li><a href="#2-what-problems-existed-in-c-that-led-to-overloading-in-c">2. What problems existed in C that led to Overloading in C++?</a>
+<ul>
+<li><a href="#in-c-you-cannot-have-two-functions-with-the-same-name-even-if-their-parameters-differ"><strong>In C, you cannot have two functions with the same name, even if their parameters differ.</strong></a></li>
+<li><a href="#in-c--cannot-use-operators-naturally">In C : Cannot use operators naturally</a></li>
+</ul>
+</li>
+<li><a href="#3-how-overloading-solves-this">3. How Overloading solves this</a></li>
+<li><a href="#4-why-is-this-useful-in-real-world-projects">4. Why is this useful in real-world projects?</a></li>
+<li><a href="#5--summary">5. ✅ Summary:</a></li>
+<li><a href="#compile-time-polymorphism-in-c">Compile-time polymorphism in C++</a>
+<ul>
+<li><a href="#1-function-overloading">1. Function Overloading</a>
+<ul>
+<li><a href="#11-how-it-works"><strong>1.1 How it works:</strong></a></li>
+<li><a href="#12-real-world-example-printing-data"><strong>1.2 Real-World Example: Printing Data</strong></a></li>
+<li><a href="#13-common-mistakes-with-overloading">1.3 Common mistakes with Overloading</a></li>
+</ul>
+</li>
+<li><a href="#2-constructor-overloading">2. Constructor Overloading</a></li>
+<li><a href="#3-operator-overloading">3. Operator Overloading</a>
+<ul>
+<li><a href="#operators-that-cannot-be-overloaded">Operators That CANNOT Be Overloaded</a></li>
+<li><a href="#real-world-example-a-complex-number-or-vector-system"><strong>Real-World Example: A Complex Number or Vector System</strong></a></li>
+<li><a href="#section-1-binary-arithmetic-operators">Section 1: Binary Arithmetic Operators</a></li>
+<li><a href="#the-problem-the-left-hand-operand-rule"><strong>The Problem: The &quot;Left-Hand Operand&quot; Rule</strong></a>
+<ul>
+<li><a href="#why-the-error"><strong>Why the Error?</strong></a></li>
+<li><a href="#the-solution-friend-global-functions">The Solution: Friend (Global) Functions</a></li>
+<li><a href="#complete-code-example"><strong>Complete Code Example</strong></a></li>
+<li><a href="#summary-checklist-to-support-5--c"><strong>Summary Checklist To support 5 + c:</strong></a></li>
+</ul>
+</li>
+<li><a href="#stream-io-operators">STREAM I/O OPERATORS</a></li>
+<li><a href="#compound-assignment-operator">COMPOUND ASSIGNMENT OPERATOR</a></li>
+<li><a href="#unary-operators">UNARY OPERATORS</a></li>
+<li><a href="#data-access-operators-make-object-act-like-array-or-function">DATA ACCESS OPERATORS (Make object act like Array or Function)</a></li>
+<li><a href="#comparison-operators">Comparison Operators</a></li>
+<li><a href="#summary-sections">Summary Sections</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#summary-table-1">Summary Table</a></li>
+<li><a href="#common-mistakes">Common Mistakes</a></li>
+</ul>
+</li>
+<li><a href="#static-members-static-member-attribute--method-">Static Members (Static Member Attribute &amp; Method )</a>
+<ul>
+<li><a href="#static-member-attribute----rules--clarifications">Static Member Attribute   — Rules &amp; Clarifications</a>
+<ul>
+<li><a href="#key-properties-corrected--clarified">Key Properties (Corrected &amp; Clarified)</a></li>
+<li><a href="#additional-clarifications">Additional Clarifications</a></li>
+</ul>
+</li>
+<li><a href="#static-member-function----rules--clarifications">Static Member Function   — Rules &amp; Clarifications</a></li>
+<li><a href="#static-storage-in-different-contexts">Static Storage in Different Contexts</a></li>
+<li><a href="#advantages-of-static-shared-configuration-refined">Advantages of Static Shared Configuration (Refined)</a></li>
+<li><a href="#use-cases">use cases</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#considerations--enhancements-on-example">Considerations &amp; Enhancements on Example</a>
+<ul>
+<li><a href="#1-thread-safety-already-applied">1) Thread Safety (already applied)</a></li>
+<li><a href="#2-singleton-pattern-for-a-single-connection-instance">2) Singleton Pattern (for a single connection instance)</a></li>
+</ul>
+</li>
+<li><a href="#handling-complex-number-addition-in-c-friend-functions-vs-static-methods">Handling Complex Number Addition in C++: Friend Functions vs Static Methods</a>
+<ul>
+<li><a href="#scenario">Scenario</a></li>
+<li><a href="#using-friend-function">using friend Function</a></li>
+<li><a href="#alternative-static-function">Alternative: Static Function</a></li>
+<li><a href="#notes-static-operator">Notes static operator</a></li>
+<li><a href="#why-is-this-a-solution">Why is this a solution?</a></li>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#best-practice">Best Practice</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="constructor">Constructor</h2>
+<ul>
+<li>Purpose: Used to initialize objects. If no constructor is defined, the compiler provides a default constructor.</li>
+<li>object Creation :
+<ol>
+<li>Allocate the Memory</li>
+<li>Call Constructor Method</li>
+</ol>
+</li>
+</ul>
+<h3 id="1-default-constructor">1. Default Constructor</h3>
+<ul>
+<li>A constructor that takes no parameters.
+<ul>
+<li><strong>Compiler-Generated:</strong> If you do not write any constructor, the compiler creates a blank one for you.</li>
+<li><strong>User-Defined:</strong> You write it manually to initialize variables to default values.</li>
+<li><strong>Modern Syntax:</strong> You can force the compiler to create one using = default</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Box</span> {</span>
+<span class="hljs-keyword">public</span>:
+    Box() { <span class="hljs-built_in">width</span> = <span class="hljs-number">0</span>; } <span class="hljs-comment">// User-Defined</span>
+    <span class="hljs-comment">// OR</span>
+    Box() = <span class="hljs-keyword">default</span>;     <span class="hljs-comment">// Modern C++ (Compiler generated)</span>
+};
+
+</div></code></pre>
+<h3 id="2-parameterized-constructor">2. Parameterized Constructor</h3>
+<ul>
+<li>A constructor that takes one or more arguments.
+<ul>
+<li>Used to initialize an object with specific values provided by the user.</li>
+<li>Note: If you write this, the compiler stops generating the automatic Default Constructor.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Box</span> {</span>
+    <span class="hljs-keyword">int</span> <span class="hljs-built_in">width</span>;
+<span class="hljs-keyword">public</span>:
+    Box(<span class="hljs-keyword">int</span> w) { <span class="hljs-built_in">width</span> = w; } 
+};
+<span class="hljs-comment">// Box b;    // Error! (No default constructor exists)</span>
+<span class="hljs-comment">// Box b(5); // Correct</span>
+</div></code></pre>
+<h3 id="3-copy-constructor">3. Copy Constructor</h3>
+<ul>
+<li>Creates a new object by copying an existing object of the same class.
+<ul>
+<li>Syntax: ClassName(const ClassName&amp; other)</li>
+<li>Used for Deep Copying (handling pointers).</li>
+<li>Called automatically during pass-by-value or return-by-value.</li>
+</ul>
+</li>
+</ul>
+<h3 id="4move-constructor-modern-c--c11">4.Move Constructor (Modern C++ / C++11)</h3>
+<ul>
+<li>Creates a new object by &quot;stealing&quot; resources from a temporary object (r-value) instead of copying them.
+<ul>
+<li>Syntax: ClassName(ClassName&amp;&amp; other)</li>
+<li>Much faster than copying for large objects (like Vectors or Strings).</li>
+</ul>
+</li>
+</ul>
+<h3 id="delegating-constructor-c11">Delegating Constructor (C++11)</h3>
+<ul>
+<li>A constructor that calls another constructor in the same class to reduce code duplication.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Box</span> {</span>
+    <span class="hljs-keyword">int</span> x, y;
+<span class="hljs-keyword">public</span>:
+    Box(<span class="hljs-keyword">int</span> val) : x(val), y(val) {} <span class="hljs-comment">// Target</span>
+    Box() : Box(<span class="hljs-number">0</span>) {}                <span class="hljs-comment">// Delegating</span>
+};
+</div></code></pre>
+<h3 id="constructor-characteristics">Constructor Characteristics</h3>
+<ul>
+<li>
+<ol>
+<li>Same Name: Must have exactly the same name as the Class.</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>No Return Type: Does not return a value, not even void.</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>Automatic Invocation: You do not call it manually. It is called automatically by the compiler when an object is created.(User Can't Call it.Automatic Call)</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>Call Only When Creating The Objects .[Automatic Call]</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>Cannot be Virtual: A constructor cannot be declared virtual. (However, Destructors can and often should be virtual).</li>
+</ol>
+</li>
+<li>
+<ol start="6">
+<li>Can be Overloaded: You can have multiple constructors as long as their parameter lists (signatures) are different.
+Multiple constructors with different parameter lists can be defined.</li>
+</ol>
+</li>
+<li>
+<ol start="7">
+<li>Member Initializer List: Constructors have a special syntax (using <img class="emoji" alt="smiley" src="data:image/png;base64,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" /> to initialize constants, references, and base classes before the constructor body runs.</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-comment">// Preferred way (Initializer List)</span>
+Box(<span class="hljs-keyword">int</span> w) : <span class="hljs-built_in">width</span>(w) {}
+</div></code></pre>
+</li>
+<li>
+<ol start="8">
+<li>The explicit Keyword: Constructors with a single argument should often be marked explicit to prevent the compiler from performing accidental type conversions.</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">Box</span><span class="hljs-params">(<span class="hljs-keyword">int</span> w)</span> </span>{ ... }
+<span class="hljs-comment">// Box b = 10; // Error! (Prevents implicit conversion)</span>
+<span class="hljs-comment">// Box b(10);  // Allowed</span>
+</div></code></pre>
+</li>
+</ul>
+<h2 id="private-constructor">Private Constructor</h2>
+<ul>
+<li>When a constructor is marked as private, the class cannot be instantiated (objects cannot be created) from outside the class. This is a - - deliberate design choice used to control strictly how and when objects are made.</li>
+<li></li>
+</ul>
+<h3 id="here-are-the-three-main-reasons-patterns-used-for-private-constructors">Here are the three main reasons (patterns) used for Private Constructors:</h3>
+<h4 id="the-singleton-pattern">The Singleton Pattern</h4>
+<ul>
+<li>Goal: Ensure a class has only one instance globally.</li>
+<li>Since the constructor is private, no one can create a second object. The class itself provides the single instance via a static method.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Database</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// 1. Private Constructor</span>
+    Database() { 
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Connected to DB\n"</span>; 
+    }
+    
+    <span class="hljs-comment">// 2. Static pointer to hold the one and only instance</span>
+    <span class="hljs-keyword">static</span> Database* instance;
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 3. Static Access Method</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> Database* <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">if</span> (instance == <span class="hljs-literal">nullptr</span>) {
+            <span class="hljs-comment">// Only the class itself can call the private constructor</span>
+            instance = <span class="hljs-keyword">new</span> Database();
+        }
+        <span class="hljs-keyword">return</span> instance;
+    }
+};
+
+<span class="hljs-comment">// Initialize static member</span>
+Database* Database::instance = <span class="hljs-literal">nullptr</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Database db; // ERROR: Constructor is private</span>
+    
+    Database* db1 = Database::getInstance(); <span class="hljs-comment">// OK</span>
+    Database* db2 = Database::getInstance(); <span class="hljs-comment">// Returns same existing object</span>
+}
+</div></code></pre>
+<h4 id="the-factory-pattern">The Factory Pattern</h4>
+<ul>
+<li>Goal: Force users to use a specific method to create objects (usually for validation or setup logic).</li>
+<li>This connects to the &quot;Factory Methods&quot; note you made earlier. By making the constructor private, you force the programmer to use the factory method.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">int</span> id;
+    <span class="hljs-comment">// Private Constructor</span>
+    User(<span class="hljs-keyword">int</span> i) : id(i) {}
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// Factory Method</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> User* <span class="hljs-title">createUser</span><span class="hljs-params">(<span class="hljs-keyword">int</span> id)</span> </span>{
+        <span class="hljs-keyword">if</span> (id &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>; <span class="hljs-comment">// Validation logic</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> User(id);        <span class="hljs-comment">// Internal call is allowed</span>
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// User u(10); // ERROR: Private Constructor</span>
+    User* u = User::createUser(<span class="hljs-number">10</span>); <span class="hljs-comment">// OK</span>
+}
+</div></code></pre>
+<h4 id="static-utility-classes">Static Utility Classes</h4>
+<ul>
+<li>Goal: Prevent an object from ever being created.</li>
+<li>Some classes are just collections of static functions (like Math libraries). It makes no sense to create an object of them.</li>
+</ul>
+<p>Note: In Modern C++ (C++11), we often use = delete for this, but the Private Constructor way is the classic C++98 method.</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MathHelper</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// Private Constructor</span>
+    <span class="hljs-comment">// Prevents: MathHelper m;</span>
+    MathHelper() {} 
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{ <span class="hljs-keyword">return</span> a + b; }
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sub</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{ <span class="hljs-keyword">return</span> a - b; }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// MathHelper m; // ERROR: Private Constructor</span>
+    
+    <span class="hljs-comment">// We just use the class name directly</span>
+    <span class="hljs-keyword">int</span> result = MathHelper::add(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>); 
+}
+</div></code></pre>
+<h4 id="summary-table">Summary Table</h4>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Why Private Constructor?</th>
+<th>Who creates the object?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Singleton</td>
+<td>To ensure only 1 object exists.</td>
+<td>The class itself (internally).</td>
+</tr>
+<tr>
+<td>Factory</td>
+<td>To enforce validation rules.</td>
+<td>A static &quot;Factory Method&quot;.</td>
+</tr>
+<tr>
+<td>Utility</td>
+<td>Class	To prevent any object creation.</td>
+<td>Nobody (Class is just a namespace for functions).</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="how-objects-are-created">How Objects Are Created</h2>
+<h3 id="the-%22under-the-hood%22-process-2-steps">The &quot;Under the Hood&quot; Process (2 Steps)</h3>
+<ul>
+<li>Whenever an object is created (regardless of Stack or Heap), the compiler performs two distinct steps:
+<ul>
+<li><strong>Memory Allocation:</strong>
+<ul>
+<li>The system finds a block of raw, empty memory large enough to hold the object's variables (sizeof class).</li>
+</ul>
+</li>
+<li><strong>Constructor Call:</strong>
+<ul>
+<li>The Constructor function is called on that piece of memory to set up the initial values (initialization).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Note: malloc (from C) only does Step 1. new (from C++) does Step 1 AND Step 2.</li>
+</ul>
+<h3 id="1-automatic-objects-stack-allocation">1. Automatic Objects (Stack Allocation)</h3>
+<ul>
+<li>These are the most common objects. They are declared inside a function or a block scope.
+<ul>
+<li>Creation: Created instantly when the code execution reaches the declaration line.</li>
+<li>Memory: Allocated on the Stack.</li>
+<li>Lifecycle: Automatically destroyed when the variable goes out of scope (e.g., function ends, } is reached).</li>
+<li>Speed: Very fast allocation.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">myFunction</span><span class="hljs-params">()</span> </span>{
+    MyClass obj;        <span class="hljs-comment">// Default constructor called</span>
+    <span class="hljs-function">MyClass <span class="hljs-title">obj2</span><span class="hljs-params">(<span class="hljs-number">10</span>)</span></span>;   <span class="hljs-comment">// Parameterized constructor called</span>
+    <span class="hljs-comment">// ... function logic ...</span>
+} <span class="hljs-comment">// &lt;--- Destructors for obj and obj2 called here automatically</span>
+</div></code></pre>
+<h3 id="2-dynamic-objects-heap-allocation">2. Dynamic Objects (Heap Allocation)</h3>
+<ul>
+<li>These objects are created explicitly by the programmer when the object needs to outlive the function that created it, or when the object size is unknown at compile time.
+<ul>
+<li>Creation: Created using the new operator.</li>
+<li>Memory: Allocated on the Heap.</li>
+<li>Lifecycle: Manual. The object stays in memory until you explicitly call delete.</li>
+<li>Risk: Forgetting to delete causes Memory Leaks.</li>
+</ul>
+</li>
+</ul>
+<h4 id="a-old-style-raw-pointers">A. Old Style (Raw Pointers):</h4>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">createDynamic</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// 1. Allocates memory on Heap</span>
+    <span class="hljs-comment">// 2. Calls Constructor</span>
+    MyClass* ptr = <span class="hljs-keyword">new</span> MyClass(<span class="hljs-number">50</span>); 
+    
+    <span class="hljs-comment">// Object still exists after function ends!</span>
+    
+    <span class="hljs-keyword">delete</span> ptr; <span class="hljs-comment">// Must call this manually to trigger Destructor &amp; free memory</span>
+}
+</div></code></pre>
+<h4 id="b-modern-style-smart-pointers---c11">B. Modern Style (Smart Pointers - C++11):</h4>
+<p>Preferred method to avoid memory leaks.</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">createModernDynamic</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Automatically manages 'new' and 'delete'</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;MyClass&gt; ptr = <span class="hljs-built_in">std</span>::make_unique&lt;MyClass&gt;(<span class="hljs-number">50</span>);
+    
+} <span class="hljs-comment">// &lt;--- 'ptr' goes out of scope, automatically deletes the heap memory</span>
+</div></code></pre>
+<h3 id="3-static-objects">3. Static Objects</h3>
+<ul>
+<li>Objects that live for the entire duration of the program.
+<ul>
+<li>Creation:
+<ul>
+<li>Global: Created before main() starts.</li>
+<li>Static Local: Created the first time the function is called.</li>
+</ul>
+</li>
+<li>Memory: Allocated in the Static/Global Data Segment.</li>
+<li>Lifecycle: Destroyed only after main() finishes (program termination).</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> {</span> ... };
+
+MyClass globalObj; <span class="hljs-comment">// Created before main() starts</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">demo</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">static</span> MyClass statObj; <span class="hljs-comment">// Created ONLY the first time demo() is run</span>
+}
+</div></code></pre>
+<h3 id="4-temporary-objects-r-values">4. Temporary Objects (R-Values)</h3>
+<ul>
+<li>Nameless objects created briefly by the compiler to evaluate expressions.
+<ul>
+<li>Creation: Created during function returns or type conversions.</li>
+<li>Lifecycle: Destroyed immediately after the expression (the line of code) is finished.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Assuming a function: MyClass createObj() { return MyClass(); }</span>
+
+<span class="hljs-comment">// A temporary object is created to hold the return value, </span>
+<span class="hljs-comment">// then copied/moved to 'result', then destroyed.</span>
+MyClass result = createObj();
+
+</div></code></pre>
+<h3 id="5factory-methods-object-creation-pattern">5.Factory Methods (Object Creation Pattern)</h3>
+<ul>
+<li>A Factory Method is a static member function used to create and return instances of a class. It is often used to replace direct Constructor calls.</li>
+<li><strong>Why use this instead of new ClassName()?</strong>
+<ul>
+<li><strong>Descriptive Names:</strong> Constructors must have the same name as the class. Factory methods can have meaningful names (e.g., createFromJSON, createEmpty, loadFromFile).</li>
+<li><strong>Failure Handling:</strong> A constructor cannot return a &quot;failure&quot; signal (it can only throw exceptions). A factory method can return nullptr if creation fails.</li>
+<li><strong>Encapsulation:</strong> It allows you to make the Constructor Private. This forces users to create objects only through your controlled method.</li>
+<li><strong>The &quot;Private Constructor&quot; Pattern</strong></li>
+</ul>
+</li>
+<li>To strictly enforce the use of a Factory Method, you usually place the Constructor in the private section</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Logger</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// 1. Constructor is Private!</span>
+    <span class="hljs-comment">// External code cannot call: new Logger();</span>
+    Logger() { 
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Logger Initialized\n"</span>; 
+    }
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 2. Static Factory Method</span>
+    <span class="hljs-comment">// 'static' means we can call this without having an object first.</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> Logger* <span class="hljs-title">createLogger</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// We can add logic here (e.g., limit to 1 logger, check config)</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Logger(); 
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">log</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* msg)</span> </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Log: "</span> &lt;&lt; msg &lt;&lt; <span class="hljs-string">"\n"</span>;
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Logger* log = new Logger(); // ERROR: Constructor is private</span>
+    
+    <span class="hljs-comment">// Correct way:</span>
+    Logger* myLog = Logger::createLogger();
+    myLog-&gt;<span class="hljs-built_in">log</span>(<span class="hljs-string">"System Started"</span>);
+    
+    <span class="hljs-keyword">delete</span> myLog; <span class="hljs-comment">// Clean up</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h4 id="comparison-constructor-vs-factory">Comparison: Constructor vs Factory</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Standard Constructor</th>
+<th>Factory Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name</td>
+<td>Must be Class Name</td>
+<td>Can be anything (create, load, etc.)</td>
+</tr>
+<tr>
+<td>Return</td>
+<td>Nothing (constructs in place)</td>
+<td>Returns Pointer or Smart Pointer</td>
+</tr>
+<tr>
+<td>Control</td>
+<td>Always creates an object</td>
+<td>Can return nullptr if invalid</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>Stack or Heap (choice of caller)</td>
+<td>Usually Heap (dynamic allocation)</td>
+</tr>
+<tr>
+<td>Access</td>
+<td>Usually Public</td>
+<td>Public (calls Private Constructor)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="destructor-wish-for-something-before-i-die">Destructor (wish for something before I die)</h2>
+<h3 id="characteristics">Characteristics</h3>
+<ul>
+<li>&quot;Wish for something before I die&quot;</li>
+<li>it is aSpecial Function.called when object destroyed.</li>
+<li>destructor is the same as the class name, but preceded by a tilde (~).</li>
+<li>No Parameters</li>
+<li>No Return any Value (not even void).</li>
+<li>A class can only have one destructor.(Can't Overloaded).</li>
+<li>Can’t be overloaded: Unlike constructors, there can be only one destructor per class.</li>
+<li>Destructors are used to clean up resources when an object is destroyed.</li>
+<li>They are automatically called when an object goes out of scope or is deleted.</li>
+<li>Automatic invocation: It is automatically called when an object is deleted or goes out of scope.</li>
+<li>Order of calling: In case of inheritance, the destructor of the derived class is called first, followed by the destructor of the base class.</li>
+</ul>
+<h3 id="syntax">Syntax</h3>
+<p>~ className(){
+}</p>
+<h3 id="purpose-of-a-destructor">Purpose of a Destructor:</h3>
+<ul>
+<li>Resource Deallocation:
+<ul>
+<li>Destructors are used to release resources (like memory, file handles, network connections) that were allocated by the object during its lifetime.</li>
+</ul>
+</li>
+<li>Clean-Up:
+<ul>
+<li>They ensure that the class does any necessary clean-up before the object is destroyed, preventing memory leaks or other resource-related issues.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="what-is-polymorphism">What is Polymorphism?</h2>
+<ul>
+<li>
+<p>The word comes from Greek meaning &quot;many shapes.&quot; In C++, it allows you to treat objects of different classes through a common interface (pointer or reference to a base class).</p>
+</li>
+<li>
+<p>It answers the question: &quot;How can I write code that handles different types of objects without knowing their specific details?&quot;</p>
+</li>
+<li>
+<p><strong>There are two types in C++:</strong></p>
+<ul>
+<li>Compile-time Polymorphism: Function Overloading and Templates.</li>
+<li>Runtime Polymorphism (The Main Focus): Virtual functions and Inheritance. This is what people usually mean when discussing OOP architecture.</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-what-is-compile-time-polymorphism">1. What is Compile-time Polymorphism?</h3>
+<ul>
+<li>Compile-time polymorphism means the decision of which function to call is made at compile time, not at runtime.</li>
+<li>In C++, this is achieved through:
+<ul>
+<li>Function Overloading (same function name, different parameter types or count)</li>
+<li>Operator Overloading (custom behavior for operators like +, ==)</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{ <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Integer: "</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">"\n"</span>; }
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span> </span>{ <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Double: "</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">"\n"</span>; }
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> x)</span> </span>{ <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"String: "</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">"\n"</span>; }
+<span class="hljs-built_in">print</span>(<span class="hljs-number">10</span>);       <span class="hljs-comment">// Calls int version</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-number">3.14</span>);     <span class="hljs-comment">// Calls double version</span>
+</div></code></pre>
+<h3 id="2-what-problems-existed-in-c-that-led-to-overloading-in-c">2. What problems existed in C that led to Overloading in C++?</h3>
+<h4 id="in-c-you-cannot-have-two-functions-with-the-same-name-even-if-their-parameters-differ"><strong>In C, you cannot have two functions with the same name, even if their parameters differ.</strong></h4>
+<ul>
+<li>
+<p>Example in C:</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printInt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printDouble</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x)</span></span>;Show more lines
+</div></code></pre>
+</li>
+<li>
+<p><strong>You need different names for each type. This causes:</strong></p>
+<ul>
+<li>Code duplication and naming complexity (e.g., printInt, printDouble, printString)</li>
+<li>Harder to maintain and read</li>
+<li>Violates intuitive design (same concept should have same name)</li>
+</ul>
+</li>
+<li>
+<p><strong>Problem scenario in C</strong></p>
+<ul>
+<li>Imagine you’re writing a math library:<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">addInt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">addDouble</span><span class="hljs-params">(<span class="hljs-keyword">double</span> a, <span class="hljs-keyword">double</span> b)</span></span>;
+</div></code></pre>
+You end up with many function names for the same concept (addition), which is messy.</li>
+</ul>
+</li>
+</ul>
+<h4 id="in-c--cannot-use-operators-naturally">In C : Cannot use operators naturally</h4>
+<ul>
+<li>In C, operators like +, -, *, == work only with built-in types (int, float, double, etc.).
+If you create a struct or custom type, you cannot use operators naturally.</li>
+<li>Example in C:<pre class="hljs"><code><div>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span> {</span>
+        <span class="hljs-keyword">int</span> x;
+        <span class="hljs-keyword">int</span> y;
+    };
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span> <span class="hljs-title">p1</span> = {</span><span class="hljs-number">1</span>, <span class="hljs-number">2</span>};
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span> <span class="hljs-title">p2</span> = {</span><span class="hljs-number">3</span>, <span class="hljs-number">4</span>};
+    <span class="hljs-comment">// You cannot do:</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span> <span class="hljs-title">p3</span> = <span class="hljs-title">p1</span> + <span class="hljs-title">p2</span>;</span> <span class="hljs-comment">// ❌ ERROR in C</span>
+</div></code></pre>
+<ul>
+<li>you must write function</li>
+<li>This makes code less readable and less intuitive.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function">struct Point <span class="hljs-title">addPoints</span><span class="hljs-params">(struct Point a, struct Point b)</span> </span>{
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span> <span class="hljs-title">result</span> = {</span>a.x + b.x, a.y + b.y};
+    <span class="hljs-keyword">return</span> result;
+}
+</div></code></pre>
+</li>
+<li><strong>Solution in C++: Operator Overloading</strong>
+<ul>
+<li>C++ introduced operator overloading so you can define how operators work for user-defined types:</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+    <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span> {</span>
+        <span class="hljs-keyword">int</span> x, y;
+        <span class="hljs-comment">// Overload +</span>
+        Point <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Point&amp; other) <span class="hljs-keyword">const</span> {
+            <span class="hljs-keyword">return</span> {x + other.x, y + other.y};
+        }
+    };
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+        Point p1{<span class="hljs-number">1</span>, <span class="hljs-number">2</span>}, p2{<span class="hljs-number">3</span>, <span class="hljs-number">4</span>};
+        Point p3 = p1 + p2; <span class="hljs-comment">// ✅ Works like built-in types</span>
+        <span class="hljs-built_in">cout</span> &lt;&lt; p3.x &lt;&lt; <span class="hljs-string">", "</span> &lt;&lt; p3.y &lt;&lt; <span class="hljs-built_in">endl</span>;
+    }
+</div></code></pre>
+</li>
+<li><strong>What problem did this solve?</strong>
+<ul>
+<li>Readability: Instead of addPoints(p1, p2), you write p1 + p2.</li>
+<li>Consistency: Custom types behave like built-in types.</li>
+<li>Intuitive APIs: Libraries like std::string use + for concatenation, == for comparison.</li>
+<li>Mathematical modeling: Classes like Complex, Matrix, Vector can use natural math syntax.</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-how-overloading-solves-this">3. How Overloading solves this</h3>
+<p>C++ introduced function overloading so you can use the same function name for different parameter types:</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">double</span> a, <span class="hljs-keyword">double</span> b)</span></span>;
+</div></code></pre>
+<p>The compiler decides which version to call based on argument types at compile time.</p>
+<h3 id="4-why-is-this-useful-in-real-world-projects">4. Why is this useful in real-world projects?</h3>
+<ul>
+<li>Cleaner APIs: Libraries like STL use overloading for functions like sort(), find(), etc.</li>
+<li>Consistency: Same concept, same name → easier for developers.</li>
+<li>Extensibility: You can add new overloads without breaking existing code.</li>
+</ul>
+<h3 id="5-%E2%9C%85-summary">5. ✅ Summary:</h3>
+<ul>
+<li>Compile-time polymorphism = decision at compile time.</li>
+<li>Introduced to solve naming complexity and code duplication in C.</li>
+<li>Overloading makes APIs cleaner, intuitive, and maintainable.</li>
+</ul>
+<h3 id="compile-time-polymorphism-in-c">Compile-time polymorphism in C++</h3>
+<h4 id="1-function-overloading">1. Function Overloading</h4>
+<ul>
+<li>Function overloading allows you to have multiple functions with the same name but different parameter lists (signatures) within the same scope.</li>
+</ul>
+<h5 id="11-how-it-works"><strong>1.1 How it works:</strong></h5>
+<ul>
+<li>The compiler differentiates functions based on:
+<ul>
+<li>The number of parameters.</li>
+<li>The type of parameters.</li>
+<li>The order of parameters.</li>
+</ul>
+</li>
+<li>Note: You cannot overload functions based solely on the return type.</li>
+</ul>
+<h5 id="12-real-world-example-printing-data"><strong>1.2 Real-World Example: Printing Data</strong></h5>
+<p>Instead of creating functions like printInteger(), printString(), and printFloat(), you simply use print().</p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Printer</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 1. Overload with int</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Printing Integer: "</span> &lt;&lt; i &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    }
+    <span class="hljs-comment">// 2. Overload with double</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">double</span> d)</span> </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Printing Double: "</span> &lt;&lt; d &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    }
+    <span class="hljs-comment">// 3. Overload with string</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> s)</span> </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Printing String: "</span> &lt;&lt; s &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    }
+    <span class="hljs-comment">// 4. Overload with two parameters</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> s, <span class="hljs-keyword">int</span> i)</span> </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Printing Mixed: "</span> &lt;&lt; s &lt;&lt; <span class="hljs-string">" "</span> &lt;&lt; i &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Printer p;
+    p.<span class="hljs-built_in">print</span>(<span class="hljs-number">10</span>);          <span class="hljs-comment">// Calls int version</span>
+    p.<span class="hljs-built_in">print</span>(<span class="hljs-number">3.14</span>);        <span class="hljs-comment">// Calls double version</span>
+    p.<span class="hljs-built_in">print</span>(<span class="hljs-string">"Hello"</span>);     <span class="hljs-comment">// Calls string version</span>
+    p.<span class="hljs-built_in">print</span>(<span class="hljs-string">"Age:"</span>, <span class="hljs-number">25</span>);  <span class="hljs-comment">// Calls mixed version</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h5 id="13-common-mistakes-with-overloading">1.3 Common mistakes with Overloading</h5>
+<ul>
+<li>
+<p><strong>Ambiguity Cases</strong>:</p>
+<pre class="hljs"><code><div>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">float</span> x, <span class="hljs-keyword">float</span> y)</span> </span>{
+      <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Called f(float, float): "</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">", "</span> &lt;&lt; y &lt;&lt; <span class="hljs-built_in">endl</span>;
+  }
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span> x, <span class="hljs-keyword">double</span> y)</span> </span>{
+      <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Called f(double, double): "</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">", "</span> &lt;&lt; y &lt;&lt; <span class="hljs-built_in">endl</span>;
+  }
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+      f(<span class="hljs-number">3.5</span>, <span class="hljs-number">5.5</span>);       <span class="hljs-comment">// ✅ Calls double version (perfect match)</span>
+      f(<span class="hljs-number">3.5f</span>, <span class="hljs-number">5.5f</span>);     <span class="hljs-comment">// ✅ Calls float version (perfect match)</span>
+      <span class="hljs-comment">// ⚠️ Ambiguity case:</span>
+      <span class="hljs-comment">// f(3.5, 5.5f);   // ❌ ERROR: ambiguous call</span>
+      <span class="hljs-comment">// ✅ Fix ambiguity with explicit cast:</span>
+      f((<span class="hljs-keyword">double</span>)<span class="hljs-number">3.5</span>, <span class="hljs-number">5.5f</span>); <span class="hljs-comment">// Calls double version</span>
+      f(<span class="hljs-number">3.5f</span>, (<span class="hljs-keyword">float</span>)<span class="hljs-number">5.5</span>);  <span class="hljs-comment">// Calls float version</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+  }
+
+</div></code></pre>
+<ul>
+<li><strong>Why does this happen?</strong>
+<ul>
+<li><strong>Both overloads require one conversion:</strong>
+<ul>
+<li>For f(float, float): convert double → float</li>
+<li>For f(double, double): convert float → double Neither is better → ambiguous.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y = <span class="hljs-number">10</span>)</span> </span>{}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span>{}
+<span class="hljs-built_in">print</span>(<span class="hljs-number">5</span>); <span class="hljs-comment">// ❌ Ambiguous!</span>
+</div></code></pre>
+<ul>
+<li><strong>How to Fix It</strong>
+<ul>
+<li>Avoid mixing default arguments with overloads for the same parameter count.</li>
+<li>Remove one overload or change the signature so they differ clearly.</li>
+<li>Use different parameter types if overloading is necessary.</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Correct Version</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y = <span class="hljs-number">10</span>)</span> </span>{}
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Default arguments + overloading can cause conflicts.</strong></p>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y = <span class="hljs-number">10</span>)</span> </span>{
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"print(int, int): "</span> &lt;&lt; x &lt;&lt; <span class="hljs-string">", "</span> &lt;&lt; y &lt;&lt; <span class="hljs-built_in">endl</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>{
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"print(int): "</span> &lt;&lt; x &lt;&lt; <span class="hljs-built_in">endl</span>;
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-built_in">print</span>(<span class="hljs-number">5</span>); <span class="hljs-comment">// ❌ Ambiguous!</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+</li>
+<li>
+<p><strong>return type alone cannot differentiate overloaded</strong></p>
+<ul>
+<li>In C++, function overloading is based on the parameter list (number and types of arguments), NOT the return type.</li>
+<li>The compiler uses the function signature (name + parameter types) to resolve which function to call.</li>
+<li>Return type is not part of the signature for overload resolution.</li>
+<li>Example of Invalid Overloading</li>
+</ul>
+<pre class="hljs"><code><div>  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">func</span><span class="hljs-params">()</span></span>;
+  <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">func</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// ❌ ERROR: cannot overload by return type only</span>
+</div></code></pre>
+<ul>
+<li>Summary Rules :-
+<ul>
+<li>Return type alone cannot differentiate overloaded functions.</li>
+<li>Parameter list must differ (number or types of arguments).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-constructor-overloading">2. Constructor Overloading</h4>
+<ul>
+<li>Constructors are special member functions called when an object is created. Overloading them allows you to initialize objects in different ways depending on what data is available.
+Why is it useful?
+Sometimes you want to create an empty object, sometimes you want to set default values, and sometimes you have all the data ready at the start.</li>
+<li><strong>Why do we need it?</strong>
+<ul>
+<li>To initialize objects in different ways.</li>
+<li>To provide flexibility for object creation.</li>
+<li>Avoid writing multiple initialization functions.</li>
+</ul>
+</li>
+<li><strong>Real-World Example: A Rectangle Class</strong><pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rectangle</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">int</span> <span class="hljs-built_in">width</span>, <span class="hljs-built_in">height</span>;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 1. Default Constructor (No arguments)</span>
+    <span class="hljs-comment">// Useful for creating arrays of objects</span>
+    Rectangle() {
+        <span class="hljs-built_in">width</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-built_in">height</span> = <span class="hljs-number">0</span>;
+    }
+    <span class="hljs-comment">// 2. Parameterized Constructor (One argument)</span>
+    <span class="hljs-comment">// Useful for a Square</span>
+    Rectangle(<span class="hljs-keyword">int</span> side) {
+        <span class="hljs-built_in">width</span> = side;
+        <span class="hljs-built_in">height</span> = side;
+    }
+    <span class="hljs-comment">// 3. Parameterized Constructor (Two arguments)</span>
+    <span class="hljs-comment">// Useful for a custom Rectangle</span>
+    Rectangle(<span class="hljs-keyword">int</span> w, <span class="hljs-keyword">int</span> h) {
+        <span class="hljs-built_in">width</span> = w;
+        <span class="hljs-built_in">height</span> = h;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getArea</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">width</span> * <span class="hljs-built_in">height</span>;
+    }
+};
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Rectangle r1;           <span class="hljs-comment">// Width=0, Height=0</span>
+    <span class="hljs-function">Rectangle <span class="hljs-title">r2</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span></span>;        <span class="hljs-comment">// Width=5, Height=5</span>
+    <span class="hljs-function">Rectangle <span class="hljs-title">r3</span><span class="hljs-params">(<span class="hljs-number">4</span>, <span class="hljs-number">6</span>)</span></span>;     <span class="hljs-comment">// Width=4, Height=6</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Area 1: "</span> &lt;&lt; r1.getArea() &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">// 0</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Area 2: "</span> &lt;&lt; r2.getArea() &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">// 25</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Area 3: "</span> &lt;&lt; r3.getArea() &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">// 24</span>
+}
+</div></code></pre>
+</li>
+<li><strong>Common Mistakes</strong>
+<ul>
+<li>Forgetting to initialize members properly.</li>
+<li>Ambiguity when using default arguments with overloaded constructors:</li>
+</ul>
+<pre class="hljs"><code><div>Rectangle(<span class="hljs-keyword">int</span> w = <span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> h = <span class="hljs-number">0</span>); <span class="hljs-comment">// Can conflict with default constructor</span>
+</div></code></pre>
+</li>
+<li><strong>Real-world Use Case</strong>
+<ul>
+<li><strong>Database Connection Class:</strong>
+<ul>
+<li>Default constructor → connects to local DB.</li>
+<li>Constructor with parameters → connects to remote DB with credentials.</li>
+</ul>
+</li>
+<li><strong>Game Engine:</strong>
+<ul>
+<li>Default constructor → loads default settings.</li>
+<li>Parameterized constructor → loads custom setting</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-operator-overloading">3. Operator Overloading</h4>
+<ul>
+<li>This allows you to redefine how standard operators (like +, -, *, ==, &lt;&lt;) work with your custom classes.</li>
+<li>It makes user-defined types (like classes) behave like built-in types (like int).</li>
+<li>Redefine operators for classes.</li>
+<li>Syntax<pre class="hljs"><code><div><span class="hljs-function">ReturnType <span class="hljs-title">operatorOp</span> <span class="hljs-params">(Parameters)</span> </span>{ ... }
+</div></code></pre>
+</li>
+</ul>
+<h5 id="operators-that-cannot-be-overloaded">Operators That CANNOT Be Overloaded</h5>
+<ul>
+<li>You can overload almost everything in C++, but these 5 are strictly forbidden because they deal with fundamental memory or scope operations:
+<ol>
+<li>. (Dot Operator): Member access. obj.x cannot be changed.</li>
+<li>:: (Scope Resolution): Class::function cannot be changed.</li>
+<li>sizeof: The size of a type is determined at compile time.</li>
+<li>?: (Ternary Conditional): a ? b : c. Overloading this would break the logic that only one branch (b or c) is evaluated.</li>
+<li>.* (Pointer-to-member): Rarely used, but cannot be overloaded.</li>
+<li>typeid: Used for RTTI (Run-Time Type Information).</li>
+</ol>
+</li>
+</ul>
+<h5 id="real-world-example-a-complex-number-or-vector-system"><strong>Real-World Example: A Complex Number or Vector System</strong></h5>
+<ul>
+<li>Imagine a game where you have a Point (x, y). Without operator overloading, adding two points looks messy:</li>
+<li>Without overloading: Point p3 = p1.add(p2);</li>
+<li>With overloading: Point p3 = p1 + p2;</li>
+</ul>
+<pre class="hljs"><code><div>  <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+  <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;      // For magnitude calculation</span></span>
+  <span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;  // For out_of_range exception</span></span>
+
+  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Point</span> {</span>
+  <span class="hljs-keyword">public</span>:
+      <span class="hljs-keyword">int</span> x, y;
+
+      Point(<span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> y = <span class="hljs-number">0</span>) : x(x), y(y) {}
+
+      <span class="hljs-comment">// Overloading the '+' operator</span>
+      <span class="hljs-comment">// This allows: Point p3 = p1 + p2;</span>
+      Point <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Point&amp; other) {
+          Point temp;
+          temp.x = <span class="hljs-keyword">this</span>-&gt;x + other.x;
+          temp.y = <span class="hljs-keyword">this</span>-&gt;y + other.y;
+          <span class="hljs-keyword">return</span> temp;
+      }
+
+      <span class="hljs-comment">// Overloading the '==' operator</span>
+      <span class="hljs-comment">// This allows: if (p1 == p2)</span>
+      <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>==(<span class="hljs-keyword">const</span> Point&amp; other) {
+          <span class="hljs-keyword">return</span> (<span class="hljs-keyword">this</span>-&gt;x == other.x &amp;&amp; <span class="hljs-keyword">this</span>-&gt;y == other.y);
+      }
+  };
+
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+      <span class="hljs-function">Point <span class="hljs-title">p1</span><span class="hljs-params">(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)</span></span>;
+      <span class="hljs-function">Point <span class="hljs-title">p2</span><span class="hljs-params">(<span class="hljs-number">5</span>, <span class="hljs-number">5</span>)</span></span>;
+
+      <span class="hljs-comment">// Using the overloaded +</span>
+      Point p3 = p1 + p2; 
+
+      <span class="hljs-comment">// Using the overloaded ==</span>
+      <span class="hljs-keyword">if</span> (p1 == p2) {
+          <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Points are equal"</span>;
+      } <span class="hljs-keyword">else</span> {
+          <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Points are different"</span>;
+      }
+      
+      <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"\nNew Point: "</span> &lt;&lt; p3.x &lt;&lt; <span class="hljs-string">", "</span> &lt;&lt; p3.y &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">// Output: 15, 25</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+  }
+</div></code></pre>
+<h5 id="section-1-binary-arithmetic-operators">Section 1: Binary Arithmetic Operators</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;      // For magnitude calculation</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;  // For out_of_range exception</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">double</span> real;
+    <span class="hljs-keyword">double</span> imag;
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// ==========================================</span>
+    <span class="hljs-comment">// 2. OPERATOR OVERLOADING</span>
+    <span class="hljs-comment">// ==========================================</span>
+    <span class="hljs-comment">// Constructor (Default and Parameterized)</span>
+    <span class="hljs-comment">// Complex(double r = 0, double i = 0) : real(r), imag(i) {}</span>
+    <span class="hljs-comment">//OR </span>
+    Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) :  {
+      real=r;
+      imag=i; 
+    }
+    <span class="hljs-comment">// Display function</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; real &lt;&lt; <span class="hljs-string">" + "</span> &lt;&lt; imag &lt;&lt; <span class="hljs-string">"i"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    }
+
+    <span class="hljs-comment">/*
+    1.void display() {} (Non-Const)
+      - Permission: Read-Write.
+      - Behavior: It can modify member variables of the class.
+      - Caller: Can ONLY be called by non-const objects.
+      - Under the hood: The this pointer passed to the function is of type Class* const.
+    2. void display() const {} (Const)
+      - Permission: Read-Only.
+      - Behavior: It cannot modify member variables (unless they are marked mutable). It creates a compile-time error if you try to assign new - values to member variables.
+      - Caller: Can be called by BOTH const objects and non-const objects.
+      - Under the hood: The this pointer passed to the function is of type const Class* const.
+    */</span>
+    <span class="hljs-comment">// Binary '+' (Complex + Complex)</span>
+    Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Complex&amp; other)  {
+        <span class="hljs-keyword">return</span> Complex(real + other.real, imag + other.imag);
+    }
+    <span class="hljs-comment">// Binary '+' (Complex + Number)</span>
+    Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">int</span> x)  {
+        <span class="hljs-keyword">return</span> Complex(real + x, imag);
+    }
+    <span class="hljs-comment">// Binary '-' (Complex - Complex)</span>
+    Complex <span class="hljs-keyword">operator</span>-(<span class="hljs-keyword">const</span> Complex&amp; other)  {
+        <span class="hljs-keyword">return</span> Complex(real - other.real, imag - other.imag);
+    }
+    <span class="hljs-comment">// Binary '-' (Complex - Number)</span>
+    Complex <span class="hljs-keyword">operator</span>-(<span class="hljs-keyword">int</span> x)  {
+        <span class="hljs-keyword">return</span> Complex(real - x, imag);
+    }
+    <span class="hljs-comment">// Binary '*' (Complex Multiplication)</span>
+    <span class="hljs-comment">// Rule: (a+bi)(c+di) = (ac - bd) + (ad + bc)i</span>
+    Complex <span class="hljs-keyword">operator</span>*(<span class="hljs-keyword">const</span> Complex&amp; other) {
+        <span class="hljs-keyword">double</span> newReal = (real * other.real) - (imag * other.imag);
+        <span class="hljs-keyword">double</span> newImag = (real * other.imag) + (imag * other.real);
+        <span class="hljs-keyword">return</span> Complex(newReal, newImag);
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c2</span><span class="hljs-params">(<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>)</span></span>;
+    <span class="hljs-function">Complex <span class="hljs-title">c1</span><span class="hljs-params">(<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>)</span></span>;
+    Complex c3;
+    c3=c1+c2;
+    c3=c1+<span class="hljs-number">5.0</span>;
+    c3=c1-c2;
+    c3=c1<span class="hljs-number">-5.0</span>;
+    c3=c1*c2;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+}
+</div></code></pre>
+<h5 id="the-problem-the-%22left-hand-operand%22-rule"><strong>The Problem: The &quot;Left-Hand Operand&quot; Rule</strong></h5>
+<ul>
+<li>In C++, when you overload an operator as a Member Function (inside the class), the object on the left drives the operation.
+If operator+ is a Member Function:</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Inside class Complex</span>
+Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Complex&amp; other) { ... }
+</div></code></pre>
+<ul>
+<li><strong>Case A:</strong> c1 + c2 → becomes c1.operator+(c2) (✅ Works)</li>
+<li><strong>Case B:</strong> c1 + 5  → becomes c1.operator+(5) (✅ Works, if you have a constructor that turns 5 into a Complex).</li>
+<li><strong>Case C:</strong> 5 + c1  → becomes 5.operator+(c1) (❌ ERROR)</li>
+</ul>
+<h6 id="why-the-error"><strong>Why the Error?</strong></h6>
+<ul>
+<li>The compiler tries to look for a function called operator+ inside the int class (for the number 5). Since int is a primitive type built into C++, you cannot add methods to it. int does not know how to handle your Complex class.</li>
+</ul>
+<h6 id="the-solution-friend-global-functions">The Solution: Friend (Global) Functions</h6>
+<ul>
+<li>To make 5 + c work, we cannot rely on the int on the left. We need a function that stands outside the objects, treating both the left (5) and the right (c) as equal parameters.</li>
+<li>We use a Non-Member Function (often made a friend to access private data).</li>
+<li>Logic:
+<ul>
+<li>Instead of object.function(parameter), it becomes function(parameter1, parameter2).
+<ul>
+<li>5 + c1→becomes operator+(5, c1)</li>
+</ul>
+</li>
+<li>Since operator+ is now a global function taking two Complex arguments, the compiler sees the 5 and asks: &quot;Can I turn this int into a Complex?&quot;</li>
+<li>If you have a constructor Complex(double), the answer is YES.</li>
+</ul>
+</li>
+</ul>
+<h6 id="complete-code-example"><strong>Complete Code Example</strong></h6>
+<ul>
+<li>Here is the implementation showing how the Friend Function enables symmetry.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;      // For magnitude calculation</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;  // For out_of_range exception</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">double</span> real;
+    <span class="hljs-keyword">double</span> imag;
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// 1. Constructor (Crucial for the logic)</span>
+    <span class="hljs-comment">// This allows '5' to be implicitly converted to Complex(5.0, 0.0)</span>
+    Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : real(r), imag(i) {}
+
+    <span class="hljs-comment">// Getter methods (So we don't strictly NEED friend, but friend is common)</span>
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">getReal</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> real; }
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">getImag</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{ <span class="hljs-keyword">return</span> imag; }
+
+    <span class="hljs-comment">// Display function</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; real &lt;&lt; <span class="hljs-string">" + "</span> &lt;&lt; imag &lt;&lt; <span class="hljs-string">"i"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    }
+
+    <span class="hljs-comment">// =========================================================</span>
+    <span class="hljs-comment">// THE SOLUTION: Global Friend Function</span>
+    <span class="hljs-comment">// =========================================================</span>
+    <span class="hljs-comment">// We declare it as a friend so it can access private 'real' and 'imag'</span>
+    <span class="hljs-comment">// It takes TWO arguments: Left side and Right side</span>
+    <span class="hljs-keyword">friend</span> Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Complex&amp; lhs, <span class="hljs-keyword">const</span> Complex&amp; rhs);
+};
+
+<span class="hljs-comment">// Definition OUTSIDE the class</span>
+<span class="hljs-comment">// This is NOT a member function. It is a global function.</span>
+Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Complex&amp; lhs, <span class="hljs-keyword">const</span> Complex&amp; rhs) {
+    <span class="hljs-keyword">return</span> Complex(lhs.real + rhs.real, lhs.imag + rhs.imag);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c1</span><span class="hljs-params">(<span class="hljs-number">2.0</span>, <span class="hljs-number">4.0</span>)</span></span>;
+
+    <span class="hljs-comment">// Case 1: Complex + Complex</span>
+    Complex c2 = c1 + c1; 
+    <span class="hljs-comment">// Calls operator+(c1, c1)</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"c1 + c1 = "</span>; c2.<span class="hljs-built_in">display</span>();
+
+    <span class="hljs-comment">// Case 2: Complex + Number</span>
+    <span class="hljs-comment">// The compiler converts 10 to Complex(10, 0) automatically</span>
+    Complex c3 = c1 + <span class="hljs-number">10</span>; 
+    <span class="hljs-comment">// Calls operator+(c1, Complex(10))</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"c1 + 10 = "</span>; c3.<span class="hljs-built_in">display</span>();
+
+    <span class="hljs-comment">// Case 3: Number + Complex (THE PROBLEM SOLVED)</span>
+    <span class="hljs-comment">// The compiler converts 5 to Complex(5, 0) automatically</span>
+    Complex c4 = <span class="hljs-number">5</span> + c1; 
+    <span class="hljs-comment">// Calls operator+(Complex(5), c1)</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"5 + c1  = "</span>; c4.<span class="hljs-built_in">display</span>();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h6 id="summary-checklist-to-support-5--c"><strong>Summary Checklist To support 5 + c:</strong></h6>
+<ul>
+<li>Do NOT use a Member Function for the operator.</li>
+<li>Use a Non-Member (Global) function.</li>
+<li>Make it a friend if you need access to private variables.</li>
+<li>Ensure you have a Constructor that takes a single number (e.g., Complex(double r)) so the compiler can convert the 5 into a Complex object automatically.</li>
+</ul>
+<h5 id="stream-io-operators">STREAM I/O OPERATORS</h5>
+<ul>
+<li>Must be Non-Member Friends</li>
+<li>To print your object using cout &lt;&lt; obj, you must overload the &lt;&lt; operator as a global friend function, not a member function.<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;      // For magnitude calculation</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;  // For out_of_range exception</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span> {</span>
+<span class="hljs-keyword">private</span>:
+  <span class="hljs-keyword">double</span> real;
+  <span class="hljs-keyword">double</span> imag;
+
+<span class="hljs-keyword">public</span>:
+   <span class="hljs-comment">// Constructor (Default and Parameterized)</span>
+    Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : real(r), imag(i) {}  
+    <span class="hljs-comment">// Friend function to access private members</span>
+
+    <span class="hljs-keyword">friend</span> <span class="hljs-built_in">std</span>::ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(<span class="hljs-built_in">std</span>::ostream&amp; os, <span class="hljs-keyword">const</span> Complex&amp; c);
+    <span class="hljs-keyword">friend</span> <span class="hljs-built_in">std</span>::istream&amp; <span class="hljs-keyword">operator</span>&gt;&gt;(<span class="hljs-built_in">std</span>::istream&amp; is, Complex&amp; c);
+};
+
+<span class="hljs-comment">// Definition (outside the class)</span>
+<span class="hljs-comment">// Output: cout &lt;&lt; c</span>
+<span class="hljs-built_in">std</span>::ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(<span class="hljs-built_in">std</span>::ostream&amp; os,<span class="hljs-keyword">const</span> Complex&amp; c) {
+  os &lt;&lt; <span class="hljs-string">"("</span> &lt;&lt; c.real &lt;&lt; (c.imag &gt;= <span class="hljs-number">0</span> ? <span class="hljs-string">" + "</span> : <span class="hljs-string">" - "</span>) 
+     &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">abs</span>(c.imag) &lt;&lt; <span class="hljs-string">"i)"</span>;
+  <span class="hljs-keyword">return</span> os;
+}
+
+<span class="hljs-comment">// Input: cin &gt;&gt; c</span>
+<span class="hljs-built_in">std</span>::istream&amp; <span class="hljs-keyword">operator</span>&gt;&gt;(<span class="hljs-built_in">std</span>::istream&amp; is, Complex&amp; c) {
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Enter Real: "</span>;
+    is &gt;&gt; c.real;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Enter Imag: "</span>;
+    is &gt;&gt; c.imag;
+    <span class="hljs-keyword">return</span> is;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-number">2.5</span>,<span class="hljs-number">3.5</span>)</span></span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">// Works like a native type!</span>
+}
+</div></code></pre>
+</li>
+</ul>
+<h5 id="compound-assignment-operator">COMPOUND ASSIGNMENT OPERATOR</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;      // For magnitude calculation</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;  // For out_of_range exception</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">double</span> real;
+    <span class="hljs-keyword">double</span> imag;
+
+<span class="hljs-keyword">public</span>:
+Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : real(r), imag(i) {}
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; real &lt;&lt; <span class="hljs-string">" + "</span> &lt;&lt; imag &lt;&lt; <span class="hljs-string">"i"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    }
+    <span class="hljs-comment">// =============================================================</span>
+    <span class="hljs-comment">// SECTION 4: ASSIGNMENT &amp; COMPOUND ASSIGNMENT</span>
+    <span class="hljs-comment">// (Must be Member Functions)</span>
+    <span class="hljs-comment">// =============================================================</span>
+    
+    <span class="hljs-comment">// 1. Compound Assignment (+=)</span>
+    <span class="hljs-comment">// We implement this first so the Binary '+' can use it.</span>
+    Complex&amp; <span class="hljs-keyword">operator</span>+=(<span class="hljs-keyword">const</span> Complex&amp; rhs) {
+        <span class="hljs-keyword">this</span>-&gt;real += rhs.real;
+        <span class="hljs-keyword">this</span>-&gt;imag += rhs.imag;
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>; <span class="hljs-comment">// Return reference to allow (a += b)</span>
+    }
+
+    <span class="hljs-comment">// 2. Assignment Operator (=)</span>
+    <span class="hljs-comment">// (Compiler generates a default one, but here is the manual syntax)</span>
+    Complex&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Complex&amp; other) {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span> == &amp;other) <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>; <span class="hljs-comment">// Self-assignment check</span>
+        real = other.real;
+        imag = other.imag;
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;
+    }
+};
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c1</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>;
+    <span class="hljs-function">Complex <span class="hljs-title">c2</span><span class="hljs-params">(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)</span></span>;
+    c1 += c2; <span class="hljs-comment">// c1 becomes 4 + 6i</span>
+
+<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+</div></code></pre>
+<h5 id="unary-operators">UNARY OPERATORS</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;      // For magnitude calculation</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;  // For out_of_range exception</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span>{</span>
+  <span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">double</span> real;
+    <span class="hljs-keyword">double</span> imag;
+
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// Constructor (Default and Parameterized)</span>
+    Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : real(r), imag(i) {}
+    <span class="hljs-comment">// =============================================================</span>
+    <span class="hljs-comment">// UNARY OPERATORS</span>
+    <span class="hljs-comment">// (Modify the single object)</span>
+    <span class="hljs-comment">// =============================================================</span>
+
+    <span class="hljs-comment">// 1. Unary Negation (-) -&gt; Returns -a -bi</span>
+    Complex <span class="hljs-keyword">operator</span>-() <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> Complex(-real, -imag);
+    }
+
+    <span class="hljs-comment">// 2. Prefix Increment (++c) -&gt; Increment, then return</span>
+    Complex&amp; <span class="hljs-keyword">operator</span>++() {
+        ++real; <span class="hljs-comment">// Let's say we only increment real part for math reasons</span>
+        <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;
+    }
+
+    <span class="hljs-comment">// 3. Postfix Increment (c++) -&gt; Return copy, then Increment</span>
+    Complex <span class="hljs-keyword">operator</span>++(<span class="hljs-keyword">int</span>) {
+        Complex temp = *<span class="hljs-keyword">this</span>;
+        ++(*<span class="hljs-keyword">this</span>); <span class="hljs-comment">// Call the prefix version</span>
+        <span class="hljs-keyword">return</span> temp;
+    }
+  };
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c2</span><span class="hljs-params">(<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>)</span></span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Prefix ++: "</span> &lt;&lt; ++c2 &lt;&lt; <span class="hljs-string">"\n"</span>; <span class="hljs-comment">// (2, 2)</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Postfix ++: "</span> &lt;&lt; c2++ &lt;&lt; <span class="hljs-string">" (Value before increment)\n"</span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Current c2: "</span> &lt;&lt; c2 &lt;&lt; <span class="hljs-string">"\n\n"</span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h5 id="data-access-operators-make-object-act-like-array-or-function">DATA ACCESS OPERATORS (Make object act like Array or Function)</h5>
+<ul>
+<li>(Make object act like Array or Function)</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;      // For magnitude calculation</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;  // For out_of_range exception</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">double</span> real;
+    <span class="hljs-keyword">double</span> imag;
+
+<span class="hljs-keyword">public</span>:
+Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : real(r), imag(i) {}
+  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; real &lt;&lt; <span class="hljs-string">" + "</span> &lt;&lt; imag &lt;&lt; <span class="hljs-string">"i"</span> &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+    }
+    <span class="hljs-comment">// =============================================================</span>
+    <span class="hljs-comment">// SECTION 6: DATA ACCESS OPERATORS</span>
+    <span class="hljs-comment">// (Make object act like Array or Function)</span>
+    <span class="hljs-comment">// =============================================================</span>
+    <span class="hljs-comment">// 1. Subscript Operator [] -&gt; Access real (0) or imag (1)</span>
+    <span class="hljs-comment">// Non-const version (for writing: c[0] = 5)</span>
+    <span class="hljs-keyword">double</span>&amp; <span class="hljs-keyword">operator</span>[](<span class="hljs-keyword">int</span> index) {
+        <span class="hljs-keyword">if</span> (index == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> real;
+        <span class="hljs-keyword">if</span> (index == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> imag;
+        <span class="hljs-keyword">throw</span> <span class="hljs-built_in">std</span>::out_of_range(<span class="hljs-string">"Index must be 0 or 1"</span>);
+    }
+
+    <span class="hljs-comment">// Const version (for reading: cout &lt;&lt; c[0])</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span>&amp; <span class="hljs-keyword">operator</span>[](<span class="hljs-keyword">int</span> index) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">if</span> (index == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> real;
+        <span class="hljs-keyword">if</span> (index == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> imag;
+        <span class="hljs-keyword">throw</span> <span class="hljs-built_in">std</span>::out_of_range(<span class="hljs-string">"Index must be 0 or 1"</span>);
+    }
+
+    <span class="hljs-comment">// 2. Function Call Operator () -&gt; Functor</span>
+    <span class="hljs-comment">// Let's make c() return the Magnitude (Pythagoras theorem)</span>
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">sqrt</span>(real*real + imag*imag);
+    }
+
+};
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c1</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>;
+    c1[<span class="hljs-number">0</span>] = <span class="hljs-number">100</span>; <span class="hljs-comment">// Modify real part using []</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Modified c1 using []: "</span> &lt;&lt; c1 &lt;&lt; <span class="hljs-string">"\n"</span>;
+    <span class="hljs-comment">// Using () as a function to calculate magnitude</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Magnitude of c1 (using functor): "</span> &lt;&lt; c1() &lt;&lt; <span class="hljs-string">"\n\n"</span>;
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+</div></code></pre>
+<h5 id="comparison-operators">Comparison Operators</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cmath&gt;      // For magnitude calculation</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdexcept&gt;  // For out_of_range exception</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span>{</span>
+  <span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">double</span> real;
+    <span class="hljs-keyword">double</span> imag;
+  <span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// Constructor (Default and Parameterized)</span>
+    Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : real(r), imag(i) {}
+    <span class="hljs-comment">// Comparison '==' </span>
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>==(<span class="hljs-keyword">const</span> Complex&amp; other) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> (real == other.real) &amp;&amp; (imag == other.imag);
+    }
+
+    <span class="hljs-comment">// Comparison '!=' </span>
+    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>!=(<span class="hljs-keyword">const</span> Complex&amp; other) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> !(*<span class="hljs-keyword">this</span> == other); <span class="hljs-comment">// Reuse the logic from ==</span>
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c1</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>;
+    <span class="hljs-function">Complex <span class="hljs-title">c2</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>;
+    <span class="hljs-function">Complex <span class="hljs-title">c3</span><span class="hljs-params">(<span class="hljs-number">4</span>, <span class="hljs-number">4</span>)</span></span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;(c1==c2)&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">//1 </span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;(c1!=c3)&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">//1 </span>
+    <span class="hljs-keyword">if</span>(c1==c2){<span class="hljs-comment">//True</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"True"</span>&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;    
+    }
+    <span class="hljs-keyword">else</span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"False"</span>&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;    
+    }
+    <span class="hljs-keyword">if</span>(c1!=c3){ <span class="hljs-comment">//True</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"True"</span>&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;    
+    }
+    <span class="hljs-keyword">else</span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"False"</span>&lt;&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;    
+    }
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h5 id="summary-sections">Summary Sections</h5>
+<ul>
+<li>
+<h6 id="brief-of-all-sections">Brief of all Sections</h6>
+<ul>
+<li>Binary Math (+): Implemented as a Friend function outside the class. This enables the line Complex magic = 5 + c1; to work perfectly.</li>
+<li>Stream I/O (&lt;&lt;, &gt;&gt;): Implemented as Friend functions. It handles formatting logic (printing + or - correctly).</li>
+<li>Comparison (==): Implemented as a Friend function returning bool.</li>
+<li>Assignment (+=): Implemented as a Member function because it modifies this object directly.</li>
+<li>Unary (-, ++): Implemented as Member functions. Note the dummy int parameter in the Postfix operator++(int) to distinguish it from Prefix.</li>
+<li>Access ([], ()): Implemented as Member functions.</li>
+<li>[] allows array-style access (c[0]).</li>
+<li>() allows the object to be called like a function to return its magnitude.</li>
+</ul>
+</li>
+<li>
+<h6 id="section-1-binary-arithmetic-operators"><strong>Section 1: Binary Arithmetic Operators</strong></h6>
+<ul>
+<li>Used for mathematical calculations between two objects.
+<ul>
+<li>Operators: + (Add), - (Subtract), * (Multiply), / (Divide), % (Modulus).</li>
+<li>Implementation Rule: Best implemented as Non-Member (Friend) Functions.</li>
+<li>Why? To allow symmetry (e.g., Object + 5 AND 5 + Object).</li>
+<li>Return Type: Returns by Value (creates a new result).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h6 id="section-2-stream-inputoutput-operators"><strong>Section 2: Stream Input/Output Operators</strong></h6>
+<ul>
+<li>Used for printing objects to the console or reading from files.
+<ul>
+<li>Operators: &lt;&lt; (Output/Insertion), &gt;&gt; (Input/Extraction).</li>
+<li>Implementation Rule: MUST be Non-Member (Friend) Functions.</li>
+<li>Why? The object on the left side is std::ostream (cout), not your class.</li>
+<li>Return Type: Returns std::ostream&amp; or std::istream&amp; (by Reference) to allow chaining (cout &lt;&lt; a &lt;&lt; b).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h6 id="section-3-comparison-relational-operators"><strong>Section 3: Comparison (Relational) Operators</strong></h6>
+<ul>
+<li>Used for sorting, searching, and logic checks.
+<ul>
+<li>Operators: ==, !=, &lt;, &gt;, &lt;=, &gt;= (and C++20 &lt;=&gt;).</li>
+<li>Implementation Rule: Can be Member or Non-Member. (Non-Member preferred for symmetry).</li>
+<li>Return Type: Always returns bool.</li>
+<li>Modern C++: In C++20, you often only need to overload &lt;=&gt; (Spaceship Operator), and the compiler generates the rest automatically.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h6 id="section-4-assignment--compound-assignment"><strong>Section 4: Assignment &amp; Compound Assignment</strong></h6>
+<ul>
+<li>Used for copying data or updating an object's value.
+<ul>
+<li>Operators:
+<ul>
+<li>Copy Assignment: = (Crucial for classes with pointers - Rule of Three).</li>
+<li>Compound: +=, -=, *=, /=.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Implementation Rule: MUST be Member Functions.</li>
+<li>Why? They modify this object directly.</li>
+<li>Return Type: Returns *this by Reference (Class&amp;).</li>
+</ul>
+</li>
+<li>
+<h6 id="section-5-unary-operators"><strong>Section 5: Unary Operators</strong></h6>
+<ul>
+<li>Used to modify a single object.
+<ul>
+<li>Operators:
+<ul>
+<li>Increment/Decrement: ++, -- (Prefix and Postfix versions).</li>
+<li>Negation/Logic: - (Negative), ! (Not), ~ (Bitwise Not).</li>
+</ul>
+</li>
+<li>Implementation Rule: Usually Member Functions.</li>
+<li>Nuance: You must distinguish between Prefix (++obj) and Postfix (obj++ taking a dummy int).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h6 id="section-6-data-access--smart-pointer-operators"><strong>Section 6: Data Access &amp; Smart Pointer Operators</strong></h6>
+<ul>
+<li>Used to make objects behave like Arrays, Functions, or Pointers.
+<ul>
+<li>Operators:
+<ul>
+<li>Subscript: [] (Makes object behave like an array/vector).</li>
+<li>Function Call: () (Makes object behave like a function/Functor).</li>
+<li>Arrow/Dereference: -&gt;, * (Makes object behave like a Smart Pointer).</li>
+</ul>
+</li>
+<li>Implementation Rule: MUST be Member Functions.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h6 id="section-7-memory-management-operators"><strong>Section 7: Memory Management Operators</strong></h6>
+<ul>
+<li>Used for controlling low-level memory allocation.
+<ul>
+<li>Operators: new, new[], delete, delete[].</li>
+<li>Implementation Rule: These are static member functions (implicitly).</li>
+<li>Use Case: Advanced users writing custom memory pools or tracking memory leaks.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h6 id="summary-table-for-quick-reference"><strong>Summary Table for Quick Reference</strong></h6>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Operators</th>
+<th>Implementation</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Math</td>
+<td>+ - * /</td>
+<td>Friend</td>
+<td>Value  (New Object)</td>
+</tr>
+<tr>
+<td>2. I/O</td>
+<td>&lt;&lt; &gt;&gt;</td>
+<td>Friend	Reference</td>
+<td>(ostream&amp;)</td>
+</tr>
+<tr>
+<td>3. Comparison</td>
+<td>== &lt; &gt;</td>
+<td>Friend/Member</td>
+<td>bool</td>
+</tr>
+<tr>
+<td>4. Assignment</td>
+<td>= +=</td>
+<td>Member</td>
+<td>Reference (*this)</td>
+</tr>
+<tr>
+<td>5. Unary</td>
+<td>++ -- -</td>
+<td>Member</td>
+<td>Ref (Prefix) / Val (Postfix)</td>
+</tr>
+<tr>
+<td>6. Access</td>
+<td>[] () -&gt;</td>
+<td>Member</td>
+<td>Value or Reference</td>
+</tr>
+<tr>
+<td>7. Memory</td>
+<td>new delete</td>
+<td>Static</td>
+<td>void* / void</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>Key Technical Details to Notice</strong></p>
+<ul>
+<li><strong>1. Const Correctness (const at the end of functions)</strong>
+Notice operator+ is defined as:<pre class="hljs"><code><div>  Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Complex&amp; other) <span class="hljs-keyword">const</span> { ... }
+</div></code></pre>
+<ul>
+<li>The argument const Complex&amp; other ensures we don't accidentally modify the number we are adding.</li>
+<li>The const at the end ensures that c1 (the left operand) is not modified by the addition. We are creating a new result, not changing the existing ones.</li>
+</ul>
+</li>
+<li><strong>2. Implicit Conversion</strong>
+We defined a constructor Complex(double r).
+This allows this line to work:<pre class="hljs"><code><div>Complex result = c1 + <span class="hljs-number">10.0</span>;
+</div></code></pre>
+The compiler sees that operator+ expects a Complex on the right side. It sees a double (10.0). It checks if it can turn a double into a Complex. It finds our constructor, creates a temporary Complex(10.0, 0), and performs the addition.</li>
+<li><strong>3. Smart Output Logic</strong>
+In the operator&lt;&lt;, we added logic:<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (c.imag &gt;= <span class="hljs-number">0</span>) os &lt;&lt; <span class="hljs-string">" + "</span> ...
+<span class="hljs-keyword">else</span> os &lt;&lt; <span class="hljs-string">" - "</span> ...
+</div></code></pre>
+This prevents the output from looking like 2 + -5i. Professional code always handles formatting edge cases like this.</li>
+</ul>
+</li>
+</ul>
+<h3 id="summary-table">Summary Table</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+<th>Key Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Function Overloading</td>
+<td>Multiple functions, same name.</td>
+<td>Signatures (param types/count) must differ.</td>
+</tr>
+<tr>
+<td>Constructor Overloading</td>
+<td>Multiple constructors.</td>
+<td>Allows creating objects in different states.</td>
+</tr>
+<tr>
+<td>Operator Overloading</td>
+<td>Custom behavior for +, -, etc.</td>
+<td>Makes classes intuitive to use (like math).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="common-mistakes">Common Mistakes</h3>
+<ul>
+<li>Ambiguity: Creating two functions void func(int x) and void func(float x) and calling func(3.5) (which is a double) causes a compiler error because it doesn't know which one to pick.</li>
+<li>Changing Meaning: Don't overload + to perform subtraction. It confuses other developers.</li>
+<li>Return Type: Remember int func() and double func() is not valid overloading. The inputs must be different.</li>
+</ul>
+<h2 id="static-members-static-member-attribute--method">Static Members (Static Member Attribute &amp; Method )</h2>
+<h3 id="static-member-attribute--rules--clarifications">Static Member Attribute   — Rules &amp; Clarifications</h3>
+<ul>
+<li>Static data members (aka “class variables”) and static member functions belong to the class itself, not to any particular object. They are shared across all instances.</li>
+<li>Definition: A variable that is shared by all objects of the class.</li>
+<li>Memory: Memory is allocated only once, no matter how many objects you create.</li>
+<li>Lifetime: It exists for the entire life of the program (from start to finish), not just when an object is alive.</li>
+</ul>
+<h4 id="key-properties-corrected--clarified">Key Properties (Corrected &amp; Clarified)</h4>
+<ul>
+<li><strong>1. Shared across all objects</strong>
+<ul>
+<li>Yes — there is one storage for the static data member that all objects read/write.</li>
+</ul>
+</li>
+<li><strong>2. Lifetime = entire program</strong>
+<ul>
+<li>Yes—static data members have static storage duration (exist from program start to end).</li>
+</ul>
+</li>
+<li><strong>3. Access from class or object</strong>
+<ul>
+<li>Yes—if public, you can access as ClassName::member or obj.member (the former is preferred for clarity).</li>
+</ul>
+</li>
+<li><strong>4. “Has constant value” → ❌ Not necessarily</strong>
+<ul>
+<li>Static does not mean const. A static member can be mutable.</li>
+<li>static const integral types (can be initialized in-class)</li>
+</ul>
+<pre class="hljs"><code><div>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Limits</span> {</span>
+  <span class="hljs-keyword">public</span>:
+      <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> MaxCount = <span class="hljs-number">100</span>; <span class="hljs-comment">// okay for integral const</span>
+  };
+</div></code></pre>
+<ul>
+<li>If you need it constant, declare it as static const or static constexpr.</li>
+<li>static constexpr (compile-time constants)</li>
+</ul>
+<pre class="hljs"><code><div>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Math</span> {</span>
+  <span class="hljs-keyword">public</span>:
+      <span class="hljs-keyword">static</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-keyword">double</span> Pi = <span class="hljs-number">3.141592653589793</span>;
+  };
+</div></code></pre>
+<ul>
+<li>C++17 inline static data member (no .cpp definition needed)<pre class="hljs"><code><div>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Registry</span> {</span>
+  <span class="hljs-keyword">public</span>:
+      <span class="hljs-keyword">inline</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt; plugins {}; <span class="hljs-comment">// single definition across TUs</span>
+  };
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DB</span> {</span>
+    <span class="hljs-keyword">inline</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> connectionString = <span class="hljs-string">"localhost:5432"</span>;
+};
+</div></code></pre>
+<ul>
+<li>Common Pitfalls :: ODR violations (One Definition Rule)
+<ul>
+<li>Don’t define the same static member in multiple translation units.</li>
+<li>Use inline static (C++17) if you need header-only definitions.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>5. Must be initialized → ⚠️ Needs a definition</strong>
+<ul>
+<li>Static data members must be defined once in a .cpp file (unless they’re inline in C++17+).</li>
+<li>Some can be initialized in-class (e.g., static constexpr), others require an out-of-class definition.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Header (.h)</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Counter</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> total; <span class="hljs-comment">// declaration</span>
+    Counter() { ++total; }
+};
+<span class="hljs-comment">// Source (.cpp)</span>
+<span class="hljs-keyword">int</span> Counter::total = <span class="hljs-number">0</span>; <span class="hljs-comment">// definition &amp; initialization</span>
+
+</div></code></pre>
+</li>
+<li><strong>6. Can be public or private</strong>
+<ul>
+<li>Yes—normal access rules apply.</li>
+</ul>
+</li>
+<li><strong>7. Usable in all member functions</strong>
+<ul>
+<li>Yes—any member function (including static and non-static) can access static members.</li>
+<li>Note: a static member function cannot access non-static members because it has no this.</li>
+</ul>
+</li>
+</ul>
+<h4 id="additional-clarifications">Additional Clarifications</h4>
+<ul>
+<li><strong>Not part of each object</strong>
+<ul>
+<li>Correct—they are not constructed per object, and constructors don’t initialize static data members.</li>
+</ul>
+</li>
+<li><strong>Memory allocated once</strong>
+<ul>
+<li>Correct—allocated once for the program lifetime.</li>
+</ul>
+</li>
+<li><strong>Exists independently of instances</strong>
+<ul>
+<li>Yes—you can use static members even if no object exists</li>
+</ul>
+</li>
+</ul>
+<h3 id="static-member-function--rules--clarifications">Static Member Function   — Rules &amp; Clarifications</h3>
+<ul>
+<li>Definition: A function that belongs to the class, not a specific object</li>
+<li>No this Pointer: Static methods cannot access this.</li>
+<li>Restriction: They can ONLY access Static Attributes or other Static Methods. They cannot touch normal (non-static) variables.</li>
+<li>Calling: You call them using the class name: ClassName::Method().</li>
+<li>Deal only with static attributes?
+<ul>
+<li>They can deal with both static and non-static if you pass an object reference as a parameter.</li>
+<li>Without an object, they cannot access non-static members (no this).</li>
+</ul>
+</li>
+<li>this is not available
+<ul>
+<li>Correct—static functions have no this pointer.</li>
+</ul>
+</li>
+<li>Call by class name or object
+<ul>
+<li>Both compile, but prefer ClassName::func() for clarity.</li>
+</ul>
+</li>
+<li>
+<h4 id="comparison-table-non-static-member-normal-vs-static-member">Comparison Table Non-Static Member (Normal) Vs	Static Member</h4>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Non-Static Member (Normal)</th>
+<th>Static Member</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Copies</td>
+<td>1 copy per Object</td>
+<td>1 copy per Class (Shared)</td>
+</tr>
+<tr>
+<td>Lifetime</td>
+<td>Created/Destroyed with object</td>
+<td>Program Start to End</td>
+</tr>
+<tr>
+<td>Access (Inside)</td>
+<td>Can access everything</td>
+<td>Can ONLY access other Statics</td>
+</tr>
+<tr>
+<td>Access (Outside)</td>
+<td>obj.method()</td>
+<td>ClassName::method()</td>
+</tr>
+<tr>
+<td>this pointer</td>
+<td>Available</td>
+<td>Not Available</td>
+</tr>
+<tr>
+<td>Usage</td>
+<td>Storing state (Name, ID, HP)</td>
+<td>Counters, Utilities, Settings</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="static-storage-in-different-contexts">Static Storage in Different Contexts</h3>
+<ul>
+<li>
+<h4 id="1-static-local-variable-function-scope">1. Static local variable (function scope)</h4>
+<ul>
+<li>Initialized once on first call, then persists across calls.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">function</span><span class="hljs-params">()</span> </span>{    
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> counter = <span class="hljs-number">0</span>;    
+  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"counter="</span> &lt;&lt; ++counter &lt;&lt; <span class="hljs-string">"\n"</span>;
+  }
+  <span class="hljs-comment">//Output across calls: 1, 2, 3, …</span>
+</div></code></pre>
+</li>
+<li>
+<h4 id="2-static-data-namespaceglobal-scope">2. Static data (namespace/global scope)</h4>
+<ul>
+<li>File-level static (C) means internal linkage (visible only in that translation unit).</li>
+<li>Change Scope from SW-Scope to File-Scope</li>
+</ul>
+<pre class="hljs"><code><div>
+<span class="hljs-comment">// In a .cpp file</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> internalState = <span class="hljs-number">42</span>;  <span class="hljs-comment">// not visible from other source </span>
+</div></code></pre>
+</li>
+<li>
+<h4 id="3-static-class-members">3. Static class members</h4>
+<ul>
+<li>Shared across all instances; not constructed by object constructors.<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">X</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> shared;
+};
+<span class="hljs-keyword">int</span> X::shared = <span class="hljs-number">0</span>; <span class="hljs-comment">// definition once</span>
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="advantages-of-static-shared-configuration-refined">Advantages of Static Shared Configuration (Refined)</h3>
+<ul>
+<li><strong>Consistency</strong>
+<ul>
+<li>One authoritative configuration shared by all parts of the program.</li>
+</ul>
+</li>
+<li><strong>Ease of Access</strong>
+<ul>
+<li>Access via ClassName::member—no need to instantiate just to read config.</li>
+</ul>
+</li>
+<li><strong>Encapsulation</strong>
+<ul>
+<li>Keeps config private to the class; exposes controlled setters/getters.</li>
+</ul>
+</li>
+<li><strong>Resource Efficiency</strong>
+<ul>
+<li>Encourages single shared resource (e.g., connection pool) instead of multiple redundant instances.</li>
+</ul>
+</li>
+</ul>
+<h3 id="use-cases">use cases</h3>
+<ul>
+<li>
+<h4 id="static-member-attributes-shared-data">Static Member Attributes (Shared Data)</h4>
+<ul>
+<li>
+<h5 id="use-case-1-object-counters">Use Case 1: Object Counters</h5>
+<ul>
+<li>To track how many objects of a class are currently active.</li>
+</ul>
+<pre class="hljs"><code><div>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Enemy</span> {</span>
+    <span class="hljs-keyword">public</span>:
+      <span class="hljs-comment">// Declaration inside class</span>
+      <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> enemyCount; 
+
+      Enemy() { 
+          enemyCount++; <span class="hljs-comment">// All objects share this variable</span>
+      }
+      
+      ~Enemy() {
+          enemyCount--;
+      }
+  };
+
+  <span class="hljs-comment">// CRITICAL: Initialization must happen OUTSIDE the class</span>
+  <span class="hljs-keyword">int</span> Enemy::enemyCount = <span class="hljs-number">0</span>; 
+
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+      Enemy e1;
+      Enemy e2;
+      <span class="hljs-built_in">cout</span> &lt;&lt; Enemy::enemyCount; <span class="hljs-comment">// Output: 2</span>
+      {
+          Enemy e3;
+          <span class="hljs-built_in">cout</span> &lt;&lt; Enemy::enemyCount; <span class="hljs-comment">// Output: 3</span>
+      } <span class="hljs-comment">// e3 dies here</span>
+      <span class="hljs-built_in">cout</span> &lt;&lt; Enemy::enemyCount; <span class="hljs-comment">// Output: 2</span>
+  }
+</div></code></pre>
+</li>
+<li>
+<h5 id="use-case-2-shared-configuration--constants">Use Case 2: Shared Configuration / Constants</h5>
+<ul>
+<li>To store settings or constants that should be the same for every object. If you change it, it changes for everyone.<pre class="hljs"><code><div>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServerConnection</span> {</span>
+  <span class="hljs-keyword">public</span>:
+      <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> serverURL; <span class="hljs-comment">// Shared URL</span>
+      <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">connect</span><span class="hljs-params">()</span> </span>{
+          <span class="hljs-comment">// Uses the shared URL</span>
+          <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Connecting to "</span> &lt;&lt; serverURL &lt;&lt; <span class="hljs-string">"..."</span>;
+      }
+  };
+  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span> ServerConnection::serverURL = <span class="hljs-string">"127.0.0.1"</span>;
+  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+      ServerConnection s1, s2;
+      <span class="hljs-comment">// Changing it for the CLASS changes it for ALL objects</span>
+      ServerConnection::serverURL = <span class="hljs-string">"192.168.1.50"</span>; 
+      s1.<span class="hljs-built_in">connect</span>(); <span class="hljs-comment">// Connects to 192.168.1.50</span>
+      s2.<span class="hljs-built_in">connect</span>(); <span class="hljs-comment">// Connects to 192.168.1.50</span>
+  }
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<h4 id="static-member-methods-shared-functions">Static Member Methods (Shared Functions)</h4>
+<ul>
+<li>
+<h5 id="use-case-1-utility--helper-functions">Use Case 1: Utility / Helper Functions</h5>
+<ul>
+<li>Functions that perform a task but don't need to know the state of any specific object. This groups related functions together (Encapsulation).<pre class="hljs"><code><div>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MathHelper</span> {</span>
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-comment">// No need to create a 'MathHelper' object just to add numbers</span>
+        <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{
+            <span class="hljs-keyword">return</span> a + b;
+        }
+        
+        <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">square</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span> </span>{
+            <span class="hljs-keyword">return</span> a * a;
+        }
+    };
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// Called directly using Class Name</span>
+        <span class="hljs-keyword">int</span> result = MathHelper::add(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>); 
+    }
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<h5 id="use-case-2-accessing-private-static-data">Use Case 2: Accessing Private Static Data</h5>
+<ul>
+<li>If your static attribute is private (for encapsulation), you need a public static method to read or modify it.<pre class="hljs"><code><div>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">System</span> {</span>
+    <span class="hljs-keyword">private</span>:
+        <span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> isRunning; <span class="hljs-comment">// Private shared variable</span>
+    <span class="hljs-keyword">public</span>:
+        <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">getStatus</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">return</span> isRunning;
+        }
+    };
+    <span class="hljs-keyword">bool</span> System::isRunning = <span class="hljs-literal">true</span>;
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// System s; </span>
+        <span class="hljs-comment">// s.getStatus(); // You COULD do this, but it's confusing.</span>
+        
+        <span class="hljs-comment">// Correct usage:</span>
+        <span class="hljs-keyword">if</span> (System::getStatus()) { ... }
+    }
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<h5 id="use-case-3-factory-methods-recap">Use Case 3: Factory Methods (Recap)</h5>
+<ul>
+<li>As discussed in your previous note, Factory Methods must be static because they are used to create the object. You can't call a normal method before you have an object!<pre class="hljs"><code><div>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> {</span>
+      User() {} 
+  <span class="hljs-keyword">public</span>:
+      <span class="hljs-function"><span class="hljs-keyword">static</span> User* <span class="hljs-title">create</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> User(); }
+  };
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Database</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// Static attributes for shared configuration</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">string</span> host;
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">string</span> user;
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">string</span> password;
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// Static methods to set configuration</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setConfig</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; dbHost, <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; dbUser, <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; dbPassword)</span> </span>{
+        host = dbHost;
+        user = dbUser;
+        password = dbPassword;
+    }
+
+    <span class="hljs-comment">// Static methods to get configuration</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printConfig</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Database Configuration:"</span> &lt;&lt; <span class="hljs-built_in">endl</span>;
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Host: "</span> &lt;&lt; host &lt;&lt; <span class="hljs-built_in">endl</span>;
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"User: "</span> &lt;&lt; user &lt;&lt; <span class="hljs-built_in">endl</span>;
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Password: "</span> &lt;&lt; password &lt;&lt; <span class="hljs-built_in">endl</span>;
+    }
+
+    <span class="hljs-comment">// Simulate a database connection</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">connect</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Connecting to database at "</span> &lt;&lt; host &lt;&lt; <span class="hljs-string">" with user "</span> &lt;&lt; user &lt;&lt; <span class="hljs-built_in">endl</span>;
+        <span class="hljs-comment">// Here, you would add actual database connection logic</span>
+    }
+};
+<span class="hljs-comment">// Definition of static attributes (exactly once, typically in a .cpp)</span>
+<span class="hljs-built_in">string</span> Database::host = <span class="hljs-string">"localhost"</span>;
+<span class="hljs-built_in">string</span> Database::user = <span class="hljs-string">"root"</span>;
+<span class="hljs-built_in">string</span> Database::password = <span class="hljs-string">"root"</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Default configuration</span>
+    Database::printConfig();
+
+    <span class="hljs-comment">// Update configuration</span>
+    Database::setConfig(<span class="hljs-string">"127.0.0.1"</span>, <span class="hljs-string">"admin"</span>, <span class="hljs-string">"admin123"</span>);
+
+    <span class="hljs-comment">// Print updated configuration</span>
+    Database::printConfig();
+
+    <span class="hljs-comment">// Connect to the database</span>
+    Database::<span class="hljs-built_in">connect</span>();
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h3 id="considerations--enhancements-on-example">Considerations &amp; Enhancements on Example</h3>
+<h4 id="1-thread-safety-already-applied">1) Thread Safety (already applied)</h4>
+<ul>
+<li>Use std::mutex and std::lock_guard when reading/writing shared static state.<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Database</span> {</span>
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-comment">// Static attributes for shared configuration (class-wide state)</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">string</span> host;
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">string</span> user;
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">string</span> password;
+
+    <span class="hljs-comment">// Thread-safety for shared config</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-built_in">std</span>::mutex configMutex;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-comment">// Static method to set configuration (thread-safe)</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setConfig</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; dbHost, <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; dbUser, <span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; dbPassword)</span> </span>{
+        <span class="hljs-function"><span class="hljs-built_in">std</span>::lock_guard&lt;<span class="hljs-built_in">std</span>::mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(configMutex)</span></span>;
+        host = dbHost;
+        user = dbUser;
+        password = dbPassword;
+    }
+
+    <span class="hljs-comment">// Static method to print configuration (thread-safe)</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printConfig</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-function"><span class="hljs-built_in">std</span>::lock_guard&lt;<span class="hljs-built_in">std</span>::mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(configMutex)</span></span>;
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Database Configuration:\n"</span>
+            &lt;&lt; <span class="hljs-string">"Host: "</span> &lt;&lt; host &lt;&lt; <span class="hljs-string">"\n"</span>
+            &lt;&lt; <span class="hljs-string">"User: "</span> &lt;&lt; user &lt;&lt; <span class="hljs-string">"\n"</span>
+            &lt;&lt; <span class="hljs-string">"Password: "</span> &lt;&lt; password &lt;&lt; <span class="hljs-string">"\n"</span>;
+    }
+    <span class="hljs-comment">// Simulate a database connection using shared config</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">connect</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-function"><span class="hljs-built_in">std</span>::lock_guard&lt;<span class="hljs-built_in">std</span>::mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(configMutex)</span></span>;
+        <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Connecting to database at "</span> &lt;&lt; host
+            &lt;&lt; <span class="hljs-string">" with user "</span> &lt;&lt; user &lt;&lt; <span class="hljs-string">"\n"</span>;
+        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> add actual DB connection logic</span>
+    }
+};
+</div></code></pre>
+</li>
+</ul>
+<h4 id="2-singleton-pattern-for-a-single-connection-instance">2) Singleton Pattern (for a single connection instance)</h4>
+<ul>
+<li>If you also want one global connection object, wrap it in a singleton:</li>
+</ul>
+<pre><code>```c++
+  #include &lt;memory&gt;
+  class DbConnection {
+  private:
+      DbConnection() { /* open the actual DB connection using Database::host/user/pass */ }
+      ~DbConnection() { /* close connection */ }
+  public:
+      DbConnection(const DbConnection&amp;) = delete;
+      DbConnection&amp; operator=(const DbConnection&amp;) = delete;
+      static DbConnection&amp; instance() {
+          static DbConnection conn; // Construct-on-first-use, thread-safe since C++11
+          return conn;
+      }
+      void query(const std::string&amp; sql) {
+          // execute SQL
+          std::cout &lt;&lt; &quot;Executing: &quot; &lt;&lt; sql &lt;&lt; &quot;\n&quot;;
+      }
+  };
+  int main() {
+      Database::setConfig(&quot;db.company.com&quot;, &quot;svc_user&quot;, &quot;SECRET&quot;);
+      auto&amp; conn = DbConnection::instance();
+      conn.query(&quot;SELECT * FROM users;&quot;);
+  }
+```
+</code></pre>
+<ul>
+<li>Note: Using a Singleton for a real DB connection should also handle reconnects, timeouts, and pooling if needed.</li>
+</ul>
+<ol start="3">
+<li>
+<p>Error Handling</p>
+<ul>
+<li>Validate inputs in setConfig (non-empty host/user).</li>
+<li>Fail gracefully on connection errors (exceptions or error codes).</li>
+</ul>
+</li>
+<li>
+<p>Configuration Persistence</p>
+<ul>
+<li>Read/write config from/to JSON/YAML/ENV. (e.g., using nlohmann::json or std::ifstream to parse a simple ini-like file).</li>
+</ul>
+</li>
+</ol>
+<h3 id="handling-complex-number-addition-in-c-friend-functions-vs-static-methods">Handling Complex Number Addition in C++: Friend Functions vs Static Methods</h3>
+<h4 id="scenario">Scenario</h4>
+<ul>
+<li>We have a Complex class, and we want to support adding:</li>
+<li>A Complex object and an int (e.g., 5 + c).</li>
+<li>Normally, you might use a friend function for this because the left operand (5) is not a Complex object.</li>
+<li>But you asked: How can a static function solve this instead of a friend function?</li>
+</ul>
+<h4 id="using-friend-function">using friend Function</h4>
+<ul>
+<li>For 5 + c, the operator + cannot be a member of Complex because the left operand (5) is not a Complex.
+So we usually write:<pre class="hljs"><code><div><span class="hljs-keyword">friend</span> Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">int</span> lhs, <span class="hljs-keyword">const</span> Complex&amp; rhs);
+</div></code></pre>
+</li>
+</ul>
+<h4 id="alternative-static-function">Alternative: Static Function</h4>
+<ul>
+<li>Instead of a friend, we can provide a static function inside the class that takes both operands:<pre class="hljs"><code><div>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span> {</span>
+    <span class="hljs-keyword">double</span> real, imag;
+<span class="hljs-keyword">public</span>:
+    Complex(<span class="hljs-keyword">double</span> r = <span class="hljs-number">0</span>, <span class="hljs-keyword">double</span> i = <span class="hljs-number">0</span>) : real(r), imag(i) {}
+
+    <span class="hljs-comment">// Member operator+</span>
+    Complex <span class="hljs-keyword">operator</span>+(<span class="hljs-keyword">const</span> Complex&amp; other) <span class="hljs-keyword">const</span> {
+        <span class="hljs-keyword">return</span> Complex(real + other.real, imag + other.imag);
+    }
+
+    <span class="hljs-comment">// Static function for int + Complex</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> Complex <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> lhs, <span class="hljs-keyword">const</span> Complex&amp; rhs)</span> </span>{
+        <span class="hljs-keyword">return</span> Complex(lhs + rhs.real, rhs.imag);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; real &lt;&lt; <span class="hljs-string">" + "</span> &lt;&lt; imag &lt;&lt; <span class="hljs-string">"i\n"</span>;
+    }
+};
+<span class="hljs-comment">//Usages </span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Complex <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>;
+
+    Complex result1 = c + Complex(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// Normal member operator+</span>
+    Complex result2 = Complex::add(<span class="hljs-number">5</span>, c); <span class="hljs-comment">// Static function handles 5 + c</span>
+
+    result1.<span class="hljs-built_in">display</span>(); <span class="hljs-comment">// 5 + 5i</span>
+    result2.<span class="hljs-built_in">display</span>(); <span class="hljs-comment">// 8 + 4i</span>
+}
+</div></code></pre>
+</li>
+</ul>
+<h4 id="notes-static-operator">Notes static operator</h4>
+<ul>
+<li>Operator Overloading functions cannot be static members (except for new and delete).</li>
+<li>However, the Friend Function concept acts similarly to what you might be thinking of as &quot;static&quot;:
+<ul>
+<li>It does not belong to a specific object instance (no this pointer).</li>
+<li>It is defined globally (or in the namespace).</li>
+</ul>
+</li>
+<li><strong>Clarification:</strong>
+If you try to write <code>static Complex operator+(...)</code> inside the class, the <strong>compiler will throw an error</strong>. You must use the <strong>Friend/Global</strong> approach shown above to solve the 5 + c problem.</li>
+</ul>
+<h4 id="why-is-this-a-solution">Why is this a solution?</h4>
+<ul>
+<li>Friend function gives direct access to private members.</li>
+<li>Static function is inside the class, so it can access private members without being a friend.</li>
+<li>It avoids polluting the global namespace with extra operator overloads.</li>
+</ul>
+<h4 id="limitations">Limitations</h4>
+<ul>
+<li>You lose the natural syntax 5 + c because you must call Complex::add(5, c).</li>
+<li>If you want 5 + c syntax, you still need a non-member operator+ (friend or regular function).</li>
+</ul>
+<h4 id="best-practice">Best Practice</h4>
+<ul>
+<li>If natural operator syntax is important → use friend operator+.</li>
+<li>If you want controlled access and don’t care about syntax → use static helper function.</li>
+</ul>
+
+</body>
+</html>

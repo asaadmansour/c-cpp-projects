@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2-Notes2026-Data and Memory.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h3 id="data--memory">Data &amp; Memory</h3>
+<h4 id="type-of-data">Type of Data ?</h4>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[Data in Computer] --> B[Numbers]
+    A --> C[Text]
+    A --> D[Color]
+    A --> E[Images]
+    A --> F[Audio]
+    A --> G[Video]
+
+    B --> B1["Stored as binary (e.g. 2's complement, IEEE 754)"]
+    C --> C1["Stored as ASCII or Unicode code points"]
+    D --> D1["Stored as RGB values (e.g. 255,0,0)"]
+    E --> E1["Stored as grid of pixels (RGB for each)"]
+    F --> F1["Stored as digital samples (bit depth + sample rate)"]
+    G --> G1["Stored as sequence of frames + audio stream"]
+</div></code></pre>
+<center>
+<img src="https://students.cs.uri.edu/~forensics/courses/CSC101/readings/binary_data/binary_data_files/binary5.jpg">
+<p><strong>Representing Real-World Data In The Computer</strong></p>
+</center>
+<ul>
+<li><strong>Binary   0  1</strong></li>
+<li><strong>units of Informations [data]</strong>
+<ul>
+<li>smallest unit of data  -----------&gt; bit [0 or 1]</li>
+<li>8 bit   --------------------------&gt; 1 Byte</li>
+<li>1024 Byte ------------------------&gt; KiloByte</li>
+<li>1024 KiloByte --------------------&gt; MegaByte</li>
+<li>1024 MegaByte --------------------&gt; GigaByte</li>
+</ul>
+</li>
+</ul>
+<h4 id="number-decimal-to-binary"><strong>Number Decimal to binary</strong></h4>
+<pre><code class="language-mermaid"><div class="mermaid">flowchart LR
+    A([Start]) --> B[/Input decimal number N/]
+    B --> C[Initialize empty list for binary digits]
+    C --> D{Is N > 0?}
+    D -- No --> H[Reverse binary digits]
+    H --> I[/Output binary number/]
+    I --> J([End])
+    D -- Yes --> E[/Divide N by 2/]
+    E --> F[/Store remainder 0 or 1/]
+    F --> G[/Set N = N ÷ 2 integer division/]
+    G --> D
+</div></code></pre>
+<pre class="hljs"><code><div>127 
+         divide    reminder                     
+127/2 ==&gt;  63   ==&gt; 1
+63/2  ==&gt;  31   ==&gt; 1
+31/2  ==&gt;  15   ==&gt; 1
+15/2  ==&gt;  7    ==&gt; 1
+7/2   ==&gt;  3    ==&gt; 1
+3/2   ==&gt;  1    ==&gt; 1
+3/2   ==&gt;  1    ==&gt; 1
+1/2   ==&gt;  0    ==&gt; 1
+01111 1111
+==================================
+128   64   32   16   8   4   2   1
+0      1    1    1   1   1   1   1
+==================================
+11 bit ===&gt; 2Byte 
+0000 0XXX XXXX XXXX
+==================================
+</div></code></pre>
+<ul>
+<li>
+<p><strong>binary  to Decimal</strong>
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Binary_counter.gif?20150306055705">
+<br>
+<img src="https://cdn.networkacademy.io/sites/default/files/2022-04/binary-to-decimal-examples.gif" width="40%"></p>
+</li>
+<li>
+<p><strong>Hex Decimal</strong>
+(0--&gt;0000)    (1--&gt;0001)   (2--&gt;0010)  (3--&gt;0011)  (4--&gt;0100)
+(5--&gt;0101)    (6--&gt;0110)   (7--&gt;0111)  (8--&gt;1000)  (9--&gt;1001)
+(A--&gt;1010)    (B--&gt;1011)   (C--&gt;1100)  (D--&gt;1101)  (E--&gt;1110)
+(F--&gt;1111)
+<img src="https://i.imgur.com/sjguzQ1.gif" width="20%"></p>
+</li>
+</ul>
+<h3 id="how-different-data-types-are-stored-in-memory">How Different Data Types Are Stored in Memory</h3>
+<p>Every piece of data (numbers, characters, etc.) is stored in binary form (0s and 1s) inside computer memory (RAM).
+Different data types occupy different sizes of memory and have specific storage formats.</p>
+<h4 id="%F0%9F%A7%AE-1-numbers">🧮 1. Numbers</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Example</th>
+<th>Binary Representation</th>
+<th>How It’s Stored</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Integer</strong></td>
+<td>25</td>
+<td><code>00011001</code></td>
+<td>Stored directly as binary digits (2’s complement for negatives).</td>
+</tr>
+<tr>
+<td><strong>Floating Point</strong></td>
+<td>12.5</td>
+<td><code>0 10000010 10010000000000000000000</code></td>
+<td>IEEE 754 format: 1 sign bit, exponent, and mantissa.</td>
+</tr>
+</tbody>
+</table>
+<p>5 (8-bit) → 11111011 (2’s complement)
+12.5 (float) → 01000001010010000000000000000000</p>
+<p><strong>Integers type</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Typical Size</th>
+<th>Example</th>
+<th>Stored As (Binary)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td>4 bytes (32 bits)</td>
+<td>25</td>
+<td><code>00000000 00000000 00000000 00011001</code></td>
+<td>Stored in <strong>2’s complement</strong> for negatives</td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>2 bytes</td>
+<td>25</td>
+<td><code>00000000 00011001</code></td>
+<td>Smaller range</td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td>8 bytes</td>
+<td>25</td>
+<td><code>000...00011001</code> (64 bits)</td>
+<td>Larger range</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Floating Point Types (float, double)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size</th>
+<th>Example</th>
+<th>Stored As (Binary)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>float</code></td>
+<td>4 bytes</td>
+<td>12.5</td>
+<td>IEEE 754 format</td>
+<td>1 bit sign + 8 bits exponent + 23 bits mantissa</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>8 bytes</td>
+<td>12.5</td>
+<td>IEEE 754 double precision</td>
+<td>1 bit sign + 11 bits exponent + 52 bits mantissa</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div>Example (<span class="hljs-keyword">float</span> <span class="hljs-number">12.5</span>):
+Sign = <span class="hljs-number">0</span> (positive)
+Exponent = <span class="hljs-number">10000010</span>
+Mantissa = <span class="hljs-number">10010000000000000000000</span>
+Binary = <span class="hljs-number">0</span> <span class="hljs-number">10000010</span> <span class="hljs-number">10010000000000000000000</span>
+</div></code></pre>
+<h4 id="%F0%9F%94%A1-2-text">🔡 2. Text</h4>
+<ul>
+<li>
+<p>Text characters are stored as numbers, according to encoding systems like:</p>
+<table>
+<thead>
+<tr>
+<th>Encoding</th>
+<th>Example</th>
+<th>Binary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASCII</strong></td>
+<td>'A' → 65</td>
+<td><code>01000001</code></td>
+</tr>
+<tr>
+<td><strong>Unicode (UTF-8)</strong></td>
+<td>'A' → 65</td>
+<td><code>01000001</code></td>
+</tr>
+<tr>
+<td></td>
+<td>'あ' (Japanese)</td>
+<td><code>11100011 10000010 10000010</code></td>
+</tr>
+</tbody>
+</table>
+<p>Hi&quot; → H (01001000) i (01101001)
+Memory: 01001000 01101001</p>
+</li>
+<li>
+<p><strong>Character Types (char)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Size</th>
+<th>Example</th>
+<th>Stored As (Binary)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>char</code></td>
+<td>1 byte (8 bits)</td>
+<td><code>'A'</code></td>
+<td><code>01000001</code></td>
+<td>Stored as <strong>ASCII</strong> or <strong>Unicode</strong> value</td>
+</tr>
+<tr>
+<td><code>wchar_t</code> / <code>char16_t</code></td>
+<td>2–4 bytes</td>
+<td><code>'あ'</code></td>
+<td>Unicode (UTF-16/UTF-32)</td>
+<td>Used for wide characters</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>string</strong> : Strings are arrays of characters stored sequentially in memory.
+Example:
+&quot;CAT&quot;</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>ASCII</th>
+<th>Binary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C</td>
+<td>67</td>
+<td>01000011</td>
+</tr>
+<tr>
+<td>A</td>
+<td>65</td>
+<td>01000001</td>
+</tr>
+<tr>
+<td>T</td>
+<td>84</td>
+<td>01010100</td>
+</tr>
+<tr>
+<td><code>\0</code> (null terminator)</td>
+<td>0</td>
+<td>00000000</td>
+</tr>
+</tbody>
+</table>
+<p>💡 Memory Layout:
+Address:   1000 1001 1002 1003
+Content:   67   65   84   0</p>
+</li>
+</ul>
+<h4 id="%F0%9F%8E%A8-3-colors">🎨 3. Colors</h4>
+<ul>
+<li>Colors are stored as numbers too — usually RGB (Red, Green, Blue) values.
+Color ==&gt; RGB (Red,Green,Blue) 0-255 ==&gt; Binary</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Color</th>
+<th>RGB Values</th>
+<th>Binary Representation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Red</strong></td>
+<td>(255, 0, 0)</td>
+<td><code>11111111 00000000 00000000</code></td>
+</tr>
+<tr>
+<td><strong>Green</strong></td>
+<td>(0, 255, 0)</td>
+<td><code>00000000 11111111 00000000</code></td>
+</tr>
+<tr>
+<td><strong>Blue</strong></td>
+<td>(0, 0, 255)</td>
+<td><code>00000000 00000000 11111111</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Color</th>
+<th>RGB</th>
+<th>Hex Color Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Black</td>
+<td>(0,0,0)</td>
+<td>#00 00 00</td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>(0,0,255)</td>
+<td>#00 00 FF</td>
+</tr>
+<tr>
+<td>Gray</td>
+<td>(128,128,128)</td>
+<td>#80 80 80</td>
+</tr>
+<tr>
+<td>Green</td>
+<td>(0,128,0)</td>
+<td>#00 80 00</td>
+</tr>
+<tr>
+<td>Purple</td>
+<td>(128,0,128)</td>
+<td>#80 00 80</td>
+</tr>
+<tr>
+<td>Red</td>
+<td>(255,0,0)</td>
+<td>#FF 00 00</td>
+</tr>
+<tr>
+<td>white</td>
+<td>(255,255,255)</td>
+<td>#FF FF FF</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Each color channel is typically 1 byte (8 bits) → total 24 bits per pixel.
+🧩 So, one pixel = 24 bits = 3 bytes</li>
+</ul>
+<h4 id="%F0%9F%96%BC%EF%B8%8F-4-images">🖼️ 4. Images</h4>
+<ul>
+<li>Images are made up of pixels, and each pixel stores color information (RGB).</li>
+<li>Images = (Height)720 Pixel * (Width)1280 Pixel</li>
+<li>Pixel ==&gt; Array of Color</li>
+<li>Images ==&gt; Matrix of Color ==&gt; Binary</li>
+</ul>
+<p>Example: a 100×100 image =
+→ 10,000 pixels × 3 bytes per pixel = 30,000 bytes (~30 KB)</p>
+<p>📦 Stored as:</p>
+<pre class="hljs"><code><div><span class="hljs-selector-tag">Pixel</span><span class="hljs-selector-attr">[0]</span>: (<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+<span class="hljs-selector-tag">Pixel</span><span class="hljs-selector-attr">[1]</span>: (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>)
+<span class="hljs-selector-tag">Pixel</span><span class="hljs-selector-attr">[2]</span>: (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>)
+...
+</div></code></pre>
+<pre class="hljs"><code><div>To convert an image into a matrix of colors, 
+where each pixel in the image is represented by its RGB (Red, Green, Blue) values, 
+you can use Python libraries like OpenCV or Pillow. The image will be loaded as an array (or matrix), 
+where each element contains the RGB color value of a pixel.
+
+pip install opencv-python or pip install pillow
+                        ====================================================================
+C language  (To convert an image to binary (black and white) in C, you can use the OpenCV library)
+Write C program that :-
+    1- loads an image, 
+    2- converts it to grayscale, 
+    3- applies binary thresholding to convert it to a binary image.
+</div></code></pre>
+<p><strong>Graphics as a Collection of Pixel Bytes</strong>
+<img src="https://students.cs.uri.edu/~forensics/courses/CSC101/readings/binary_data/binary_data_files/pixel.gif"></p>
+<h4 id="%F0%9F%8E%A7-5-audio">🎧 5. Audio</h4>
+<p>Audio is stored as a series of samples (sound wave amplitudes) captured over time.
+Formats (like PNG, JPEG) compress this pixel data to save space.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sample Rate</strong></td>
+<td>Number of samples per second (e.g. 44,100 Hz)</td>
+</tr>
+<tr>
+<td><strong>Bit Depth</strong></td>
+<td>Bits per sample (e.g. 16-bit, 24-bit)</td>
+</tr>
+<tr>
+<td><strong>Channels</strong></td>
+<td>Mono (1), Stereo (2)</td>
+</tr>
+</tbody>
+</table>
+<p>🧩 Example:</p>
+<p>CD-quality audio → 44,100 samples/sec × 16 bits/sample × 2 channels
+= 1.4 million bits/sec ≈ 176 KB/sec</p>
+<p>Each sample = a binary number representing the sound’s amplitude.</p>
+<h4 id="6-videos">6. Videos</h4>
+<p>A video = sequence of images (frames) + audio.</p>
+<p>Each frame is like an image (pixels), and they are shown quickly (e.g. 30 fps).
+Audio is stored alongside it.
+📦 Stored as:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Frame</span> <span class="hljs-number">1</span>: <span class="hljs-keyword">Image</span> Data
+<span class="hljs-keyword">Frame</span> <span class="hljs-number">2</span>: <span class="hljs-keyword">Image</span> Data
+...
+<span class="hljs-keyword">Audio</span> Stream: Sample Data
+</div></code></pre>
+<p>Modern formats (MP4, AVI) compress both image and sound using codecs (like H.264, AAC).</p>
+<h4 id="in-summary">in Summary</h4>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Representation in Memory</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Numbers</strong></td>
+<td>Binary (2’s complement or IEEE 754)</td>
+<td><code>12.5 → 0100000101001000...</code></td>
+</tr>
+<tr>
+<td><strong>Text</strong></td>
+<td>Character encodings (ASCII/Unicode)</td>
+<td><code>'A' → 01000001</code></td>
+</tr>
+<tr>
+<td><strong>Color</strong></td>
+<td>RGB values (3 bytes)</td>
+<td>Red → <code>11111111 00000000 00000000</code></td>
+</tr>
+<tr>
+<td><strong>Images</strong></td>
+<td>Grid of pixels (each pixel = RGB)</td>
+<td>PNG/JPEG compression</td>
+</tr>
+<tr>
+<td><strong>Audio</strong></td>
+<td>Sequence of amplitude samples</td>
+<td>16-bit PCM data</td>
+</tr>
+<tr>
+<td><strong>Video</strong></td>
+<td>Series of images + audio track</td>
+<td>MP4, AVI, etc.</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>dynamic_union_bitfield.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<ul>
+<li><a href="#c-programming-topics-dynamic-allocation-dynamic-arrays-unions-bit-fields-and-enums">C Programming Topics: Dynamic Allocation, Dynamic Arrays, Unions, Bit Fields, and Enums</a>
+<ul>
+<li><a href="#0-void-pointer">0. Void Pointer</a>
+<ul>
+<li><a href="#can-point-to-any-data-type">Can point to any data type</a></li>
+<li><a href="#cannot-be-dereferenced-directly">Cannot be dereferenced directly</a></li>
+<li><a href="#must-be-cast-before-arithmetic">Must be cast before arithmetic</a></li>
+<li><a href="#mostly-used-in-generic-functions">Mostly used in generic functions</a></li>
+<li><a href="#examples">Examples</a>
+<ul>
+<li><a href="#example-1--using-void-pointer">Example 1 — Using void pointer</a></li>
+<li><a href="#example-2--using-void-pointer-with-multiple-types">Example 2 — Using void pointer with multiple types</a></li>
+<li><a href="#example-3--using-void-pointer-for-a-generic-swap-function">Example 3 — Using void pointer for a generic swap function</a></li>
+</ul>
+</li>
+<li><a href="#where-void-pointers-are-used">Where void pointers are used</a></li>
+</ul>
+</li>
+<li><a href="#1-dynamic-memory-allocation">1. Dynamic Memory Allocation</a>
+<ul>
+<li><a href="#explanation">Explanation</a></li>
+<li><a href="#stack-vs-heap">Stack vs Heap</a></li>
+<li><a href="#how-memory-allocation-works-internally">How Memory Allocation Works Internally</a></li>
+<li><a href="#why-dynamic-allocation-is-needed">Why Dynamic Allocation is Needed</a></li>
+<li><a href="#when-not-to-use-heap">When NOT to Use Heap</a></li>
+<li><a href="#key-functions">Key functions:</a></li>
+<li><a href="#examples-1">Examples</a></li>
+<li><a href="#1-malloc">1. malloc()</a></li>
+<li><a href="#2-calloc--allocation-with-zero-initialization">2. calloc() – Allocation With Zero Initialization</a></li>
+<li><a href="#3-realloc--resize-dynamic-memory">3. realloc() – Resize Dynamic Memory</a>
+<ul>
+<li><a href="#make-mycustomer-realloc">Make mycustomer realloc</a></li>
+</ul>
+</li>
+<li><a href="#4-free--deallocating-memory">4. free() – Deallocating Memory</a></li>
+<li><a href="#common-mistakes">Common Mistakes</a></li>
+<li><a href="#best-practices">Best Practices</a></li>
+<li><a href="#memory-leak-example">Memory Leak Example</a></li>
+<li><a href="#c-new-vs-c-malloc--calloc-">C++ new VS C (malloc , calloc )</a>
+<ul>
+<li><a href="#new-c-dynamic-allocation">new (C++ Dynamic Allocation)</a></li>
+<li><a href="#example-showing-why-malloc-is-dangerous-in-c">Example Showing Why malloc is Dangerous in C++</a></li>
+<li><a href="#memory-initialization-differences">Memory Initialization Differences</a></li>
+<li><a href="#exception-vs-null-on-failure">Exception vs NULL on Failure</a></li>
+<li><a href="#when-to-use-what-best-practice">When to Use What? (Best Practice)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-dynamic-arrays">2. Dynamic Arrays</a>
+<ul>
+<li><a href="#explanation-1">Explanation</a></li>
+<li><a href="#1d-dynamicarray">1D DynamicArray</a>
+<ul>
+<li><a href="#examples-2">Examples</a>
+<ul>
+<li><a href="#dynamic-array-of-integers">Dynamic Array of Integers</a></li>
+<li><a href="#dynamic-array-of-struct-employee">Dynamic Array of Struct Employee</a></li>
+<li><a href="#example-dynamic-array-of-complex-struct">Example: Dynamic Array of Complex Struct</a></li>
+<li><a href="#example-function-to-return-a-dynamic-array-of-sums">Example: Function to Return a Dynamic Array of Sums</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2d-dynamicarray">2D DynamicArray</a>
+<ul>
+<li><a href="#2d-using-one-pointer">2D using One Pointer</a></li>
+<li><a href="#2d-using-pointer-to-pointer">2D using Pointer to Pointer</a></li>
+<li><a href="#2d-using-array-of-pointers">2D using Array of Pointers</a></li>
+<li><a href="#pointer-to-array">Pointer to Array</a></li>
+</ul>
+</li>
+<li><a href="#common-mistakes-1">Common Mistakes</a></li>
+<li><a href="#best-practices-1">Best Practices</a></li>
+</ul>
+</li>
+<li><a href="#3-unions">3. Unions</a>
+<ul>
+<li><a href="#explanation-2">Explanation</a></li>
+<li><a href="#examples-3">Examples</a></li>
+<li><a href="#common-mistakes-2">Common Mistakes</a></li>
+<li><a href="#best-practices-2">Best Practices</a></li>
+</ul>
+</li>
+<li><a href="#4-bit-fields-in-cc">4. Bit Fields in C/C++</a>
+<ul>
+<li><a href="#explanation-3">Explanation</a></li>
+<li><a href="#examples-4">Examples</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#common-mistakes-3">Common Mistakes</a></li>
+<li><a href="#best-practices-3">Best Practices</a></li>
+</ul>
+</li>
+<li><a href="#5-enums">5. Enums</a>
+<ul>
+<li><a href="#explanation-4">Explanation</a></li>
+<li><a href="#examples-5">Examples</a></li>
+<li><a href="#common-mistakes-4">Common Mistakes</a></li>
+<li><a href="#best-practices-4">Best Practices</a></li>
+</ul>
+</li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="c-programming-topics-dynamic-allocation-dynamic-arrays-unions-bit-fields-and-enums">C Programming Topics: Dynamic Allocation, Dynamic Arrays, Unions, Bit Fields, and Enums</h1>
+<p>This README provides detailed explanations of key C programming topics based on the notes in this folder. Each section includes an overview, examples, common mistakes, and best practices.</p>
+<h2 id="0-void-pointer">0. Void Pointer</h2>
+<p>A void pointer is a special type of pointer that can store the address of any data type.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">void</span> *ptr;
+</div></code></pre>
+<p>It is also called a generic pointer.</p>
+<h3 id="can-point-to-any-data-type">Can point to any data type</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">float</span> y = <span class="hljs-number">5.5</span>;
+<span class="hljs-keyword">char</span> c = <span class="hljs-string">'A'</span>;
+
+<span class="hljs-keyword">void</span> *ptr;
+
+ptr = &amp;x;  <span class="hljs-comment">// OK</span>
+ptr = &amp;y;  <span class="hljs-comment">// OK</span>
+ptr = &amp;c;  <span class="hljs-comment">// OK</span>
+
+</div></code></pre>
+<h3 id="cannot-be-dereferenced-directly">Cannot be dereferenced directly</h3>
+<ul>
+<li>You must cast it first.</li>
+</ul>
+<p>❌ INVALID:</p>
+<pre class="hljs"><code><div>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>, *ptr);
+</div></code></pre>
+<p>✔ VALID:</p>
+<pre class="hljs"><code><div>  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>, *(<span class="hljs-keyword">int</span> *)ptr);
+</div></code></pre>
+<h3 id="must-be-cast-before-arithmetic">Must be cast before arithmetic</h3>
+<p>❌ INVALID:</p>
+<pre class="hljs"><code><div>  ptr++;
+</div></code></pre>
+<p>✔ VALID:</p>
+<pre class="hljs"><code><div>(<span class="hljs-keyword">int</span> *)ptr + <span class="hljs-number">1</span>;
+(<span class="hljs-keyword">char</span> *)ptr + <span class="hljs-number">1</span>;
+</div></code></pre>
+<h3 id="mostly-used-in-generic-functions">Mostly used in generic functions</h3>
+<p>✔ malloc, calloc, realloc return void*</p>
+<ul>
+<li>So you can assign to any pointer type.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> *p = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+</div></code></pre>
+<p>✔ qsort() and bsearch() use void pointers</p>
+<ul>
+<li>Because they work with any data type.</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<h4 id="example-1--using-void-pointer">Example 1 — Using void pointer</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> x = <span class="hljs-number">100</span>;
+<span class="hljs-keyword">void</span> *ptr = &amp;x;
+
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>, *(<span class="hljs-keyword">int</span> *)ptr); <span class="hljs-comment">// cast -&gt; dereference</span>
+</div></code></pre>
+<h4 id="example-2--using-void-pointer-with-multiple-types">Example 2 — Using void pointer with multiple types</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">float</span> b = <span class="hljs-number">3.14</span>;
+
+<span class="hljs-keyword">void</span> *vp;
+
+vp = &amp;a;
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, *(<span class="hljs-keyword">int</span> *)vp);
+
+vp = &amp;b;
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%f\n"</span>, *(<span class="hljs-keyword">float</span> *)vp);
+</div></code></pre>
+<h4 id="example-3--using-void-pointer-for-a-generic-swap-function">Example 3 — Using void pointer for a generic swap function</h4>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">swap</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *a, <span class="hljs-keyword">void</span> *b, <span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)</span> </span>{
+    <span class="hljs-keyword">char</span> temp;
+    <span class="hljs-keyword">char</span> *p = a;
+    <span class="hljs-keyword">char</span> *q = b;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">size</span>; i++) {
+        temp = p[i];
+        p[i] = q[i];
+        q[i] = temp;
+    }
+}
+</div></code></pre>
+<p>Use it:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> x = <span class="hljs-number">5</span>, y = <span class="hljs-number">10</span>;
+swap(&amp;x, &amp;y, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+
+<span class="hljs-keyword">float</span> f1 = <span class="hljs-number">1.1</span>, f2 = <span class="hljs-number">2.2</span>;
+swap(&amp;f1, &amp;f2, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">float</span>));
+</div></code></pre>
+<h3 id="where-void-pointers-are-used">Where void pointers are used</h3>
+<table>
+<thead>
+<tr>
+<th>Use Case</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>malloc</code>, <code>calloc</code>, <code>realloc</code></td>
+<td>Return a generic address</td>
+</tr>
+<tr>
+<td><code>qsort</code>, <code>bsearch</code></td>
+<td>Work on any data type</td>
+</tr>
+<tr>
+<td>Generic programming</td>
+<td>Create flexible functions</td>
+</tr>
+<tr>
+<td>Implementing stacks, queues</td>
+<td>Store any type</td>
+</tr>
+<tr>
+<td>Function callbacks</td>
+<td>Pass unknown data</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-dynamic-memory-allocation">1. Dynamic Memory Allocation</h2>
+<h3 id="explanation">Explanation</h3>
+<ul>
+<li>Dynamic memory allocation allows programs to allocate memory at runtime</li>
+<li>using functions from <code>stdlib.h</code>.</li>
+<li>This is essential for data structures whose size is unknown at compile time.</li>
+</ul>
+<h3 id="stack-vs-heap">Stack vs Heap</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Stack</th>
+<th>Heap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allocation</td>
+<td>Automatic (compile-time)</td>
+<td>Manual (runtime)</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Fast</td>
+<td>Slower</td>
+</tr>
+<tr>
+<td>Size</td>
+<td>Limited, small</td>
+<td>Large</td>
+</tr>
+<tr>
+<td>Lifetime</td>
+<td>Auto-removed when function ends</td>
+<td>Until <code>free()</code> is called</td>
+</tr>
+<tr>
+<td>Management</td>
+<td>Done by compiler</td>
+<td>Done by programmer</td>
+</tr>
+<tr>
+<td>Common errors</td>
+<td>Stack overflow</td>
+<td>Memory leak, dangling pointer</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Local variables, function calls</td>
+<td>Dynamic arrays, linked structures</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-memory-allocation-works-internally">How Memory Allocation Works Internally</h3>
+<p><strong>Heap Structure</strong></p>
+<ul>
+<li>
+<p>The heap is made of:</p>
+<ul>
+<li>
+<p>Allocated blocks (your actual memory)</p>
+</li>
+<li>
+<p>Free blocks (managed by the allocator)</p>
+</li>
+</ul>
+</li>
+<li>
+<p>When you call malloc():</p>
+<ul>
+<li>
+<p>The allocator searches for a free block big enough.</p>
+</li>
+<li>
+<p>If found, it marks it as allocated.</p>
+</li>
+<li>
+<p>If not found, the heap grows by requesting more space from OS.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Internally, each allocated block has:</p>
+<ul>
+<li>Metadata (hidden header: block size, status)</li>
+<li>The actual memory returned to you</li>
+</ul>
+</li>
+<li>
+<p>You access only the data part.</p>
+</li>
+</ul>
+<h3 id="why-dynamic-allocation-is-needed">Why Dynamic Allocation is Needed</h3>
+<ul>
+<li>
+<p>When memory size is unknown at compile time.</p>
+</li>
+<li>
+<p>For large data structures that cannot fit on the stack.</p>
+</li>
+<li>
+<p>For data that must outlive a function (returned from function).</p>
+</li>
+<li>
+<p>Used heavily in:</p>
+<ul>
+<li>Linked lists</li>
+<li>Trees</li>
+<li>Graphs</li>
+<li>Buffers</li>
+<li>OS and embedded systems</li>
+</ul>
+</li>
+</ul>
+<h3 id="when-not-to-use-heap">When NOT to Use Heap</h3>
+<ul>
+<li>
+<p>Avoid dynamic allocation when:</p>
+<ul>
+<li>Deterministic timing is required (real-time systems)</li>
+<li>Embedded systems with tiny memory</li>
+<li>Fixed data size known at compile time</li>
+<li>High performance critical inner loops</li>
+</ul>
+</li>
+<li>
+<p>Use stack or static memory instead.</p>
+</li>
+</ul>
+<h3 id="key-functions">Key functions:</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>malloc()</code></td>
+<td>Allocates a block of memory of a given size. Initial values are <strong>undefined</strong>.</td>
+</tr>
+<tr>
+<td><code>calloc()</code></td>
+<td>Allocates memory for an array and initializes it to <strong>zero</strong>.</td>
+</tr>
+<tr>
+<td><code>realloc()</code></td>
+<td>Resizes an existing allocated block.</td>
+</tr>
+<tr>
+<td><code>free()</code></td>
+<td>Releases dynamically allocated memory.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>malloc(size_t size)</code>: Allocates a block of memory.</li>
+<li><code>calloc(size_t num, size_t size)</code>: Allocates and initializes to zero.</li>
+<li><code>realloc(void *ptr, size_t new_size)</code>: Resizes allocated memory.</li>
+<li><code>free(void *ptr)</code>: Deallocates memory.</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Using malloc</span>
+<span class="hljs-keyword">int</span> *arr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">5</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+<span class="hljs-keyword">if</span> (arr == <span class="hljs-literal">NULL</span>) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Allocation failed\n"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+<span class="hljs-comment">// Use arr</span>
+<span class="hljs-built_in">free</span>(arr);
+
+<span class="hljs-comment">// Using calloc</span>
+<span class="hljs-keyword">int</span> *arr2 = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">calloc</span>(<span class="hljs-number">5</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>)); <span class="hljs-comment">// Initialized to 0</span>
+<span class="hljs-built_in">free</span>(arr2);
+
+<span class="hljs-comment">// Using realloc</span>
+arr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">realloc</span>(arr, <span class="hljs-number">10</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+<span class="hljs-keyword">if</span> (arr == <span class="hljs-literal">NULL</span>) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Reallocation failed\n"</span>);
+}
+<span class="hljs-built_in">free</span>(arr);
+</div></code></pre>
+<hr>
+<h3 id="1-malloc">1. malloc()</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">malloc</span><span class="hljs-params">(<span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)</span></span>;
+</div></code></pre>
+<ul>
+<li>Allocates a block of memory.</li>
+<li>Returns a void* pointer → must be cast.</li>
+<li>Returns NULL if allocation fails.</li>
+<li>Memory is uninitialized (contains garbage values).</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">malloc</span><span class="hljs-params">(<span class="hljs-keyword">size_t</span> <span class="hljs-built_in">size</span>)</span></span>;
+</div></code></pre>
+<p>-Example</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> *arr;
+
+<span class="hljs-comment">// Allocate memory for 5 integers</span>
+arr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">5</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+
+<span class="hljs-keyword">if</span> (arr == <span class="hljs-literal">NULL</span>) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Memory allocation failed!\n"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+<span class="hljs-comment">// Use arr[] ...</span>
+<span class="hljs-built_in">free</span>(arr);  <span class="hljs-comment">// Release allocated memory</span>
+</div></code></pre>
+<h3 id="2-calloc-%E2%80%93-allocation-with-zero-initialization">2. calloc() – Allocation With Zero Initialization</h3>
+<ul>
+<li>void *calloc(size_t num, size_t size);</li>
+<li>Allocates memory for an array.</li>
+<li>Initializes all bytes to 0.</li>
+<li>Returns NULL if allocation fails.</li>
+<li>Example:</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> *arr;
+arr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">calloc</span>(<span class="hljs-number">5</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+<span class="hljs-keyword">if</span> (arr == <span class="hljs-literal">NULL</span>) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Memory allocation failed!\n"</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+<span class="hljs-comment">// Use arr[] ...</span>
+<span class="hljs-built_in">free</span>(arr);
+</div></code></pre>
+<h3 id="3-realloc-%E2%80%93-resize-dynamic-memory">3. realloc() – Resize Dynamic Memory</h3>
+<ul>
+<li>void *realloc(void *ptr, size_t new_size);</li>
+<li>Resizes previously allocated memory (malloc, calloc, or realloc).</li>
+<li>Preserves old data.</li>
+<li>May move memory to a new location.</li>
+<li>Returns NULL on failure (the old pointer is still valid!).</li>
+<li>Example:</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> n = <span class="hljs-number">5</span>;
+<span class="hljs-keyword">int</span> *arr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">calloc</span>(n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+<span class="hljs-keyword">if</span> (arr == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+<span class="hljs-comment">// Resize to 10 integers</span>
+n = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">int</span> *temp = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">realloc</span>(arr, n * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+<span class="hljs-keyword">if</span> (temp == <span class="hljs-literal">NULL</span>) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Reallocation failed!\n"</span>);
+    <span class="hljs-built_in">free</span>(arr);   <span class="hljs-comment">// free old pointer</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+}
+arr = temp;
+<span class="hljs-comment">// Assign values</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    arr[i] = i * <span class="hljs-number">10</span>;
+<span class="hljs-comment">// Display</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"arr[%d] = %d\n"</span>, i, arr[i]);
+<span class="hljs-built_in">free</span>(arr);
+</div></code></pre>
+<h4 id="make-mycustomer-realloc">Make mycustomer realloc</h4>
+<pre class="hljs"><code><div>
+<span class="hljs-function"><span class="hljs-keyword">void</span> * <span class="hljs-title">reallocMina</span><span class="hljs-params">(<span class="hljs-keyword">void</span> * ptr,<span class="hljs-keyword">int</span> oldSize,<span class="hljs-keyword">int</span> newSize)</span></span>{
+  <span class="hljs-comment">// Handle zero size specifically</span>
+  <span class="hljs-keyword">if</span>(newSize==<span class="hljs-number">0</span> ){
+      <span class="hljs-built_in">free</span>(ptr);
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;
+  }
+  <span class="hljs-comment">// Allocate new memory</span>
+  <span class="hljs-keyword">void</span> * newPtr=<span class="hljs-built_in">malloc</span>(newSize);
+  <span class="hljs-keyword">if</span> (newPtr == <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Failed Memory allocation\n"</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>; <span class="hljs-comment">// Memory allocation error</span>
+  }
+  <span class="hljs-comment">//If old pointer is NULL, just return the new pointer</span>
+  <span class="hljs-keyword">if</span>(ptr==<span class="hljs-literal">NULL</span>){
+        <span class="hljs-keyword">return</span> newPtr;  
+  }
+
+  <span class="hljs-comment">// Determine the size to copy based on the minimum of old and new sizes</span>
+  <span class="hljs-keyword">int</span> minSize = (oldSize &lt; newSize) ? oldSize : newSize;
+
+  <span class="hljs-comment">// Copy old data to new memory</span>
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> * des=(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *)newPtr;
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> * source=(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *)ptr;
+  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;minSize; i++){
+           des[i]=source[i]; 
+  } 
+
+  <span class="hljs-comment">// Free the old memory</span>
+  <span class="hljs-built_in">free</span>(ptr);
+
+  <span class="hljs-keyword">return</span> newPtr;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> oldSize = <span class="hljs-number">4</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>);
+    <span class="hljs-keyword">int</span> newSize = <span class="hljs-number">8</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>);
+    
+    <span class="hljs-comment">// Allocate initial memory</span>
+    <span class="hljs-keyword">int</span> * <span class="hljs-built_in">array</span> = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">malloc</span>(oldSize);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {
+        <span class="hljs-built_in">array</span>[i] = i + <span class="hljs-number">1</span>; <span class="hljs-comment">// Initialize array</span>
+    }
+
+    <span class="hljs-comment">// Reallocate memory</span>
+    <span class="hljs-built_in">array</span> = (<span class="hljs-keyword">int</span> *)reallocMina(<span class="hljs-built_in">array</span>, oldSize, newSize);
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">array</span> == <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; <span class="hljs-comment">// Handle memory allocation failure</span>
+    }
+    
+    <span class="hljs-comment">// Use the new memory</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">8</span>; i++) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>, <span class="hljs-built_in">array</span>[i]); <span class="hljs-comment">// Print values</span>
+    }
+
+    <span class="hljs-comment">// Free the allocated memory</span>
+    <span class="hljs-built_in">free</span>(<span class="hljs-built_in">array</span>);
+}
+ 
+
+</div></code></pre>
+<h3 id="4-free-%E2%80%93-deallocating-memory">4. free() – Deallocating Memory</h3>
+<ul>
+<li>void free(void *ptr);</li>
+<li>Releases dynamically allocated memory.</li>
+<li>After calling free(ptr):
+<ul>
+<li>The memory is invalid.</li>
+<li>Pointer becomes dangling → do NOT dereference.</li>
+<li>Good practice: ptr = NULL;</li>
+</ul>
+</li>
+</ul>
+<h3 id="common-mistakes">Common Mistakes</h3>
+<ul>
+<li>
+<p><strong>Memory Leaks</strong>:</p>
+<ul>
+<li>Occurs when allocated memory is never freed.</li>
+<li>Fix: Call free() for every malloc(), calloc(), or realloc().</li>
+<li>Forgetting to call <code>free()</code>, leading to unreleased memory.</li>
+<li>Occur when allocated memory is not freed.</li>
+<li>Causes: Forgetting free(), lost references, improper error handling.</li>
+<li>Prevention: Always free memory; use tools like Valgrind.</li>
+<li>Memory Leak Detection
+<ul>
+<li>Tools: Valgrind, AddressSanitizer.</li>
+<li>Valgrind: Detects leaks, invalid accesses, uninitialized memory.</li>
+<li>Installation: <code>sudo apt-get install valgrind</code> (Ubuntu).</li>
+<li>Usage: Compile with -g, run <code>valgrind ./program</code>.</li>
+<li>Options: <code>--leak-check=full</code>, <code>--track-origins=yes</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Dangling Pointers</strong>:</p>
+<ul>
+<li>Happens when: You use a pointer after freeing it.</li>
+</ul>
+<pre class="hljs"><code><div>  free(ptr);
+  ptr = NULL;
+</div></code></pre>
+<ul>
+<li>Pointers pointing to freed memory.</li>
+<li>Dereferencing pointers after <code>free()</code>.</li>
+<li>Avoid dereferencing after free().</li>
+</ul>
+</li>
+<li>
+<p><strong>Reallocation Failures</strong>:</p>
+<pre class="hljs"><code><div><span class="hljs-function">If <span class="hljs-title">realloc</span><span class="hljs-params">()</span> returns <span class="hljs-literal">NULL</span>:
+     - Original memory block is still valid.
+     - You must <span class="hljs-keyword">not</span> lose it.
+</span></div></code></pre>
+<ul>
+<li>Not checking <code>realloc()</code> return; original pointer remains valid if it fails.</li>
+<li>realloc() may fail; check return value.</li>
+<li>If fails, original memory is still valid; free manually if needed.</li>
+</ul>
+</li>
+<li>
+<p><strong>Null Pointer Dereference</strong>:</p>
+<ul>
+<li>Not checking allocation success.</li>
+<li>Always verify malloc/calloc/realloc return values.</li>
+</ul>
+</li>
+<li>
+<p><strong>Fragmentation</strong>:</p>
+<ul>
+<li>Scattered blocks reduce available continuous memory.</li>
+<li>Cause: Frequent allocation/deallocation of irregular block sizes.</li>
+<li><strong>Prevention:</strong>
+<ul>
+<li>
+<p>Use memory pools</p>
+</li>
+<li>
+<p>Allocate in fixed block sizes</p>
+</li>
+<li>
+<p>Avoid too many malloc/free cycles in embedded systems</p>
+</li>
+</ul>
+</li>
+<li>Frequent alloc/free in limited memory systems.</li>
+<li>Wasted memory from scattered allocations/deallocations.</li>
+<li>Common in limited memory systems.</li>
+<li>Prevention: Use memory pools, avoid frequent alloc/free.</li>
+</ul>
+</li>
+</ul>
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+<li>Always check return values of <code>malloc</code>, <code>calloc</code>, <code>realloc</code>.</li>
+<li>Free memory as soon as it's no longer needed.</li>
+<li>Use tools like Valgrind to detect leaks: <code>valgrind --leak-check=full ./program</code>.</li>
+<li>Prefer <code>calloc</code> when zero-initialization is required.</li>
+<li>Avoid unnecessary reallocations; allocate with a buffer.</li>
+</ul>
+<h3 id="memory-leak-example">Memory Leak Example</h3>
+<ul>
+<li>Valgrind – Detecting Memory Problems
+<ul>
+<li>Valgrind detects:
+<ul>
+<li>Memory leaks</li>
+<li>Invalid reads/writes</li>
+<li>Double free</li>
+<li>Use of uninitialized memory</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> *ptr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));  <span class="hljs-comment">// Memory allocated</span>
+
+    *ptr = <span class="hljs-number">10</span>;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, *ptr);
+
+    <span class="hljs-comment">// Memory leak: missing free(ptr)</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+
+</div></code></pre>
+<ul>
+<li>install</li>
+</ul>
+<pre class="hljs"><code><div>    sudo apt-get install valgrind
+    <span class="hljs-comment">#or</span>
+    sudo dnf install valgrind
+</div></code></pre>
+<ul>
+<li>Compile Program with Debugging Symbols</li>
+</ul>
+<pre class="hljs"><code><div>    gcc -g -o myprogram myprogram.c
+</div></code></pre>
+<ul>
+<li>Run With Valgrind</li>
+</ul>
+<pre class="hljs"><code><div>valgrind ./myprogram
+</div></code></pre>
+<ul>
+<li>Common Options:<pre class="hljs"><code><div>    valgrind --leak-check=full --track-origins=yes ./myprogram
+</div></code></pre>
+<ul>
+<li>--leak-check=full → detailed leak report</li>
+<li>--track-origins=yes → shows source of uninitialized memory</li>
+<li>--tool=memcheck → default tool</li>
+</ul>
+</li>
+</ul>
+<p>Good and Bad Examples
+❌ Bad: Memory leak
+int *p = malloc(100 * sizeof(int));
+p = malloc(50 * sizeof(int));  // Lost reference → leak</p>
+<p>✔ Good: Free before overwriting</p>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">int</span> *p = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">100</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    <span class="hljs-built_in">free</span>(p);
+    p = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">50</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+</div></code></pre>
+<h3 id="c-new-vs-c-malloc--calloc">C++ new VS C (malloc , calloc )</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>new</code></th>
+<th><code>malloc()</code></th>
+<th><code>calloc()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language</td>
+<td>C++</td>
+<td>C</td>
+<td>C</td>
+</tr>
+<tr>
+<td>Initialization</td>
+<td>Yes (constructor or default init)</td>
+<td>No (garbage values)</td>
+<td>Yes (zero-initialized)</td>
+</tr>
+<tr>
+<td>Type safety</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Returns</td>
+<td>Exact type pointer</td>
+<td><code>void*</code></td>
+<td><code>void*</code></td>
+</tr>
+<tr>
+<td>Error on failure</td>
+<td>Throws exception (<code>std::bad_alloc</code>)</td>
+<td>Returns <code>NULL</code></td>
+<td>Returns <code>NULL</code></td>
+</tr>
+<tr>
+<td>Calls constructors?</td>
+<td>✔ Yes</td>
+<td>✖ No</td>
+<td>✖ No</td>
+</tr>
+<tr>
+<td>Calls destructors?</td>
+<td>✔ Yes (when using delete/delete[])</td>
+<td>✖ No</td>
+<td>✖ No</td>
+</tr>
+<tr>
+<td>Resize allowed?</td>
+<td>✖ No</td>
+<td>✔ <code>realloc</code> can resize</td>
+<td>✔ <code>realloc</code> can resize</td>
+</tr>
+<tr>
+<td>Deallocated using</td>
+<td><code>delete</code> / <code>delete[]</code></td>
+<td><code>free()</code></td>
+<td><code>free()</code></td>
+</tr>
+<tr>
+<td>Used for</td>
+<td>C++ objects</td>
+<td>Raw memory</td>
+<td>Zeroed array memory</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>new</code></th>
+<th><code>malloc()</code></th>
+<th><code>calloc()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C++ Only</td>
+<td>✔</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>Constructors</td>
+<td>✔</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>Destructors</td>
+<td>✔</td>
+<td>✖</td>
+<td>✖</td>
+</tr>
+<tr>
+<td>Initialization</td>
+<td>Optional (0 if using new())</td>
+<td>No</td>
+<td>Zero</td>
+</tr>
+<tr>
+<td>Returns <code>void*</code></td>
+<td>✖</td>
+<td>✔</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>Error Handling</td>
+<td>Exception</td>
+<td>NULL</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>Resize</td>
+<td>✖</td>
+<td>✔ with <code>realloc</code></td>
+<td>✔ with <code>realloc</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="new-c-dynamic-allocation">new (C++ Dynamic Allocation)</h4>
+<p>✔ Features:</p>
+<ul>
+<li>Type-safe</li>
+<li>Calls constructors</li>
+<li>Initializes memory</li>
+<li>Throws std::bad_alloc on failure (unless nothrow is used)</li>
+<li>Must be released using delete or delete[]</li>
+<li>Example:</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span>* p = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>;      <span class="hljs-comment">// uninitialized integer</span>
+<span class="hljs-keyword">int</span>* arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">5</span>]; <span class="hljs-comment">// array of 5 integers, uninitialized</span>
+MyClass* obj = <span class="hljs-keyword">new</span> MyClass();  <span class="hljs-comment">// constructor called</span>
+</div></code></pre>
+<p>With initialization:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span>* x = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>(<span class="hljs-number">10</span>);
+</div></code></pre>
+<p>With nothrow:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span>* p = <span class="hljs-keyword">new</span>(<span class="hljs-built_in">std</span>::nothrow) <span class="hljs-keyword">int</span>;
+<span class="hljs-keyword">if</span> (!p) { <span class="hljs-comment">/* handle failure */</span> }
+</div></code></pre>
+<h4 id="example-showing-why-malloc-is-dangerous-in-c">Example Showing Why malloc is Dangerous in C++</h4>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> {</span>
+<span class="hljs-keyword">public</span>:
+    Test() { <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Ctor\n"</span>; }
+    ~Test() { <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Dtor\n"</span>; }
+};
+
+Test* t = (Test*)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Test));  <span class="hljs-comment">// ❌ NO constructor called</span>
+<span class="hljs-built_in">free</span>(t);                                <span class="hljs-comment">// ❌ NO destructor called</span>
+</div></code></pre>
+<h4 id="memory-initialization-differences">Memory Initialization Differences</h4>
+<p>new int; → uninitialized (garbage)
+new int(); → initialized to 0
+malloc() → garbage values
+calloc() → all bytes set to 0</p>
+<h4 id="exception-vs-null-on-failure">Exception vs NULL on Failure</h4>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>On Failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new</code></td>
+<td>Throws <code>std::bad_alloc</code></td>
+</tr>
+<tr>
+<td><code>new (nothrow)</code></td>
+<td>Returns NULL</td>
+</tr>
+<tr>
+<td><code>malloc</code>, <code>calloc</code></td>
+<td>Returns NULL</td>
+</tr>
+</tbody>
+</table>
+<h4 id="when-to-use-what-best-practice">When to Use What? (Best Practice)</h4>
+<p>✔ Use new / delete in C++</p>
+<ul>
+<li>Objects</li>
+<li>Classes</li>
+<li>Arrays of objects</li>
+<li>RAII, constructors/destructors</li>
+</ul>
+<p>✔ Use malloc/calloc/realloc ONLY when:</p>
+<ul>
+<li>Interfacing with C libraries</li>
+<li>Allocating plain old data (POD types)</li>
+<li>Writing low-level memory management code</li>
+<li>You need realloc functionality</li>
+</ul>
+<h2 id="2-dynamic-arrays">2. Dynamic Arrays</h2>
+<h3 id="explanation">Explanation</h3>
+<p>Dynamic arrays can resize at runtime, unlike static arrays. They use heap memory and require manual management.</p>
+<p>Comparison with static arrays:</p>
+<ul>
+<li>Static: Fixed size, stack-allocated, faster.</li>
+<li>Dynamic: Resizable, heap-allocated, flexible but slower.</li>
+</ul>
+<h3 id="1d-dynamicarray">1D DynamicArray</h3>
+<h4 id="examples">Examples</h4>
+<h5 id="dynamic-array-of-integers">Dynamic Array of Integers</h5>
+<pre class="hljs"><code><div><span class="hljs-comment">// Resizing</span>
+<span class="hljs-keyword">int</span> *arr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">10</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+arr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">realloc</span>(arr, <span class="hljs-number">20</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+<span class="hljs-built_in">free</span>(arr);
+
+<span class="hljs-comment">// Returning dynamic array from function</span>
+<span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">copy_using_dynamic</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *source)</span> </span>{
+    <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">strlen</span>(source) + <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">char</span> *dest = (<span class="hljs-keyword">char</span> *)<span class="hljs-built_in">malloc</span>(len * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">char</span>));
+    <span class="hljs-built_in">strcpy</span>(dest, source);
+    <span class="hljs-keyword">return</span> dest; <span class="hljs-comment">// Caller must free</span>
+}
+</div></code></pre>
+<h5 id="dynamic-array-of-struct-employee">Dynamic Array of Struct Employee</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
+    <span class="hljs-keyword">int</span> id;
+    <span class="hljs-keyword">char</span> name[<span class="hljs-number">50</span>];
+} Employee;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> initialSize = <span class="hljs-number">2</span>;
+    Employee *employees = (Employee *)<span class="hljs-built_in">malloc</span>(initialSize * <span class="hljs-keyword">sizeof</span>(Employee));
+
+    <span class="hljs-comment">// Check if memory allocation was successful</span>
+    <span class="hljs-keyword">if</span> (employees == <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Memory allocation failed\n"</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-comment">// Initialize employee data</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; initialSize; i++) {
+        employees[i].id = i + <span class="hljs-number">1</span>;
+        <span class="hljs-built_in">cin</span>&gt;&gt;employees[i].name;
+    }
+
+    <span class="hljs-comment">// Print the initial employees</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Initial Employees:\n"</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; initialSize; i++) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"ID: %d, Name: %s\n"</span>, employees[i].id, employees[i].name);
+        <span class="hljs-comment">//cout&lt;&lt;"ID: "&lt;&lt; employees[i].id &lt;&lt;", Name: "&lt;&lt;employees[i].name&lt;&lt;endl;</span>
+    }
+}
+
+</div></code></pre>
+<h5 id="example-dynamic-array-of-complex-struct">Example: Dynamic Array of Complex Struct</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+ 
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Birthady</span>{</span>
+    <span class="hljs-keyword">int</span> day;
+    <span class="hljs-keyword">int</span> month;
+    <span class="hljs-keyword">int</span> year;
+}Birthady;
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Employee</span>{</span>
+ <span class="hljs-keyword">char</span> *name;      <span class="hljs-comment">// Dynamic string </span>
+    Employee *manager; <span class="hljs-comment">// Pointer to another Employee</span>
+    Birthday bd;     <span class="hljs-comment">// Birthday struct</span>
+}Employee;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-comment">// Allocate memory for 3 employees</span>
+    Employee *Emp = (Employee *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">3</span> * <span class="hljs-keyword">sizeof</span>(Employee));
+    <span class="hljs-keyword">if</span> (Emp == <span class="hljs-literal">NULL</span>) {
+        perror(<span class="hljs-string">"Failed to allocate memory for employees"</span>);
+        <span class="hljs-keyword">return</span> EXIT_FAILURE;
+    }
+
+    <span class="hljs-comment">// Create and initialize employee s</span>
+    Employee *s = (Employee *)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(Employee));
+    <span class="hljs-keyword">if</span> (s == <span class="hljs-literal">NULL</span>) {
+        perror(<span class="hljs-string">"Failed to allocate memory for employee s"</span>);
+        <span class="hljs-built_in">free</span>(Emp);
+        <span class="hljs-keyword">return</span> EXIT_FAILURE;
+    }
+    
+    s-&gt;name = (<span class="hljs-keyword">char</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">5</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">char</span>)); <span class="hljs-comment">// Allocate memory for name "mina"</span>
+    <span class="hljs-built_in">strcpy</span>(s-&gt;name, <span class="hljs-string">"mina"</span>);
+    s-&gt;manager = s; <span class="hljs-comment">// Manager is self-referencing</span>
+    s-&gt;bd.day = <span class="hljs-number">1</span>;
+    s-&gt;bd.month = <span class="hljs-number">10</span>;
+    s-&gt;bd.year = <span class="hljs-number">1993</span>;
+
+    <span class="hljs-comment">// Initialize the first employee</span>
+    Emp[<span class="hljs-number">0</span>].name = (<span class="hljs-keyword">char</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-number">8</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">char</span>)); <span class="hljs-comment">// Allocate memory for name "Anderw"</span>
+    <span class="hljs-built_in">strcpy</span>(Emp[<span class="hljs-number">0</span>].name, <span class="hljs-string">"Anderw"</span>);
+    Emp[<span class="hljs-number">0</span>].manager = s;
+    Emp[<span class="hljs-number">0</span>].bd.day = <span class="hljs-number">1</span>;
+    Emp[<span class="hljs-number">0</span>].bd.month = <span class="hljs-number">10</span>;
+    Emp[<span class="hljs-number">0</span>].bd.year = <span class="hljs-number">1998</span>;
+  <span class="hljs-comment">/*if(s-&gt;manager == &amp;s){
+  } */</span> 
+  <span class="hljs-comment">// Print employee manager's name and its address</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%s, %p\n"</span>, (Emp[<span class="hljs-number">0</span>].manager)-&gt;name, (Emp[<span class="hljs-number">0</span>].manager)-&gt;name);
+
+  <span class="hljs-comment">// Fix employee manager's name to "Mark"</span>
+  <span class="hljs-keyword">char</span> * ptr=<span class="hljs-string">"Mark"</span>;
+  <span class="hljs-comment">/*
+    char *ptr = (char *)malloc(5 * sizeof(char)); // Allocate memory for name "Mark"
+    strcpy(ptr, "Mark");
+  */</span>
+  <span class="hljs-built_in">free</span>(Emp[<span class="hljs-number">0</span>].manager-&gt;name); <span class="hljs-comment">// Free the old name</span>
+  (Emp[<span class="hljs-number">0</span>].manager)-&gt;name=ptr; <span class="hljs-comment">// Assign new name to manager  </span>
+  <span class="hljs-comment">//Emp[0]===&gt; (*(Emp+0))</span>
+  <span class="hljs-comment">//((*(Emp+0)).manager)-&gt;name=ptr;</span>
+    
+  <span class="hljs-comment">// Print new manager's name</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Manager's new name: %s\n"</span>, Emp[<span class="hljs-number">0</span>].manager-&gt;name);
+  <span class="hljs-built_in">free</span>(s-&gt;name);
+  <span class="hljs-built_in">free</span>(Emp[<span class="hljs-number">0</span>].name);
+  <span class="hljs-built_in">free</span>(Emp);
+  <span class="hljs-built_in">free</span>(s);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h5 id="example-function-to-return-a-dynamic-array-of-sums">Example: Function to Return a Dynamic Array of Sums</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-comment">// Function to return a dynamic array with element-wise sums</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span>* <span class="hljs-title">sumArrays</span><span class="hljs-params">(<span class="hljs-keyword">int</span>* array1, <span class="hljs-keyword">int</span>* array2, <span class="hljs-keyword">int</span> <span class="hljs-built_in">size</span>)</span> </span>{
+    <span class="hljs-comment">// Allocate memory for the result array</span>
+    <span class="hljs-keyword">int</span>* result = (<span class="hljs-keyword">int</span>*)<span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">size</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    <span class="hljs-keyword">if</span> (result == <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Memory allocation failed\n"</span>);
+        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>); <span class="hljs-comment">// Handle memory allocation failure</span>
+    }
+
+    <span class="hljs-comment">// Calculate the sum of both arrays</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">size</span>; i++) {
+        result[i] = array1[i] + array2[i];
+    }
+
+    <span class="hljs-keyword">return</span> result; <span class="hljs-comment">// Return the pointer to the dynamic array</span>
+}
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> <span class="hljs-built_in">size</span> = <span class="hljs-number">5</span>;
+
+    <span class="hljs-comment">// Allocate and initialize the first array</span>
+    <span class="hljs-keyword">int</span>* array1 = (<span class="hljs-keyword">int</span>*)<span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">size</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+    <span class="hljs-keyword">int</span>* array2 = (<span class="hljs-keyword">int</span>*)<span class="hljs-built_in">malloc</span>(<span class="hljs-built_in">size</span> * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+
+    <span class="hljs-keyword">if</span> (array1 == <span class="hljs-literal">NULL</span> || array2 == <span class="hljs-literal">NULL</span>) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Memory allocation failed\n"</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    }
+
+    <span class="hljs-comment">// Initialize the arrays</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">size</span>; i++) {
+        array1[i] = i + <span class="hljs-number">1</span>; <span class="hljs-comment">// Values: 1, 2, 3, 4, 5</span>
+        array2[i] = (i + <span class="hljs-number">1</span>) * <span class="hljs-number">2</span>; <span class="hljs-comment">// Values: 2, 4, 6, 8, 10</span>
+    }
+
+    <span class="hljs-comment">// Get the sum of the two arrays</span>
+    <span class="hljs-keyword">int</span>* sumArray = sumArrays(array1, array2, <span class="hljs-built_in">size</span>);
+
+    <span class="hljs-comment">// Print the resulting sum array</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Sum Array: "</span>);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">size</span>; i++) {
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d "</span>, sumArray[i]);
+    }
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n"</span>);
+
+    <span class="hljs-comment">// Free allocated memory</span>
+    <span class="hljs-built_in">free</span>(array1);
+    <span class="hljs-built_in">free</span>(array2);
+    <span class="hljs-built_in">free</span>(sumArray);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h3 id="2d-dynamicarray">2D DynamicArray</h3>
+<ul>
+<li>Performance-critical → Single Pointer</li>
+<li>Easy indexing + flexible rows → Array  of Pointers</li>
+<li>Contiguous + indexing → Pointer to Array</li>
+<li>Generic/Classic C code → Pointer to Pointer</li>
+</ul>
+<h4 id="2d-using-one-pointer">2D using One Pointer</h4>
+<p>✔ How it works</p>
+<ul>
+<li>Allocate ROWS * COLS elements in one long 1D block.</li>
+<li>Access using formula:
+ptr[i * COLS + j].</li>
+</ul>
+<p>✔ Memory layout</p>
+<ul>
+<li>Contiguous (same as Pointer to Array but no row type)</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-selector-attr">[0]</span><span class="hljs-selector-attr">[1]</span><span class="hljs-selector-attr">[2]</span><span class="hljs-selector-attr">[3]</span><span class="hljs-selector-attr">[4]</span><span class="hljs-selector-attr">[5]</span><span class="hljs-selector-attr">[6]</span>...<span class="hljs-selector-attr">[ROWS*COLS - 1]</span>
+</div></code></pre>
+<p>✔ Pros</p>
+<ul>
+<li>Fastest and simplest allocation.</li>
+<li>Best cache performance.</li>
+<li>Full flexibility in dimensions (both ROWS and COLS dynamic).</li>
+<li>Only one free().
+❌ Cons</li>
+<li>Indexing is manual: ptr[i * COLS + j].</li>
+<li>Code readability is lower.
+✔ When to use?</li>
+<li>Dynamic ROWS and dynamic COLS.</li>
+<li>Performance-critical programs.</li>
+<li>Interfacing with C libraries (common format).</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ROWS = 4</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> COLS = 3</span>
+<span class="hljs-comment">//This allocates a single continuous block of memory containing:</span>
+<span class="hljs-keyword">int</span> *ptr = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">calloc</span>(ROWS * COLS, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+<span class="hljs-comment">// Allocates ROWS * COLS integers initialized to 0</span>
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ROWS; i++) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; COLS; j++) {
+        ptr[i * COLS + j] = i + <span class="hljs-number">1</span>;  <span class="hljs-comment">// Fill each row with (i+1)</span>
+    }
+}
+<span class="hljs-comment">/*
+// Allocates ROWS * COLS = 12 integers (48 bytes if int = 4 bytes)
+4 * 3 = 12 integers
+Total bytes = 12 * sizeof(int) = 48 bytes
+*/</span>
+
+
+</div></code></pre>
+<h4 id="2d-using-pointer-to-pointer">2D using Pointer to Pointer</h4>
+<p>int **arr;
+✔ How it works</p>
+<ul>
+<li>Allocate a pointer array (ROWS pointers).</li>
+<li>Allocate a row for each pointer (COLS ints).
+✔ Memory layout</li>
+</ul>
+<pre class="hljs"><code><div>pp → <span class="hljs-selector-attr">[ * ]</span><span class="hljs-selector-attr">[ * ]</span><span class="hljs-selector-attr">[ * ]</span><span class="hljs-selector-attr">[ * ]</span>   (heap)
+          ↓   ↓   ↓   ↓
+         row row row row    (each separately allocated)
+</div></code></pre>
+<p>✔ Pros</p>
+<ul>
+<li>Columns AND rows both fully dynamic.</li>
+<li>Flexible, widely used, works with many APIs.</li>
+</ul>
+<p>❌ Cons</p>
+<ul>
+<li>Slowest of all methods (non-contiguous).</li>
+<li>Complex allocation:
+<ul>
+<li>allocate pointer array</li>
+<li>allocate each row</li>
+</ul>
+</li>
+<li>Must free row-by-row + free pointer array.</li>
+</ul>
+<p>✔ When to use?</p>
+<ul>
+<li>
+<p>When both ROWS and COLS must be fully dynamic.</p>
+</li>
+<li>
+<p>When you need to reallocate rows independently.</p>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ROWS = 4</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> COLS = 3</span>
+
+<span class="hljs-comment">// 2D Dynamic Array (Pointer to Pointer)</span>
+  <span class="hljs-comment">// ROW -----&gt; Dynamic ---&gt; Heap</span>
+  <span class="hljs-comment">// COL -----&gt; Dynamic ---&gt; Heap</span>
+
+<span class="hljs-keyword">int</span> **arr2d = (<span class="hljs-keyword">int</span> **)<span class="hljs-built_in">malloc</span>(ROWS * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span> *));
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) {
+    arr2d[i] = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">malloc</span>(COLS * <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>));
+}
+<span class="hljs-comment">// Use arr2d</span>
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;ROWS; i++){
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;  j&lt;COLS; j++){
+        arr2d[i][j]=i+<span class="hljs-number">1</span>;
+      }
+  }
+<span class="hljs-comment">// free arr2d</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">3</span>; i++) <span class="hljs-built_in">free</span>(arr2d[i]);
+<span class="hljs-built_in">free</span>(arr2d);
+</div></code></pre>
+<h4 id="2d-using-array-of-pointers">2D using Array of Pointers</h4>
+<p>int *arr2[ROWS];
+✔ How it works</p>
+<ul>
+<li>arr2 is an array of ROWS pointers on the stack.</li>
+<li>Each pointer arr2[i] points to a separate dynamic row (COLS ints allocated on the heap).</li>
+</ul>
+<p>✔ Memory layout
+❌ NOT contiguous</p>
+<pre class="hljs"><code><div>arr2 → [ * ][ * ][ * ][ * ]   (<span class="hljs-keyword">on</span> stack)
+           ↓    ↓    ↓    ↓
+          <span class="hljs-keyword">row</span>   <span class="hljs-keyword">row</span>  <span class="hljs-keyword">row</span>  <span class="hljs-keyword">row</span>   (<span class="hljs-keyword">each</span> <span class="hljs-keyword">row</span> allocated separately)
+</div></code></pre>
+<p>✔ Pros</p>
+<ul>
+<li>Very flexible (each row can have different length → jagged array).</li>
+<li>Simple indexing: arr2[i][j].
+❌ Cons</li>
+<li>Many allocations (one per row).</li>
+<li>Rows are scattered → slower cache performance.</li>
+<li>Must free() every row separately.
+✔ When to use?</li>
+<li>When rows have different sizes.</li>
+<li>When you want a jagged array.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Array of Pointers</span>
+<span class="hljs-comment">// ROW → Static (stack)</span>
+<span class="hljs-comment">// COL → Dynamic (heap)</span>
+
+<span class="hljs-keyword">int</span> *arr2[ROWS];  <span class="hljs-comment">// array of ROW pointers</span>
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ROWS; i++) {
+    arr2[i] = (<span class="hljs-keyword">int</span> *)<span class="hljs-built_in">calloc</span>(COLS, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>)); <span class="hljs-comment">// allocate COL integers</span>
+}
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ROWS; i++) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; COLS; j++) {
+        arr2[i][j] = i + <span class="hljs-number">1</span>;
+    }
+}
+</div></code></pre>
+<h4 id="pointer-to-array">Pointer to Array</h4>
+<p>int (*arr3)[COLS];
+✔ How it works</p>
+<ul>
+<li>One block of memory: ROWS arrays, each of size COLS.</li>
+<li>arr3 points to an array of COLS integers.</li>
+</ul>
+<p>✔ Memory layout
+✅ Contiguous</p>
+<pre class="hljs"><code><div><span class="hljs-selector-attr">[ row0 COLS ints ]</span>
+<span class="hljs-selector-attr">[ row1 COLS ints ]</span>
+<span class="hljs-selector-attr">[ row2 COLS ints ]</span>
+<span class="hljs-selector-attr">[ row3 COLS ints ]</span>   ← one single large block
+</div></code></pre>
+<p>✔ Pros</p>
+<ul>
+<li>Very fast (best cache locality).</li>
+<li>Only one allocation and one free().</li>
+<li>Clean indexing: arr3[i][j].</li>
+<li>Most similar to static array int arr[ROWS][COLS].
+❌ Cons</li>
+<li>Number of columns (COLS) must be known at compile time.
+✔ When to use?</li>
+<li>For true 2D arrays with known column size.</li>
+<li>When performance matters.</li>
+</ul>
+<pre class="hljs"><code><div>  <span class="hljs-comment">//Pointer to Array</span>
+  <span class="hljs-comment">// COL -----&gt; Static</span>
+  <span class="hljs-comment">// ROW -----&gt; Dynamic ---&gt; Heap</span>
+  <span class="hljs-keyword">int</span> (*arr3)[COLS]=(<span class="hljs-keyword">int</span>(*)[COLS])<span class="hljs-built_in">calloc</span>(ROWS,<span class="hljs-keyword">sizeof</span>(*arr3));
+
+   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;ROWS; i++){
+    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;  j&lt;COLS; j++){
+        arr3[i][j]=i+<span class="hljs-number">1</span>;
+      }
+  }
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Continuous?</th>
+<th>Indexing</th>
+<th>Speed</th>
+<th>Memory flexibility</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Single Pointer</strong></td>
+<td>Yes</td>
+<td>arr[i*cols+j]</td>
+<td>Fastest</td>
+<td>Hard</td>
+<td>Best performance</td>
+</tr>
+<tr>
+<td><strong>Array of Pointers</strong></td>
+<td>No</td>
+<td>arr[i][j]</td>
+<td>Medium</td>
+<td>Easy (row resize)</td>
+<td>Most common</td>
+</tr>
+<tr>
+<td><strong>Pointer to Array</strong></td>
+<td>Yes</td>
+<td>arr[i][j]</td>
+<td>Fast</td>
+<td>Hard</td>
+<td>Safe &amp; clean indexing</td>
+</tr>
+<tr>
+<td><strong>Pointer to Pointer</strong></td>
+<td>No</td>
+<td>arr[i][j]</td>
+<td>Medium</td>
+<td>Easy</td>
+<td>Same as array-of-pointers</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Contiguous?</th>
+<th>Allocation Count</th>
+<th>Indexing</th>
+<th>Flexibility</th>
+<th>Performance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Array of Pointers</strong> (<code>int *arr2[ROWS]</code>)</td>
+<td>❌ No</td>
+<td>ROWS</td>
+<td>Easy (<code>a[i][j]</code>)</td>
+<td>Jagged rows</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Pointer to Array</strong> (<code>int (*arr3)[COLS]</code>)</td>
+<td>✅ Yes</td>
+<td>1</td>
+<td>Easy (<code>a[i][j]</code>)</td>
+<td>COLS fixed at compile-time</td>
+<td><strong>Fastest</strong></td>
+</tr>
+<tr>
+<td><strong>1D Linear Block</strong> (<code>int *ptr</code>)</td>
+<td>✅ Yes</td>
+<td>1</td>
+<td>Manual (<code>a[i*COLS+j]</code>)</td>
+<td>Fully dynamic</td>
+<td><strong>Fastest</strong></td>
+</tr>
+<tr>
+<td><strong>Pointer to Pointer</strong> (<code>int **pp</code>)</td>
+<td>❌ No</td>
+<td>ROWS + 1</td>
+<td>Easy (<code>a[i][j]</code>)</td>
+<td>Fully dynamic</td>
+<td>Slowest</td>
+</tr>
+</tbody>
+</table>
+<h3 id="common-mistakes">Common Mistakes</h3>
+<ul>
+<li>Forgetting to free each row in 2D arrays.</li>
+<li>Not handling realloc failures, losing data.</li>
+<li>Returning local pointers (use dynamic allocation).</li>
+<li>Buffer overflows if resizing incorrectly.</li>
+</ul>
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+<li>Use <code>realloc</code> carefully; copy data if needed.</li>
+<li>For 2D, choose method based on access pattern (e.g., pointer to pointer for jagged arrays).</li>
+<li>Always free in reverse order of allocation.</li>
+<li>Consider libraries like GLib for advanced dynamic arrays.</li>
+</ul>
+<h2 id="3-unions">3. Unions</h2>
+<h3 id="explanation">Explanation</h3>
+<p>Unions allow storing different data types in the same memory location. Size is that of the largest member. Only one member is accessible at a time.</p>
+<p>Difference from structs: Structs have separate memory for each member; unions share it.</p>
+<h3 id="examples">Examples</h3>
+<div style="font-size:18px">
+<pre class="hljs"><code><div><span class="hljs-keyword">union</span> Data {
+    <span class="hljs-keyword">int</span> i;
+    <span class="hljs-keyword">float</span> f;
+    <span class="hljs-keyword">char</span> str[<span class="hljs-number">20</span>];
+};
+
+<span class="hljs-keyword">union</span> Data d;
+d.i = <span class="hljs-number">10</span>;
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, d.i); <span class="hljs-comment">// 10</span>
+d.f = <span class="hljs-number">3.14</span>;
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%.2f\n"</span>, d.f); <span class="hljs-comment">// 3.14 (overwrites i)</span>
+<span class="hljs-built_in">strcpy</span>(d.str, <span class="hljs-string">"Hello"</span>);
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%s\n"</span>, d.str); <span class="hljs-comment">// Hello (overwrites f)</span>
+</div></code></pre>
+</div>
+<table style="width:100%">
+<tr>
+<td style="font-size:18px ;width:60%">
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">union</span> Data{
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> integer; 
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i0;
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i1;
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i2;
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i3;
+}Data;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">union</span> Data2{
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> integer; 
+  <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> byteArr[<span class="hljs-number">4</span>];
+  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">byte</span>{</span>
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i0;
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i1;
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i2;
+      <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i3;
+  }<span class="hljs-keyword">byte</span>;
+}Data2;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+  Data d1; 
+  d1.integer=<span class="hljs-number">0x00ff00ff</span>;
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d1.i0 = %d \n"</span>,d1.i0);<span class="hljs-comment">//0xff //255</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d1.i1 = %d \n"</span>,d1.i1);<span class="hljs-comment">//0xff //255</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d1.i2 = %d \n"</span>,d1.i2);<span class="hljs-comment">//0xff //255</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d1.i3 = %d \n"</span>,d1.i3);<span class="hljs-comment">//0xff //255</span>
+  <span class="hljs-comment">//--------------------------------------------</span>
+  Data2 d2; 
+  d2.integer=<span class="hljs-number">0x00ff00ff</span>;
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d2.byteArr[0] = %d \n"</span>,d2.byteArr[<span class="hljs-number">0</span>]); <span class="hljs-comment">//0xff //255 </span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d2.byteArr[1] = %d \n"</span>,d2.byteArr[<span class="hljs-number">1</span>]);<span class="hljs-comment">//0x00 //255</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d2.byteArr[2] = %d \n"</span>,d2.byteArr[<span class="hljs-number">2</span>]);<span class="hljs-comment">//0xff //255</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d2.byteArr[3] = %d \n"</span>,d2.byteArr[<span class="hljs-number">3</span>]);<span class="hljs-comment">//0x00 //255</span>
+  
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d2.byte.i0 = %d \n"</span>,d2.<span class="hljs-keyword">byte</span>.i0);<span class="hljs-comment">//0xff //255</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d2.byte.i1 = %d \n"</span>,d2.<span class="hljs-keyword">byte</span>.i1);<span class="hljs-comment">//0x00 //0</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d2.byte.i2 = %d \n"</span>,d2.<span class="hljs-keyword">byte</span>.i2);<span class="hljs-comment">//0xff //255</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">"d2.byte.i3 = %d \n"</span>,d2.<span class="hljs-keyword">byte</span>.i3);<span class="hljs-comment">//0x00 //0</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+}
+</div></code></pre>
+</td>
+<td>
+<img src="https://live.staticflickr.com/65535/54936710713_b8ac767289_b.jpg" >
+</td>
+</tr>
+</table>
+<h3 id="common-mistakes">Common Mistakes</h3>
+<ul>
+<li>Accessing wrong member after assignment.</li>
+<li>Assuming all members are valid simultaneously.</li>
+<li>Miscalculating size (padding in structs, not unions).</li>
+</ul>
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+<li>Use unions for type punning or saving space.</li>
+<li>Combine with structs for tagged unions (add a type field).</li>
+<li>Initialize only the intended member.</li>
+</ul>
+<h2 id="4-bit-fields-in-cc">4. Bit Fields in C/C++</h2>
+<h3 id="explanation">Explanation</h3>
+<p>Bit fields allow defining structure members smaller than a byte, useful for flags, hardware registers, or compact data storage. They specify the number of bits a member occupies.</p>
+<p>Syntax: <code>type member : width;</code></p>
+<p>In C and C++, bit fields are similar, but C++ allows access specifiers (public, private) in structs/classes, and has stricter type rules.</p>
+<h3 id="examples">Examples</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// C Example</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Reg</span> {</span>
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> bit0 : <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> bit1 : <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> bit2 : <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> bit3 : <span class="hljs-number">1</span>;
+};
+
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Reg</span> <span class="hljs-title">r</span>;</span>
+r.bit0 = <span class="hljs-number">1</span>;
+r.bit1 = <span class="hljs-number">0</span>;
+
+<span class="hljs-comment">// C++ Example (similar, but can use class)</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Reg</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> bit0 : <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> bit1 : <span class="hljs-number">1</span>;
+};
+</div></code></pre>
+<h3 id="example">Example</h3>
+<ul>
+<li>Explanation:
+<ul>
+<li>Union: A union is used to allow access to the same memory location as both a byte and its individual bits.</li>
+<li>Bit Field: The struct within the union defines each bit of the byte.</li>
+<li>Setting bits initializes each bit as shown in your snippet.</li>
+<li>Output: Finally, printing byte.byte results in the decimal value 255.</li>
+</ul>
+</li>
+<li>This way, manipulating bits at a low level becomes straightforward while still providing a way to access the complete byte.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">union</span> {
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> <span class="hljs-keyword">byte</span>;
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> {</span>
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> b0 : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> b1 : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> b2 : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> b3 : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> b4 : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> b5 : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> b6 : <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> b7 : <span class="hljs-number">1</span>;
+    } Bit;
+} CHAR;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    CHAR <span class="hljs-keyword">byte</span>;
+    <span class="hljs-keyword">byte</span>.Bit.b0 = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">byte</span>.Bit.b1 = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">byte</span>.Bit.b2 = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">byte</span>.Bit.b3 = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">byte</span>.Bit.b4 = <span class="hljs-number">1</span>; 
+    <span class="hljs-keyword">byte</span>.Bit.b5 = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">byte</span>.Bit.b6 = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">byte</span>.Bit.b7 = <span class="hljs-number">1</span>;
+
+    <span class="hljs-comment">// b7   b6   b5   b4    b3    b2    b1   b0</span>
+    <span class="hljs-comment">// 128   64  32    16    8    4     2     1</span>
+    <span class="hljs-comment">//  1    1   1     1     1    1     0     0</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n%d \n"</span>,<span class="hljs-keyword">byte</span>.<span class="hljs-keyword">byte</span>);<span class="hljs-comment">//255</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+          
+</div></code></pre>
+<h3 id="common-mistakes">Common Mistakes</h3>
+<ul>
+<li>Portability issues (bit order depends on architecture; big-endian vs little-endian).</li>
+<li>Overlapping fields incorrectly, causing undefined behavior.</li>
+<li>Assuming bit fields are contiguous or packed without padding.</li>
+<li>In C++, mixing signed/unsigned can lead to sign extension issues.</li>
+</ul>
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+<li>Use for memory-constrained applications or hardware interfaces.</li>
+<li>Avoid in portable code; prefer bit masks (e.g., <code>#define BIT0 (1 &lt;&lt; 0)</code>) for better control.</li>
+<li>Document bit meanings and ensure alignment.</li>
+<li>In C++, use classes for encapsulation; test on target architectures.</li>
+</ul>
+<h2 id="5-enums">5. Enums</h2>
+<h3 id="explanation">Explanation</h3>
+<p>Enums define named integer constants, improving readability and avoiding magic numbers.</p>
+<p>Syntax: <code>enum Name { Val1, Val2 };</code></p>
+<p>Values start at 0, increment by 1, unless specified.</p>
+<h3 id="examples">Examples</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">enum</span> Week { Mon, Tue, Wed }; <span class="hljs-comment">// 0,1,2</span>
+<span class="hljs-keyword">enum</span> Day { Sun = <span class="hljs-number">5</span>, Mon = <span class="hljs-number">10</span>, Tue, Wed }; <span class="hljs-comment">// 5,10,11,12</span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">enum</span> { Red, Green, Blue } Color;
+Color c = Green;
+</div></code></pre>
+<h3 id="common-mistakes">Common Mistakes</h3>
+<ul>
+<li>Name conflicts in same scope.</li>
+<li>Assuming values are consecutive if custom assigned.</li>
+<li>Implicit conversions (not type-safe like C++ enum class).</li>
+</ul>
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+<li>Use typedef for cleaner code.</li>
+<li>Assign values explicitly if needed.</li>
+<li>In C, add validation functions for type safety.</li>
+<li>Prefer enums over macros for constants.</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<p>These topics cover essential C concepts for memory management and data structures. Practice with examples, use debugging tools, and follow best practices to avoid common pitfalls.</p>
+
+</body>
+</html>

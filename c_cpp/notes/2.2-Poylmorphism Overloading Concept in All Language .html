@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>2.2-Poylmorphism Overloading Concept in All Language .md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<ul>
+<li><a href="#overloading">Overloading</a>
+<ul>
+<li><a href="#what-is-overloading">What is Overloading?</a></li>
+<li><a href="#examples-of-overloading--">Examples of Overloading :-</a>
+<ul>
+<li><a href="#1-method-overloading">1. Method Overloading</a></li>
+<li><a href="#2-constructor-overloading">2. Constructor Overloading</a></li>
+<li><a href="#3-operator-overloading">3. Operator Overloading</a></li>
+</ul>
+</li>
+<li><a href="#method-overloading">Method Overloading</a>
+<ul>
+<li><a href="#what-is-method-overloading">What is Method Overloading</a></li>
+<li><a href="#problems-before">Problems before</a></li>
+<li><a href="#why-is-it-needed">Why is It Needed?</a>
+<ul>
+<li><a href="#1-simplifies-code-and-enhances-readability">1. Simplifies Code and Enhances Readability</a></li>
+<li><a href="#2-improves-code-reusability">2. Improves Code Reusability</a></li>
+<li><a href="#3-handles-multiple-scenarios-with-the-same-method-name">3. Handles Multiple Scenarios with the Same Method Name</a></li>
+<li><a href="#4-reduces-complexity">4. Reduces Complexity</a></li>
+</ul>
+</li>
+<li><a href="#category-1-true-native-support-languages-static-dispatchcompiler-selects-the-method">Category 1: True Native Support Languages (Static Dispatch)(Compiler selects the method)</a>
+<ul>
+<li><a href="#category-11-java--c--c">Category 1.1 :<strong>Java / C# / C++</strong></a></li>
+<li><a href="#category-12--kotlin">Category 1.2 : Kotlin</a></li>
+</ul>
+</li>
+<li><a href="#category-2--argument-label-support">Category 2 : Argument Label Support</a></li>
+<li><a href="#category-3--the-dynamic--no-native-support-languages-simulation">Category 3 : The &quot;Dynamic / No Native Support&quot; Languages (Simulation)</a>
+<ul>
+<li><a href="#category-31--javascript--typescript"><strong>Category 3.1 : JavaScript / TypeScript:</strong></a></li>
+<li><a href="#category-32--python"><strong>Category 3.2 : Python:</strong></a></li>
+<li><a href="#category-33--ruby"><strong>Category 3.3 : Ruby:</strong></a></li>
+<li><a href="#category-34--php">Category 3.4 : PHP</a></li>
+</ul>
+</li>
+<li><a href="#category-4---the-explicit-exclusion-languages">Category 4 :  The &quot;Explicit Exclusion&quot; Languages</a>
+<ul>
+<li><a href="#category-41--go-golang">Category 4.1 : Go (Golang)</a></li>
+<li><a href="#category-42-rust">Category 4.2: Rust</a></li>
+</ul>
+</li>
+<li><a href="#category-5--pattern-matching-functional-languages">Category 5 : Pattern Matching (Functional Languages)</a></li>
+<li><a href="#summary-table-overloadingmethods">Summary Table OverloadingMethods</a></li>
+</ul>
+</li>
+<li><a href="#constructor-overloading">Constructor Overloading</a>
+<ul>
+<li><a href="#category-1--the-native-support-group">Category 1 : The &quot;Native Support&quot; Group</a>
+<ul>
+<li><a href="#category-11---java--c">Category 1.1 :  Java / C#</a></li>
+<li><a href="#category-12--c">Category 1.2 : C++</a></li>
+</ul>
+</li>
+<li><a href="#category-2--the-default-arguments-group">Category 2 : The &quot;Default Arguments&quot; Group</a>
+<ul>
+<li><a href="#category-21--python">Category 2.1 : Python</a></li>
+<li><a href="#category-22--kotlin">Category 2.2 : Kotlin</a></li>
+</ul>
+</li>
+<li><a href="#category-3--the-named-constructors-group">Category 3 : The &quot;Named Constructors&quot; Group</a>
+<ul>
+<li><a href="#category-31--dart">Category 3.1 : Dart</a></li>
+<li><a href="#category-32-swift">Category 3.2 :Swift</a></li>
+</ul>
+</li>
+<li><a href="#category-4--the-single-implementation-group">Category 4 : The &quot;Single Implementation&quot; Group</a></li>
+<li><a href="#category-5-the-factory-function-group-no-constructors">Category 5: The &quot;Factory Function&quot; Group (No Constructors)</a>
+<ul>
+<li><a href="#category-51--go-golang">Category 5.1 : Go (Golang)</a></li>
+<li><a href="#category-52-rust">Category 5.2 :Rust</a></li>
+</ul>
+</li>
+<li><a href="#summary-cheatsheet-constructor-overloading">Summary Cheatsheet Constructor Overloading</a></li>
+</ul>
+</li>
+<li><a href="#operator-overloading">Operator Overloading</a>
+<ul>
+<li><a href="#category-1-static-languages-native-keywords">Category 1: Static Languages (Native Keywords)</a></li>
+<li><a href="#category-11-c">Category 1.1: C++</a></li>
+<li><a href="#category-12-c">Category 1.2: C#</a></li>
+<li><a href="#category-13-swift">Category 1.3: Swift</a>
+<ul>
+<li><a href="#category-14-kotlin">Category 1.4: Kotlin</a></li>
+</ul>
+</li>
+<li><a href="#category-2-languages-without-operator-overloading">Category 2: Languages WITHOUT Operator Overloading</a>
+<ul>
+<li><a href="#category-21-java-is-not-allowed-no-operator-overloading">Category 2.1: Java is NOT allowed (No operator overloading)</a></li>
+<li><a href="#category-22-javascript--typescript">Category 2.2: JavaScript / TypeScript:</a></li>
+<li><a href="#category-23-go-golang">Category 2.3: Go (Golang):</a></li>
+</ul>
+</li>
+<li><a href="#category-3--dynamic-languages-magic-methods">Category 3 : Dynamic Languages (Magic Methods)</a>
+<ul>
+<li><a href="#category-31-python">Category 3.1 :Python</a></li>
+<li><a href="#category-32-ruby">Category 3.2 :Ruby</a></li>
+<li><a href="#category-33-lua">Category 3.3 :Lua</a></li>
+</ul>
+</li>
+<li><a href="#category-4-traitinterface-based">Category 4: Trait/Interface Based</a>
+<ul>
+<li><a href="#category-41-rust">Category 4.1: Rust</a></li>
+<li><a href="#scala">Scala</a></li>
+</ul>
+</li>
+<li><a href="#summary-matrix-operator-overloading">Summary Matrix Operator Overloading</a></li>
+</ul>
+</li>
+<li><a href="#summary-of-overloading">Summary of Overloading</a></li>
+</ul>
+</li>
+<li><a href="#overloading-operator-in-c">Overloading Operator in c++</a>
+<ul>
+<li><a href="#overloading-binary-operator">Overloading Binary operator:</a></li>
+<li><a href="#overloading-unary-operators">overloading unary operators</a>
+<ul>
+<li><a href="#case-1-prefix-form">case 1: prefix form;</a></li>
+<li><a href="#case-2postfix-form">case 2:postfix form:</a></li>
+</ul>
+</li>
+<li><a href="#casting-operator">Casting operator</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="overloading">Overloading</h2>
+<h3 id="what-is-overloading">What is Overloading?</h3>
+<ul>
+<li>Overloading (Compile-time Polymorphism) occurs when multiple methods,
+constructors, or operators in the same scope share the same name but have
+different signatures.</li>
+<li>A signature usually consists of:
+<ul>
+<li>The number of parameters.</li>
+<li>The data types of the parameters.</li>
+<li>The order of the data types.</li>
+</ul>
+</li>
+</ul>
+<h3 id="examples-of-overloading">Examples of Overloading :-</h3>
+<h4 id="1-method-overloading">1. Method Overloading</h4>
+<ul>
+<li>This is defining multiple methods with the same name but different parameters.</li>
+</ul>
+<h4 id="2-constructor-overloading">2. Constructor Overloading</h4>
+<ul>
+<li>Creating multiple ways to instantiate an object.</li>
+</ul>
+<h4 id="3-operator-overloading">3. Operator Overloading</h4>
+<ul>
+<li>Redefining symbols like +, -, == to work with custom objects.</li>
+<li>C++: Extremely powerful. You can overload almost any operator.</li>
+<li>C#: Supported via public static operator.</li>
+<li>Swift: Supported via global functions inside the class.</li>
+<li>Java: Does NOT support user-defined operator overloading (except for the built-in + for Strings).</li>
+</ul>
+<h3 id="method-overloading">Method Overloading</h3>
+<h4 id="what-is-method-overloading">What is Method Overloading</h4>
+<ul>
+<li>define multiple methods with the same name but different parameter lists</li>
+<li>Same Action - Different Input  (Same Name , different Parameters(type-Number-order))</li>
+</ul>
+<h4 id="problems-before">Problems before</h4>
+<table>
+<tr>
+    <td> Before Method Overloading </td>
+    <td> After Method Overloading </td>
+</tr>
+<tr>
+<td>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DiscountCalculator</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">calculateDiscountPercentage</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price, <span class="hljs-keyword">double</span> percentage)</span> </span>{
+        <span class="hljs-keyword">return</span> price - (price * percentage / <span class="hljs-number">100</span>);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">calculateDiscountFixed</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price, <span class="hljs-keyword">double</span> fixedAmount)</span> </span>{
+        <span class="hljs-keyword">return</span> price - fixedAmount;
+    }
+}
+</div></code></pre>
+</td>
+<td>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DiscountCalculator</span> </span>{
+    <span class="hljs-comment">// Overloaded methods</span>
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">calculateDiscount</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price, <span class="hljs-keyword">double</span> percentage)</span> </span>{
+        <span class="hljs-keyword">return</span> price - (price * percentage / <span class="hljs-number">100</span>);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">calculateDiscount</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price, <span class="hljs-keyword">int</span> fixedAmount)</span> </span>{
+        <span class="hljs-keyword">return</span> price - fixedAmount;
+    }
+}
+</div></code></pre>
+</td>
+</tr>
+<tr>
+    <td>
+    This example shows poor practices:
+    <ul>
+        - Unclear method names.<br>
+        - Redundant logic.<br>
+        - Hard to maintain.
+    </ul>
+    Problems:<br>
+    <ul>
+    - Two different method names for similar functionality.<br>
+    - Reduces readability and flexibility.<br>
+    - Harder to maintain if more discount types are added.<br>
+    </ul>
+    </td>
+    <td>
+        This example uses method overloading properly:
+        <ul>
+        - Same method name for similar operations.<br>
+        - Clear parameter differentiation.<br>
+        - Easy to extend.
+        </ul>
+        Why this is better:
+        <ul>
+        - Readability: One method name calculateDiscount() for all discount types.<br>
+        - Maintainability: Easy to add new overloads (e.g., discount based on coupon).<br>
+        - Flexibility: Handles multiple scenarios without clutter.<br>
+        </ul>
+    </td>
+</tr>
+</table>
+<ul>
+<li><strong>Key Principles for Best Code:</strong>
+<ul>
+<li>Use meaningful method names.</li>
+<li>Avoid unnecessary duplication.</li>
+<li>Keep logic consistent and reusable.</li>
+<li>Ensure clear parameter types for overloads.</li>
+</ul>
+</li>
+</ul>
+<h4 id="why-is-it-needed">Why is It Needed?</h4>
+<ul>
+<li>Same Action - Different Input  (Same Name , different Parameters(type-Number-order))</li>
+<li>This is defining multiple methods with the same name but different parameters.</li>
+<li>This allows a method to handle similar tasks with different types or numbers of inputs.</li>
+</ul>
+<h5 id="1-simplifies-code-and-enhances-readability">1. Simplifies Code and Enhances Readability</h5>
+<ul>
+<li>Instead of creating multiple method names for similar tasks, you use the same name with different parameter lists.</li>
+<li>Example: E-commerce Discount Calculation<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DiscountCalculator</span> </span>{
+    <span class="hljs-comment">// Percentage discount</span>
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">calculateDiscount</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price, <span class="hljs-keyword">double</span> percentage)</span> </span>{
+        <span class="hljs-keyword">return</span> price - (price * percentage / <span class="hljs-number">100</span>);
+    }
+    <span class="hljs-comment">// Fixed discount</span>
+    <span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">calculateDiscount</span><span class="hljs-params">(<span class="hljs-keyword">double</span> price, <span class="hljs-keyword">double</span> fixedAmount)</span> </span>{
+        <span class="hljs-keyword">return</span> price - fixedAmount;
+    }
+}
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        DiscountCalculator dc = <span class="hljs-keyword">new</span> DiscountCalculator();
+        System.out.println(dc.calculateDiscount(<span class="hljs-number">1000</span>, <span class="hljs-number">10</span>)); <span class="hljs-comment">// Percentage</span>
+        System.out.println(dc.calculateDiscount(<span class="hljs-number">1000</span>, <span class="hljs-number">200</span>)); <span class="hljs-comment">// Fixed amount</span>
+    }
+}
+</div></code></pre>
+</li>
+<li>Why it helps:
+<ul>
+<li>Both methods share the same name calculateDiscount(), making the code cleaner and easier to understand.</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-improves-code-reusability">2. Improves Code Reusability</h5>
+<ul>
+<li>You can reuse the same method name for different input types or scenarios.</li>
+<li>Example: Financial App Transactions</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TransactionProcessor</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">processTransaction</span><span class="hljs-params">(<span class="hljs-keyword">double</span> amount)</span> </span>{
+        System.out.println(<span class="hljs-string">"Processing deposit of $"</span> + amount);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">processTransaction</span><span class="hljs-params">(<span class="hljs-keyword">double</span> amount, String accountType)</span> </span>{
+        System.out.println(<span class="hljs-string">"Processing withdrawal of $"</span> + amount + <span class="hljs-string">" from "</span> + accountType);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">processTransaction</span><span class="hljs-params">(<span class="hljs-keyword">double</span> amount, String fromAccount, String toAccount)</span> </span>{
+        System.out.println(<span class="hljs-string">"Transferring $"</span> + amount + <span class="hljs-string">" from "</span> + fromAccount + <span class="hljs-string">" to "</span> + toAccount);
+    }
+}
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        TransactionProcessor tp = <span class="hljs-keyword">new</span> TransactionProcessor();
+        tp.processTransaction(<span class="hljs-number">500</span>); <span class="hljs-comment">// Deposit</span>
+        tp.processTransaction(<span class="hljs-number">200</span>, <span class="hljs-string">"Savings"</span>); <span class="hljs-comment">// Withdrawal</span>
+        tp.processTransaction(<span class="hljs-number">100</span>, <span class="hljs-string">"Savings"</span>, <span class="hljs-string">"Checking"</span>); <span class="hljs-comment">// Transfer</span>
+    }
+}
+</div></code></pre>
+<ul>
+<li>Why it helps:
+<ul>
+<li>One method name processTransaction() handles multiple scenarios, reducing redundancy.</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-handles-multiple-scenarios-with-the-same-method-name">3. Handles Multiple Scenarios with the Same Method Name</h5>
+<ul>
+<li>You can overload methods to handle different search criteria.</li>
+<li>Example: User Search</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserSearch</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">searchUser</span><span class="hljs-params">(String username)</span> </span>{
+        System.out.println(<span class="hljs-string">"Searching by username: "</span> + username);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">searchUser</span><span class="hljs-params">(String email, <span class="hljs-keyword">boolean</span> isEmail)</span> </span>{
+        System.out.println(<span class="hljs-string">"Searching by email: "</span> + email);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">searchUser</span><span class="hljs-params">(<span class="hljs-keyword">long</span> phoneNumber)</span> </span>{
+        System.out.println(<span class="hljs-string">"Searching by phone number: "</span> + phoneNumber);
+    }
+}
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        UserSearch us = <span class="hljs-keyword">new</span> UserSearch();
+        us.searchUser(<span class="hljs-string">"john_doe"</span>); <span class="hljs-comment">// Username</span>
+        us.searchUser(<span class="hljs-string">"john@example.com"</span>, <span class="hljs-keyword">true</span>); <span class="hljs-comment">// Email</span>
+        us.searchUser(<span class="hljs-number">1234567890L</span>); <span class="hljs-comment">// Phone number</span>
+    }
+}
+</div></code></pre>
+<ul>
+<li>Why it helps:
+<ul>
+<li>One method name searchUser() handles username, email, and phone searches, making the code flexible and intuitive.</li>
+</ul>
+</li>
+</ul>
+<h5 id="4-reduces-complexity">4. Reduces Complexity</h5>
+<ul>
+<li>Instead of creating multiple method names for similar actions, you overload one method.</li>
+<li>Example: Messaging App</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MessageSender</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sendMessage</span><span class="hljs-params">(String email, String message)</span> </span>{
+        System.out.println(<span class="hljs-string">"Sending email to "</span> + email + <span class="hljs-string">": "</span> + message);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sendMessage</span><span class="hljs-params">(<span class="hljs-keyword">long</span> phoneNumber, String message)</span> </span>{
+        System.out.println(<span class="hljs-string">"Sending SMS to "</span> + phoneNumber + <span class="hljs-string">": "</span> + message);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sendMessage</span><span class="hljs-params">(<span class="hljs-keyword">int</span> userId, String message)</span> </span>{
+        System.out.println(<span class="hljs-string">"Sending in-app message to user ID "</span> + userId + <span class="hljs-string">": "</span> + message);
+    }
+}
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        MessageSender ms = <span class="hljs-keyword">new</span> MessageSender();
+        ms.sendMessage(<span class="hljs-string">"john@example.com"</span>, <span class="hljs-string">"Hello via Email!"</span>);
+        ms.sendMessage(<span class="hljs-number">1234567890L</span>, <span class="hljs-string">"Hello via SMS!"</span>);
+        ms.sendMessage(<span class="hljs-number">101</span>, <span class="hljs-string">"Hello via App!"</span>);
+    }
+}
+</div></code></pre>
+<ul>
+<li>Why it helps:
+<ul>
+<li>One method name sendMessage() handles email, SMS, and in-app messages, reducing complexity and improving maintainability.</li>
+</ul>
+</li>
+</ul>
+<h4 id="category-1-true-native-support-languages-static-dispatchcompiler-selects-the-method">Category 1: True Native Support Languages (Static Dispatch)(Compiler selects the method)</h4>
+<ul>
+<li>(Java, C#, C++, Swift, Kotlin)</li>
+<li>These are statically typed languages where the compiler determines which method to call based on the arguments passed.</li>
+<li>in these languages, the compiler decides which method to call at compile-time based on the parameter types and count.</li>
+</ul>
+<h5 id="category-11-java--c--c">Category 1.1 :<strong>Java / C# / C++</strong></h5>
+<ul>
+<li>These languages check the &quot;Method Signature&quot; (Name + Parameter Types).</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Java Example</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Printer</span> </span>{
+    <span class="hljs-comment">// 1. Overloading by Parameter Type</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>{
+        System.out.println(<span class="hljs-string">"Printing Integer: "</span> + i);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(String s)</span> </span>{
+        System.out.println(<span class="hljs-string">"Printing String: "</span> + s);
+    }
+
+    <span class="hljs-comment">// 2. Overloading by Parameter Count</span>
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(String s, <span class="hljs-keyword">int</span> times)</span> </span>{
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;times; i++) System.out.println(s);
+    }
+}
+
+<span class="hljs-comment">// Usage</span>
+Printer p = <span class="hljs-keyword">new</span> Printer();
+p.print(<span class="hljs-number">10</span>);        <span class="hljs-comment">// Calls int version</span>
+p.print(<span class="hljs-string">"Hello"</span>);   <span class="hljs-comment">// Calls String version</span>
+</div></code></pre>
+<h5 id="category-12--kotlin">Category 1.2 : Kotlin</h5>
+<ul>
+<li>Kotlin supports overloading exactly like Java, but adds Default Arguments, which often reduces the need to write multiple overloaded methods.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Calculator</span> </span>{
+    <span class="hljs-comment">// Standard Overloading</span>
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">add</span><span class="hljs-params">(a: <span class="hljs-type">Int</span>, b: <span class="hljs-type">Int</span>)</span></span> = a + b
+    <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">add</span><span class="hljs-params">(a: <span class="hljs-type">Double</span>, b: <span class="hljs-type">Double</span>)</span></span> = a + b
+}
+</div></code></pre>
+<h4 id="category-2--argument-label-support">Category 2 : Argument Label Support</h4>
+<ul>
+<li>Languages: Swift, Objective-C</li>
+<li>Swift is unique. It considers the Argument Label (the name of the variable used when calling the function) as Category of the signature. This allows two functions to have the exact same parameter types but different names.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Mover</span> </span>{
+    <span class="hljs-comment">// Signature: move(to: Int)</span>
+    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">move</span><span class="hljs-params">(to x: Int)</span></span> {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"Moving to coordinate \(x)"</span>)
+    }
+
+    <span class="hljs-comment">// Signature: move(by: Int)</span>
+    <span class="hljs-comment">// Input types are identical to above, but the label is different</span>
+    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">move</span><span class="hljs-params">(by x: Int)</span></span> {
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">"Moving forward by \(x) steps"</span>)
+    }
+}
+
+<span class="hljs-keyword">let</span> m = <span class="hljs-type">Mover</span>()
+m.move(to: <span class="hljs-number">10</span>) <span class="hljs-comment">// Calls first function</span>
+m.move(by: <span class="hljs-number">10</span>) <span class="hljs-comment">// Calls second function</span>
+</div></code></pre>
+<h4 id="category-3--the-%22dynamic--no-native-support%22-languages-simulation">Category 3 : The &quot;Dynamic / No Native Support&quot; Languages (Simulation)</h4>
+<ul>
+<li>(Python, JavaScript,TypeScript, Ruby, PHP)]</li>
+<li>These languages do not support traditional overloading because variables are not strictly typed. If you define two functions with the same name, the second one usually overwrites the first.</li>
+<li>In these languages, if you define two functions with the same name, the last one defined overwrites the first. To achieve overloading, you write one single function and check the arguments inside it.</li>
+<li>Instead of multiple methods, you write one method that handles variable arguments.</li>
+</ul>
+<h5 id="category-31--javascript--typescript"><strong>Category 3.1 : JavaScript / TypeScript:</strong></h5>
+<ul>
+<li>JavaScript does not support overloading. If you define func(a) and func(a,b), the second one deletes the first.</li>
+<li>JavaScript has no concept of signatures.</li>
+<li>TypeScript allows you to write overload signatures(definitions) for IDE support, but the implementation must be a single function that handles all cases.<pre class="hljs"><code><div>    <span class="hljs-comment">// JavaScript approach</span>
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Calculator</span> </span>{
+        add(a, b) {
+            <span class="hljs-keyword">if</span> (b === <span class="hljs-literal">undefined</span>) {
+                <span class="hljs-keyword">return</span> a + <span class="hljs-number">10</span>; <span class="hljs-comment">// Default behavior if 2nd arg missing</span>
+            }
+            <span class="hljs-keyword">return</span> a + b;
+        }
+    }
+
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">//TypeScript</span>
+<span class="hljs-keyword">class</span> Formatter {
+    <span class="hljs-comment">// Overload Signatures (for IDE/Compiler check only)</span>
+    format(input: <span class="hljs-built_in">string</span>): <span class="hljs-built_in">string</span>;
+    format(input: <span class="hljs-built_in">number</span>): <span class="hljs-built_in">string</span>;
+
+    <span class="hljs-comment">// The Implementation (One function to rule them all)</span>
+    format(input: <span class="hljs-built_in">any</span>): <span class="hljs-built_in">string</span> {
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> input === <span class="hljs-string">"string"</span>) {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"Text: "</span> + input;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"Number: "</span> + input.toFixed(<span class="hljs-number">2</span>);
+        }
+    }
+}
+</div></code></pre>
+</li>
+</ul>
+<h5 id="category-32--python"><strong>Category 3.2 : Python:</strong></h5>
+<ul>
+<li>Python uses &quot;Duck Typing.&quot; You cannot define def add(x) and def add(x, y).</li>
+<li>Python does not support overloading. You generally use Default Arguments or variable arguments (*args).</li>
+<li>Solution: Use Default Arguments or *args.<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Calculator</span>:</span>
+    <span class="hljs-comment"># Solution 1: Default Arguments (Simulates overloading by count)</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(self, a, b=<span class="hljs-number">0</span>, c=<span class="hljs-number">0</span>)</span>:</span>
+        <span class="hljs-keyword">return</span> a + b + c
+
+    <span class="hljs-comment"># Solution 2: Variable Arguments (*args)</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">log</span><span class="hljs-params">(self, *args)</span>:</span>
+        <span class="hljs-keyword">if</span> len(args) == <span class="hljs-number">1</span>:
+            print(<span class="hljs-string">f"Log: <span class="hljs-subst">{args[<span class="hljs-number">0</span>]}</span>"</span>)
+        <span class="hljs-keyword">elif</span> len(args) == <span class="hljs-number">2</span>:
+            print(<span class="hljs-string">f"Log <span class="hljs-subst">{args[<span class="hljs-number">0</span>]}</span>: <span class="hljs-subst">{args[<span class="hljs-number">1</span>]}</span>"</span>)
+
+    <span class="hljs-comment"># Modern Python (3.4+) alternative: @singledispatch</span>
+    <span class="hljs-comment"># Modern Python (3.10+) can use singledispatch for type-based overloading </span>
+    <span class="hljs-comment"># outside of classes, but it's less common.</span>
+    <span class="hljs-comment"># allows overloading based on type for standalone functions.</span>
+</div></code></pre>
+</li>
+</ul>
+<h5 id="category-33--ruby"><strong>Category 3.3 : Ruby:</strong></h5>
+<ul>
+<li>Ruby supports variable arguments (*args) but not multiple definitions.<pre class="hljs"><code><div>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span><span class="hljs-params">(*args)</span></span>
+    <span class="hljs-keyword">if</span> args.length == <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> args[<span class="hljs-number">0</span>] + <span class="hljs-number">10</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> args[<span class="hljs-number">0</span>] + args[<span class="hljs-number">1</span>]
+    <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+</div></code></pre>
+</li>
+</ul>
+<h5 id="category-34--php">Category 3.4 : PHP</h5>
+<ul>
+<li>PHP uses the magic method __call to intercept calls to undefined methods.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MultiAdd</span> </span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__call</span><span class="hljs-params">($name, $arguments)</span> </span>{
+        <span class="hljs-keyword">if</span> ($name == <span class="hljs-string">'add'</span>) {
+            <span class="hljs-keyword">if</span> (count($arguments) == <span class="hljs-number">2</span>) {
+                <span class="hljs-keyword">return</span> $arguments[<span class="hljs-number">0</span>] + $arguments[<span class="hljs-number">1</span>];
+            }
+            <span class="hljs-keyword">if</span> (count($arguments) == <span class="hljs-number">3</span>) {
+                <span class="hljs-keyword">return</span> $arguments[<span class="hljs-number">0</span>] + $arguments[<span class="hljs-number">1</span>] + $arguments[<span class="hljs-number">2</span>];
+            }
+        }
+    }
+}
+</div></code></pre>
+<h4 id="category-4--the-%22explicit-exclusion%22-languages">Category 4 :  The &quot;Explicit Exclusion&quot; Languages</h4>
+<ul>
+<li>(Go, Rust,c)</li>
+<li>These languages intentionally do not support overloading. The philosophy is that overloading hides behavior and makes code harder to read (&quot;grep-ability&quot;).</li>
+<li>Some modern languages intentionally removed overloading to keep code simple and readable.</li>
+</ul>
+<h5 id="category-41--go-golang">Category 4.1 : Go (Golang)</h5>
+<ul>
+<li>Go does not support method or operator overloading.</li>
+<li>Philosophy: If you want to add two integers, call it Add. If you want to add floats, call it AddFloat. This prevents magic and confusion.<pre class="hljs"><code><div><span class="hljs-comment">// Invalid in Go:</span>
+<span class="hljs-comment">// func Process(x int) {}</span>
+<span class="hljs-comment">// func Process(s string) {}</span>
+
+<span class="hljs-comment">// Valid approach:</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ProcessInt</span><span class="hljs-params">(x <span class="hljs-keyword">int</span>)</span></span> {}
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ProcessString</span><span class="hljs-params">(s <span class="hljs-keyword">string</span>)</span></span> {}
+
+<span class="hljs-comment">// Valid Go</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Add</span><span class="hljs-params">(a, b <span class="hljs-keyword">int</span>)</span> <span class="hljs-title">int</span></span> { ... }
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AddFloat</span><span class="hljs-params">(a, b <span class="hljs-keyword">float64</span>)</span> <span class="hljs-title">float64</span></span> { ... }
+<span class="hljs-comment">// Invalid: func Add(a, b float64) ...</span>
+</div></code></pre>
+</li>
+</ul>
+<h5 id="category-42-rust">Category 4.2: Rust</h5>
+<ul>
+<li>Rust does not support traditional overloading (defining the same function twice).</li>
+<li>However, it achieves Operator Overloading through Traits.</li>
+<li>Rust does not allow multiple functions with the same name.</li>
+<li>Workaround: Use Generics (Traits) or Enums.<pre class="hljs"><code><div>    <span class="hljs-comment">// Using an Enum to handle different types in one function</span>
+    <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Input</span></span> {
+        Num(<span class="hljs-built_in">i32</span>),
+        Text(<span class="hljs-built_in">String</span>),
+    }
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">process</span></span>(input: Input) {
+        <span class="hljs-keyword">match</span> input {
+            Input::Num(i) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Number: {}"</span>, i),
+            Input::Text(t) =&gt; <span class="hljs-built_in">println!</span>(<span class="hljs-string">"Text: {}"</span>, t),
+        }
+    }
+</div></code></pre>
+</li>
+</ul>
+<h4 id="category-5--pattern-matching-functional-languages">Category 5 : Pattern Matching (Functional Languages)</h4>
+<ul>
+<li>Languages: Elixir, Haskell, Erlang</li>
+<li>These languages don't technically have OOP overloading, but they have Pattern Matching. You define the function multiple times with different patterns; the runtime tries them from top to bottom.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">#Elixir</span>
+<span class="hljs-class"><span class="hljs-keyword">defmodule</span> <span class="hljs-title">Greeter</span></span> <span class="hljs-keyword">do</span>
+  <span class="hljs-comment"># Pattern 1: If argument is exactly :formal</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">greet</span></span>(<span class="hljs-symbol">:formal</span>), <span class="hljs-symbol">do:</span> IO.puts <span class="hljs-string">"Good day to you."</span>
+
+  <span class="hljs-comment"># Pattern 2: If argument is exactly :casual</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">greet</span></span>(<span class="hljs-symbol">:casual</span>), <span class="hljs-symbol">do:</span> IO.puts <span class="hljs-string">"Hey, what's up?"</span>
+
+  <span class="hljs-comment"># Pattern 3: Catch-all (functions like a variable)</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">greet</span></span>(name), <span class="hljs-symbol">do:</span> IO.puts <span class="hljs-string">"Hello, <span class="hljs-subst">#{name}</span>"</span>
+<span class="hljs-keyword">end</span>
+</div></code></pre>
+<h4 id="summary-table-overloadingmethods">Summary Table OverloadingMethods</h4>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Mechanism</th>
+<th>How it works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java / C# / C++</td>
+<td>Strict Signatures</td>
+<td>Compiler checks parameter types/count.</td>
+</tr>
+<tr>
+<td>Swift</td>
+<td>Argument Labels</td>
+<td>Distinguishes based on external parameter names (to:, by:).</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>One Implementation</td>
+<td>Signatures are for type-checking; code logic manually checks types.</td>
+</tr>
+<tr>
+<td>Python / JS</td>
+<td>Run-time Logic</td>
+<td>One function checks type(arg) or len(args) dynamically.</td>
+</tr>
+<tr>
+<td>Elixir / Haskell</td>
+<td>Pattern Matching</td>
+<td>Multiple definitions; runtime picks the first pattern that matches.</td>
+</tr>
+<tr>
+<td>Go / Rust / C</td>
+<td>Not Supported</td>
+<td>Must use unique names (e.g., addInt, addFloat).</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="constructor-overloading">Constructor Overloading</h3>
+<h4 id="category-1--the-%22native-support%22-group">Category 1 : The &quot;Native Support&quot; Group</h4>
+<ul>
+<li>(Java, C#, C++)</li>
+<li>These languages allow you to define multiple constructor methods within the same class, provided they have different parameter signatures.</li>
+</ul>
+<h5 id="category-11--java--c">Category 1.1 :  Java / C#</h5>
+<ul>
+<li>In Java and C#, you simply write the constructor multiple times. A common pattern is Constructor Chaining, where one constructor calls another using this().</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+    String name;
+    <span class="hljs-keyword">int</span> age;
+
+    <span class="hljs-comment">// 1. Default Constructor</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">User</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-comment">// Calls the detailed constructor with default values</span>
+        <span class="hljs-keyword">this</span>(<span class="hljs-string">"Guest"</span>, <span class="hljs-number">18</span>); 
+    }
+
+    <span class="hljs-comment">// 2. Overloaded Constructor (Name only)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">User</span><span class="hljs-params">(String name)</span> </span>{
+        <span class="hljs-keyword">this</span>(name, <span class="hljs-number">18</span>);
+    }
+
+    <span class="hljs-comment">// 3. Master Constructor</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">User</span><span class="hljs-params">(String name, <span class="hljs-keyword">int</span> age)</span> </span>{
+        <span class="hljs-keyword">this</span>.name = name;
+        <span class="hljs-keyword">this</span>.age = age;
+    }
+}
+</div></code></pre>
+<h5 id="category-12--c">Category 1.2 : C++</h5>
+<ul>
+<li>C++ supports overloading, but it uses Member Initializer Lists and Delegating Constructors (C++11 and later) to manage efficiency.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">string</span> name;
+    <span class="hljs-keyword">int</span> age;
+
+    <span class="hljs-comment">// 1. Master Constructor</span>
+    User(<span class="hljs-built_in">string</span> n, <span class="hljs-keyword">int</span> a) : name(n), age(a) {}
+
+    <span class="hljs-comment">// 2. Overloaded Constructor (Delegates to Master)</span>
+    User() : User(<span class="hljs-string">"Guest"</span>, <span class="hljs-number">18</span>) {} 
+};
+</div></code></pre>
+<h4 id="category-2--the-%22default-arguments%22-group">Category 2 : The &quot;Default Arguments&quot; Group</h4>
+<ul>
+<li>(Python, Kotlin, Scala)</li>
+<li>These languages discourage writing multiple constructors. Instead, they encourage one constructor with Default Parameters.</li>
+</ul>
+<h5 id="category-21--python">Category 2.1 : Python</h5>
+<ul>
+<li>In Python, you cannot define <strong>init</strong> twice. The second one will overwrite the first. You must use default values.
+code</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>:</span>
+    <span class="hljs-comment"># Simulates 3 different constructors using defaults</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, name=<span class="hljs-string">"Guest"</span>, age=<span class="hljs-number">18</span>)</span>:</span>
+        self.name = name
+        self.age = age
+
+<span class="hljs-comment"># Usage:</span>
+u1 = User()             <span class="hljs-comment"># Guest, 18</span>
+u2 = User(<span class="hljs-string">"Alice"</span>)      <span class="hljs-comment"># Alice, 18</span>
+u3 = User(<span class="hljs-string">"Bob"</span>, <span class="hljs-number">25</span>)    <span class="hljs-comment"># Bob, 25</span>
+</div></code></pre>
+<ul>
+<li>Note: If you need drastically different initialization logic (e.g., initializing from a File vs. a String), Python uses @classmethod as a Factory.</li>
+</ul>
+<h5 id="category-22--kotlin">Category 2.2 : Kotlin</h5>
+<ul>
+<li>Kotlin has a &quot;Primary Constructor&quot; (in the class header). While it allows &quot;Secondary Constructors&quot;, the idiomatic way is using defaults.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">// Primary Constructor with defaults</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span></span>(<span class="hljs-keyword">val</span> name: String = <span class="hljs-string">"Guest"</span>, <span class="hljs-keyword">val</span> age: <span class="hljs-built_in">Int</span> = <span class="hljs-number">18</span>)
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">val</span> u1 = User()
+<span class="hljs-keyword">val</span> u2 = User(<span class="hljs-string">"Alice"</span>)
+</div></code></pre>
+<h4 id="category-3--the-%22named-constructors%22-group">Category 3 : The &quot;Named Constructors&quot; Group</h4>
+<ul>
+<li>(Dart, Swift)</li>
+<li>Some languages allow/require you to give names to your constructors to avoid ambiguity.</li>
+</ul>
+<h5 id="category-31--dart">Category 3.1 : Dart</h5>
+<ul>
+<li>Dart does not support traditional overloading (same name, different params). You must name the alternatives.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  <span class="hljs-built_in">String</span> name;
+  <span class="hljs-built_in">int</span> age;
+
+  <span class="hljs-comment">// Default Constructor</span>
+  User(<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.age);
+
+  <span class="hljs-comment">// Named Constructor 1</span>
+  User.anonymous() {
+    name = <span class="hljs-string">"Guest"</span>;
+    age = <span class="hljs-number">18</span>;
+  }
+
+  <span class="hljs-comment">// Named Constructor 2</span>
+  User.fromJson(<span class="hljs-built_in">Map</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">dynamic</span>&gt; json) {
+    name = json[<span class="hljs-string">'name'</span>];
+    age = json[<span class="hljs-string">'age'</span>];
+  }
+}
+
+<span class="hljs-keyword">var</span> u1 = User(<span class="hljs-string">"Alice"</span>, <span class="hljs-number">25</span>);
+<span class="hljs-keyword">var</span> u2 = User.anonymous(); <span class="hljs-comment">// Very readable</span>
+</div></code></pre>
+<h5 id="category-32-swift">Category 3.2 :Swift</h5>
+<ul>
+<li>Swift uses Argument Labels. The function name is technically init, but the labels make them distinct signatures.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Color</span> </span>{
+    <span class="hljs-comment">// Signature: init(gray:)</span>
+    <span class="hljs-keyword">init</span>(gray: <span class="hljs-type">Double</span>) { ... }
+
+    <span class="hljs-comment">// Signature: init(r:g:b:)</span>
+    <span class="hljs-keyword">init</span>(r: <span class="hljs-type">Double</span>, g: <span class="hljs-type">Double</span>, b: <span class="hljs-type">Double</span>) { ... }
+}
+
+<span class="hljs-comment">// Usage</span>
+<span class="hljs-keyword">let</span> c1 = <span class="hljs-type">Color</span>(gray: <span class="hljs-number">0.5</span>)
+<span class="hljs-keyword">let</span> c2 = <span class="hljs-type">Color</span>(r: <span class="hljs-number">1.0</span>, g: <span class="hljs-number">0.0</span>, b: <span class="hljs-number">0.0</span>)
+</div></code></pre>
+<h4 id="category-4--the-%22single-implementation%22-group">Category 4 : The &quot;Single Implementation&quot; Group</h4>
+<ul>
+<li>(JavaScript, TypeScript)</li>
+<li>JavaScript allows only one function named constructor per class.</li>
+<li>JavaScript / TypeScript</li>
+<li>You must handle argument checking manually inside the single constructor.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">class</span> Box {
+    width: <span class="hljs-built_in">number</span>;
+    height: <span class="hljs-built_in">number</span>;
+
+    <span class="hljs-comment">// TS Overload Signatures (for intellisense only)</span>
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>);
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">size: <span class="hljs-built_in">number</span></span>);
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">w: <span class="hljs-built_in">number</span>, h: <span class="hljs-built_in">number</span></span>);
+
+    <span class="hljs-comment">// The Actual Implementation (Single entry point)</span>
+    <span class="hljs-keyword">constructor</span>(<span class="hljs-params">wOrSize?: <span class="hljs-built_in">number</span>, h?: <span class="hljs-built_in">number</span></span>) {
+        <span class="hljs-keyword">if</span> (wOrSize === <span class="hljs-literal">undefined</span>) {
+            <span class="hljs-comment">// Case: No args</span>
+            <span class="hljs-keyword">this</span>.width = <span class="hljs-number">0</span>; 
+            <span class="hljs-keyword">this</span>.height = <span class="hljs-number">0</span>;
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (h === <span class="hljs-literal">undefined</span>) {
+            <span class="hljs-comment">// Case: One arg (Size)</span>
+            <span class="hljs-keyword">this</span>.width = wOrSize; 
+            <span class="hljs-keyword">this</span>.height = wOrSize;
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// Case: Two args</span>
+            <span class="hljs-keyword">this</span>.width = wOrSize;
+            <span class="hljs-keyword">this</span>.height = h;
+        }
+    }
+}
+</div></code></pre>
+<h4 id="category-5-the-%22factory-function%22-group-no-constructors">Category 5: The &quot;Factory Function&quot; Group (No Constructors)</h4>
+<ul>
+<li>(Go, Rust)</li>
+<li>These languages do not have &quot;Constructors&quot; in the OOP sense. They use static functions (Factories) to return initialized structures.</li>
+</ul>
+<h5 id="category-51--go-golang">Category 5.1 : Go (Golang)</h5>
+<ul>
+<li>Go uses naming conventions (usually starting with New).</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+    Name <span class="hljs-keyword">string</span>
+    Age  <span class="hljs-keyword">int</span>
+}
+
+<span class="hljs-comment">// "Default Constructor"</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewUser</span><span class="hljs-params">(name <span class="hljs-keyword">string</span>, age <span class="hljs-keyword">int</span>)</span> *<span class="hljs-title">User</span></span> {
+    <span class="hljs-keyword">return</span> &amp;User{Name: name, Age: age}
+}
+
+<span class="hljs-comment">// "Overloaded Constructor"</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewGuestUser</span><span class="hljs-params">()</span> *<span class="hljs-title">User</span></span> {
+    <span class="hljs-keyword">return</span> &amp;User{Name: <span class="hljs-string">"Guest"</span>, Age: <span class="hljs-number">18</span>}
+}
+</div></code></pre>
+<h5 id="category-52-rust">Category 5.2 :Rust</h5>
+<ul>
+<li>Rust typically uses a new function, but can define others like default or from_file.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">User</span></span> {
+    name: <span class="hljs-built_in">String</span>,
+    age: <span class="hljs-built_in">u8</span>,
+}
+
+<span class="hljs-keyword">impl</span> User {
+    <span class="hljs-comment">// Standard constructor</span>
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new</span></span>(name: <span class="hljs-built_in">String</span>, age: <span class="hljs-built_in">u8</span>) -&gt; User {
+        User { name, age }
+    }
+
+    <span class="hljs-comment">// Alternative constructor</span>
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">guest</span></span>() -&gt; User {
+        User { name: <span class="hljs-built_in">String</span>::from(<span class="hljs-string">"Guest"</span>), age: <span class="hljs-number">18</span> }
+    }
+}
+</div></code></pre>
+<h4 id="summary-cheatsheet-constructor-overloading">Summary Cheatsheet Constructor Overloading</h4>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Mechanism</th>
+<th>Example Syntax</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java / C#</td>
+<td>True Overloading</td>
+<td>User(), User(String s)</td>
+</tr>
+<tr>
+<td>C++</td>
+<td>True Overloading</td>
+<td>User() : User(&quot;Default&quot;) {}</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Default Args (or Class Methods)</td>
+<td>def <strong>init</strong>(self, name=&quot;Guest&quot;)</td>
+</tr>
+<tr>
+<td>Kotlin</td>
+<td>Default Args (Idiomatic)</td>
+<td>class User(val name: String = &quot;&quot;)</td>
+</tr>
+<tr>
+<td>Dart</td>
+<td>Named Constructors</td>
+<td>User.fromJson(...), User.guest()</td>
+</tr>
+<tr>
+<td>Swift</td>
+<td>Argument Labels</td>
+<td>init(name:), init(json:)</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>Manual Logic</td>
+<td>if (arg === undefined) ...</td>
+</tr>
+<tr>
+<td>Go / Rust</td>
+<td>Static Factories</td>
+<td>NewUser(), User::new()</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td>Static Factories (Modern)</td>
+<td>Use static function create...</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="operator-overloading">Operator Overloading</h3>
+<h4 id="category-1-static-languages-native-keywords">Category 1: Static Languages (Native Keywords)</h4>
+<ul>
+<li>These languages support operator overloading directly via specific keywords (operator, static, etc.).</li>
+</ul>
+<h4 id="category-11-c">Category 1.1: C++</h4>
+<ul>
+<li>C++ is the pioneer of operator overloading. You can overload almost any operator as a member function or a friend function.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vector</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-keyword">int</span> x, y;
+    Vector(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y) : x(x), y(y) {}
+
+    <span class="hljs-comment">// Overloading '+' operator</span>
+    Vector <span class="hljs-keyword">operator</span> + (<span class="hljs-keyword">const</span> Vector&amp; other) {
+        <span class="hljs-keyword">return</span> Vector(x + other.x, y + other.y);
+    }
+};
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-function">Vector <span class="hljs-title">v1</span><span class="hljs-params">(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)</span></span>;
+    <span class="hljs-function">Vector <span class="hljs-title">v2</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>;
+    Vector v3 = v1 + v2; <span class="hljs-comment">// v3 is (4, 6)</span>
+}
+</div></code></pre>
+<h4 id="category-12-c">Category 1.2: C#</h4>
+<ul>
+<li>C# requires operator overloads to be public and static. You generally have to overload equality operators (==, !=) in pairs.<pre class="hljs"><code><div>    <span class="hljs-comment">//C#</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vector</span> </span>{
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> X { get; set; }
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> Y { get; set; }
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Vector</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>{ X = x; Y = y; }
+
+        <span class="hljs-comment">// Syntax: public static returnType operator Op (args)</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Vector operator +(Vector a, Vector b) {
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Vector(a.X + b.X, a.Y + b.Y);
+        }
+    }
+</div></code></pre>
+</li>
+</ul>
+<h4 id="category-13-swift">Category 1.3: Swift</h4>
+<ul>
+<li>Swift uses global-level static functions defined inside the class extension or body.<pre class="hljs"><code><div>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Vector</span> </span>{
+        <span class="hljs-keyword">let</span> x: <span class="hljs-type">Int</span>
+        <span class="hljs-keyword">let</span> y: <span class="hljs-type">Int</span>
+
+        <span class="hljs-comment">// 'static' is required</span>
+        <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">func</span> + <span class="hljs-params">(<span class="hljs-keyword">left</span>: Vector, <span class="hljs-keyword">right</span>: Vector)</span></span> -&gt; <span class="hljs-type">Vector</span> {
+            <span class="hljs-keyword">return</span> <span class="hljs-type">Vector</span>(x: <span class="hljs-keyword">left</span>.x + <span class="hljs-keyword">right</span>.x, y: <span class="hljs-keyword">left</span>.y + <span class="hljs-keyword">right</span>.y)
+        }
+    }
+
+    <span class="hljs-keyword">let</span> v1 = <span class="hljs-type">Vector</span>(x: <span class="hljs-number">1</span>, y: <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">let</span> v2 = <span class="hljs-type">Vector</span>(x: <span class="hljs-number">3</span>, y: <span class="hljs-number">4</span>)
+    <span class="hljs-keyword">let</span> v3 = v1 + v2
+</div></code></pre>
+</li>
+</ul>
+<h5 id="category-14-kotlin">Category 1.4: Kotlin</h5>
+<ul>
+<li>Kotlin uses the strict operator keyword. However, you cannot define new symbols; you must map to predefined names (e.g., + maps to the function name plus).<pre class="hljs"><code><div>    <span class="hljs-comment">//Kotlin </span>
+    <span class="hljs-keyword">data</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vector</span></span>(<span class="hljs-keyword">val</span> x: <span class="hljs-built_in">Int</span>, <span class="hljs-keyword">val</span> y: <span class="hljs-built_in">Int</span>) {
+        <span class="hljs-comment">// Must use the specific name 'plus' for '+'</span>
+        <span class="hljs-keyword">operator</span> <span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">plus</span><span class="hljs-params">(other: <span class="hljs-type">Vector</span>)</span></span>: Vector {
+            <span class="hljs-keyword">return</span> Vector(<span class="hljs-keyword">this</span>.x + other.x, <span class="hljs-keyword">this</span>.y + other.y)
+        }
+    }
+
+    <span class="hljs-keyword">val</span> v1 = Vector(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">val</span> v2 = Vector(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+    <span class="hljs-keyword">val</span> v3 = v1 + v2 <span class="hljs-comment">// Compiler calls v1.plus(v2)</span>
+</div></code></pre>
+</li>
+</ul>
+<h4 id="category-2-languages-without-operator-overloading">Category 2: Languages WITHOUT Operator Overloading</h4>
+<ul>
+<li>These languages intentionally exclude operator overloading to maintain code clarity and avoid &quot;magic&quot; behavior.</li>
+</ul>
+<h5 id="category-21-java-is-not-allowed-no-operator-overloading">Category 2.1: Java is NOT allowed (No operator overloading)</h5>
+<ul>
+<li>Java does not allow operator overloading for user-defined types.</li>
+<li>Java does not support operator overloading except for + on Strings.</li>
+<li>Why? To keep the language simple and prevent developers from creating confusing code (e.g., using - to &quot;subtract&quot; a user from a database).</li>
+<li>Exception: The + operator is overloaded internally for String concatenation, but you cannot define it for your own classes.</li>
+<li>Alternative: v1.add(v2)</li>
+<li>The ONLY operator Java overloads : string<pre class="hljs"><code><div>String s = <span class="hljs-string">"Hello "</span> + <span class="hljs-string">"World"</span>;  <span class="hljs-comment">// works</span>
+</div></code></pre>
+</li>
+<li>✔ Incorrect Java :<pre class="hljs"><code><div>    Complex c = <span class="hljs-keyword">new</span> Complex(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>);
+    Complex c2 = <span class="hljs-number">5</span> + c;  <span class="hljs-comment">// ❌ Compile-time error</span>
+    Complex c3 = <span class="hljs-keyword">new</span> Complex(<span class="hljs-number">2</span>,<span class="hljs-number">5</span>);
+    Complex c4 = c1 + c3;  <span class="hljs-comment">// ❌ Compile-time Error</span>
+</div></code></pre>
+</li>
+<li>✔ Correct Java way:<pre class="hljs"><code><div>    Complex c2 = c.add(<span class="hljs-number">5</span>);
+    Complex c4 = c.add(c3);
+</div></code></pre>
+</li>
+</ul>
+<h5 id="category-22-javascript--typescript">Category 2.2: JavaScript / TypeScript:</h5>
+<ul>
+<li>Why? JS uses type coercion. Adding objects usually results in &quot;[object Object][object Object]&quot;.</li>
+<li>Alternative: v1.add(v2)</li>
+</ul>
+<h5 id="category-23-go-golang">Category 2.3: Go (Golang):</h5>
+<ul>
+<li>Why? Go values explicit code over implicit behavior.</li>
+<li>Alternative: func Add(a, b Vector) Vector</li>
+</ul>
+<h4 id="category-3--dynamic-languages-magic-methods">Category 3 : Dynamic Languages (Magic Methods)</h4>
+<ul>
+<li>These languages interpret operators as method calls. If you define a method with a specific &quot;magic&quot; name, the operator works.</li>
+<li>Interestingly, while they don't support method overloading well, many support operator overloading via &quot;Magic Methods.&quot;</li>
+<li>Python: Uses &quot;Dunder&quot; methods (<strong>add</strong>, <strong>sub</strong>).</li>
+<li>Ruby: You can define def +(other) inside a class.</li>
+<li>JavaScript: No operator overloading.</li>
+</ul>
+<h5 id="category-31-python">Category 3.1 :Python</h5>
+<ul>
+<li>Python uses &quot;Dunder&quot; (Double Underscore) methods.</li>
+<li>CAN work, but only if you implement the correct special (dunder) methods.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Complex</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, real=<span class="hljs-number">0</span>, img=<span class="hljs-number">0</span>)</span>:</span>
+        self.real = real
+        self.img = img
+    <span class="hljs-comment"># Handles: object + something</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__add__</span><span class="hljs-params">(self, other)</span>:</span>
+        <span class="hljs-keyword">if</span> isinstance(other, Complex):
+            <span class="hljs-keyword">return</span> Complex(self.real + other.real, self.img + other.img)
+        <span class="hljs-keyword">elif</span> isinstance(other, int):
+            <span class="hljs-keyword">return</span> Complex(self.real + other, self.img)
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">NotImplemented</span>
+    <span class="hljs-comment"># Handles: something + object</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__radd__</span><span class="hljs-params">(self, other)</span>:</span>
+        <span class="hljs-keyword">return</span> self.__add__(other)
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__str__</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f"<span class="hljs-subst">{self.real}</span>+<span class="hljs-subst">{self.img}</span>i"</span>
+</div></code></pre>
+<pre class="hljs"><code><div>c1 = Complex(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+print(c1 + <span class="hljs-number">5</span>)   <span class="hljs-comment"># object + 5   → __add__</span>
+print(<span class="hljs-number">5</span> + c1)   <span class="hljs-comment"># 5 + object   → __radd__</span>
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Method Python Calls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>object + 5</code></td>
+<td><code>__add__(self, other)</code></td>
+</tr>
+<tr>
+<td><code>5 + object</code></td>
+<td><code>__radd__(self, other)</code> <em>(reverse add)</em></td>
+</tr>
+</tbody>
+</table>
+<h5 id="category-32-ruby">Category 3.2 :Ruby</h5>
+<ul>
+<li>In Ruby, operators are just regular methods. There is no difference between a function named add and a function named +.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vector</span></span>
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:x</span>, <span class="hljs-symbol">:y</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(x, y)</span></span>
+    @x = x
+    @y = y
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-comment"># Defining the method named '+'</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">+</span><span class="hljs-params">(other)</span></span>
+    Vector.new(@x + other.x, @y + other.y)
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+v1 = Vector.new(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+v2 = Vector.new(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+v3 = v1 + v2
+</div></code></pre>
+<h5 id="category-33-lua">Category 3.3 :Lua</h5>
+<p>Lua uses &quot;Metatables&quot; to handle overloading.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">local</span> Vector = {}
+Vector.<span class="hljs-built_in">__index</span> = Vector
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Vector.new</span><span class="hljs-params">(x, y)</span></span>
+    <span class="hljs-keyword">local</span> v = {x = x, y = y}
+    <span class="hljs-built_in">setmetatable</span>(v, Vector)
+    <span class="hljs-keyword">return</span> v
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-comment">-- The metamethod for addition</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Vector.__add</span><span class="hljs-params">(v1, v2)</span></span>
+    <span class="hljs-keyword">return</span> Vector.new(v1.x + v2.x, v1.y + v2.y)
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-keyword">local</span> v1 = Vector.new(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+<span class="hljs-keyword">local</span> v2 = Vector.new(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+<span class="hljs-keyword">local</span> v3 = v1 + v2
+</div></code></pre>
+<h4 id="category-4-traitinterface-based">Category 4: Trait/Interface Based</h4>
+<ul>
+<li>These languages do not allow you to just &quot;write a function.&quot; You must implement a specific Interface or Trait provided by the standard library.</li>
+</ul>
+<h5 id="category-41-rust">Category 4.1: Rust</h5>
+<ul>
+<li>
+<p>Rust uses Traits from std::ops. You must implement the Add trait to use +.</p>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">use</span> std::ops::Add;
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Point</span></span> { x: <span class="hljs-built_in">i32</span>, y: <span class="hljs-built_in">i32</span> }
+    <span class="hljs-comment">// Implementing the Add trait overload the '+' operator</span>
+    <span class="hljs-keyword">impl</span> Add <span class="hljs-keyword">for</span> Point {
+        <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Output</span></span> = Point;
+
+        <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">add</span></span>(<span class="hljs-keyword">self</span>, other: Point) -&gt; Point {
+            Point { x: <span class="hljs-keyword">self</span>.x + other.x, y: <span class="hljs-keyword">self</span>.y + other.y }
+        }
+    }
+</div></code></pre>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">use</span> std::ops::Add;
+
+    <span class="hljs-meta">#[derive(Debug)]</span>
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Vector</span></span> {
+        x: <span class="hljs-built_in">i32</span>,
+        y: <span class="hljs-built_in">i32</span>,
+    }
+
+    <span class="hljs-comment">// Implement the Add Trait</span>
+    <span class="hljs-keyword">impl</span> Add <span class="hljs-keyword">for</span> Vector {
+        <span class="hljs-class"><span class="hljs-keyword">type</span> <span class="hljs-title">Output</span></span> = Vector;
+
+        <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">add</span></span>(<span class="hljs-keyword">self</span>, other: Vector) -&gt; Vector {
+            Vector {
+                x: <span class="hljs-keyword">self</span>.x + other.x,
+                y: <span class="hljs-keyword">self</span>.y + other.y,
+            }
+        }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
+        <span class="hljs-keyword">let</span> v1 = Vector { x: <span class="hljs-number">1</span>, y: <span class="hljs-number">2</span> };
+        <span class="hljs-keyword">let</span> v2 = Vector { x: <span class="hljs-number">3</span>, y: <span class="hljs-number">4</span> };
+        <span class="hljs-keyword">let</span> v3 = v1 + v2;
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">"{:?}"</span>, v3);
+    }
+</div></code></pre>
+</li>
+</ul>
+<h5 id="scala">Scala</h5>
+<ul>
+<li>Scala is flexible; it treats methods with symbolic names as operators.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Vector</span>(<span class="hljs-params">x: <span class="hljs-type">Int</span>, y: <span class="hljs-type">Int</span></span>) </span>{
+    <span class="hljs-comment">// Simply naming the method '+'</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">+</span></span>(other: <span class="hljs-type">Vector</span>): <span class="hljs-type">Vector</span> = {
+        <span class="hljs-type">Vector</span>(<span class="hljs-keyword">this</span>.x + other.x, <span class="hljs-keyword">this</span>.y + other.y)
+    }
+}
+
+<span class="hljs-keyword">val</span> v1 = <span class="hljs-type">Vector</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+<span class="hljs-keyword">val</span> v2 = <span class="hljs-type">Vector</span>(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)
+<span class="hljs-keyword">val</span> v3 = v1 + v2
+</div></code></pre>
+<h4 id="summary-matrix-operator-overloading">Summary Matrix Operator Overloading</h4>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Method Overloading</th>
+<th>Constructor Overloading</th>
+<th>Operator Overloading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td>✅ Yes (Native)</td>
+<td>✅ Yes</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>C++</td>
+<td>✅ Yes (Native)</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>C#</td>
+<td>✅ Yes (Native)</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Swift</td>
+<td>✅ Yes (Native)</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Kotlin</td>
+<td>✅ Yes (Native)</td>
+<td>✅ Yes</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>❌ No (Use defaults)</td>
+<td>❌ No (Use factories)</td>
+<td>✅ Yes (Dunder methods)</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>❌ No (Last one wins)</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>TypeScript</td>
+<td>⚠️ Signatures only</td>
+<td>⚠️ Signatures only</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Ruby</td>
+<td>❌ No</td>
+<td>❌ No</td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td>PHP</td>
+<td>❌ No(Use __call)</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>❌ No</td>
+<td>❌ No</td>
+<td>❌ No</td>
+</tr>
+<tr>
+<td>Rust</td>
+<td>❌ No</td>
+<td>(Use Generics)</td>
+<td>❌ No (Use Factories)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="summary-of-overloading">Summary of Overloading</h3>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Keyword / Mechanism</th>
+<th>Operator Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C++</td>
+<td>operator keyword</td>
+<td>Vector operator+(...)</td>
+</tr>
+<tr>
+<td>C#</td>
+<td>static operator keyword</td>
+<td>public static Vector operator +(...)</td>
+</tr>
+<tr>
+<td>Swift</td>
+<td>static func</td>
+<td>static func + (...)</td>
+</tr>
+<tr>
+<td>Kotlin</td>
+<td>operator keyword + Mapping</td>
+<td>operator fun plus(...)</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Magic Methods (Dunder)</td>
+<td>def <strong>add</strong>(self, other):</td>
+</tr>
+<tr>
+<td>Ruby</td>
+<td>Method Name</td>
+<td>def +(other)</td>
+</tr>
+<tr>
+<td>Rust</td>
+<td>Traits (std::ops)</td>
+<td>impl Add for Vector</td>
+</tr>
+<tr>
+<td>Scala</td>
+<td>Method Name</td>
+<td>def +(other: ...)</td>
+</tr>
+<tr>
+<td>Java</td>
+<td>❌ Not Supported</td>
+<td>Use .add()</td>
+</tr>
+<tr>
+<td>JS/TS</td>
+<td>❌ Not Supported</td>
+<td>Use .add()</td>
+</tr>
+<tr>
+<td>Go</td>
+<td>❌ Not Supported</td>
+<td>Use Add()</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Key Takeaway
+<ul>
+<li>Static Languages (Java/C++/C#) resolve overloading at Compile Time.</li>
+<li>Dynamic Languages (Python/JS) resolve behavior at Runtime (usually by checking argument types inside a single function).</li>
+<li>Modern Systems Languages (Go/Rust) often avoid overloading in favor of explicit naming or Traits to reduce ambiguity.</li>
+</ul>
+</li>
+</ul>
+<h2 id="overloading-operator-in-c">Overloading Operator in c++</h2>
+<ul>
+<li>In C++,operators can be reprogrammed (ie.,overloaded) to operate on user-defined types,such as classes , just in the same way they operate on C++ built in data types.
+this process is known as operator overloading.</li>
+<li>Syntax<pre class="hljs"><code><div>    <span class="hljs-keyword">return</span>-type <span class="hljs-keyword">operator</span>#(arg-<span class="hljs-built_in">list</span>)
+    {
+    <span class="hljs-comment">// perform operator action.</span>
+    }
+</div></code></pre>
+</li>
+<li>can be any valid C++ operator except (.),(:<img class="emoji" alt="smiley" src="data:image/png;base64,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" />,(?<img class="emoji" alt="smiley" src="data:image/png;base64,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" /></li>
+</ul>
+<h3 id="overloading-binary-operator">Overloading Binary operator:</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">//operand1 Binary-operator operand 2</span>
+<span class="hljs-comment">//e.g:</span>
+<span class="hljs-comment">//x                      +                   y ;</span>
+<span class="hljs-keyword">return</span> type <span class="hljs-keyword">operator</span>     #             operand <span class="hljs-number">2</span>
+{
+<span class="hljs-comment">// operand one is the This operator</span>
+}
+</div></code></pre>
+<ul>
+<li>Example</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">//in complex.h</span>
+<span class="hljs-built_in">complex</span> <span class="hljs-keyword">operator</span> +(<span class="hljs-built_in">complex</span> c);<span class="hljs-comment">//c1+c2</span>
+<span class="hljs-built_in">complex</span> <span class="hljs-keyword">operator</span> +(<span class="hljs-keyword">float</span> h);<span class="hljs-comment">//c1+5</span>
+<span class="hljs-keyword">friend</span> <span class="hljs-built_in">complex</span> <span class="hljs-keyword">operator</span> +(<span class="hljs-keyword">float</span> f,<span class="hljs-built_in">complex</span> h);<span class="hljs-comment">//5+c</span>
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-built_in">complex</span> commplex::<span class="hljs-keyword">operator</span> +(<span class="hljs-built_in">complex</span> c){
+	<span class="hljs-built_in">complex</span> c2;
+	c2.real=real+c.real;
+	c2.imag=imag+c.imag;
+	<span class="hljs-keyword">return</span> c2;
+}
+<span class="hljs-built_in">complex</span> <span class="hljs-built_in">complex</span>::<span class="hljs-keyword">operator</span> +(<span class="hljs-keyword">float</span> h);
+{
+	<span class="hljs-built_in">complex</span> c;
+	c.real=h+real;
+	c.imag=imag;
+	<span class="hljs-keyword">return</span> c;
+
+}
+
+<span class="hljs-built_in">complex</span> <span class="hljs-keyword">operator</span> +(<span class="hljs-keyword">float</span> f,<span class="hljs-built_in">complex</span> h){
+	copmlex c;
+	c.real=h.real+f;
+	c.imag=h.imag;
+	<span class="hljs-keyword">return</span> c;
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">//In main()</span>
+<span class="hljs-function"><span class="hljs-built_in">complex</span> <span class="hljs-title">c1</span><span class="hljs-params">(<span class="hljs-number">2.5</span>,<span class="hljs-number">-3.2</span>)</span></span>;
+<span class="hljs-keyword">float</span> f=<span class="hljs-number">5.3</span>;
+<span class="hljs-function"><span class="hljs-built_in">complex</span> <span class="hljs-title">c2</span><span class="hljs-params">(<span class="hljs-number">-3.4</span>,<span class="hljs-number">2.2</span>)</span></span>;
+<span class="hljs-built_in">complex</span> c3,c4,c5;
+c3=c1+c2;
+c4=c1+f;
+c5=f+c2;
+</div></code></pre>
+<h3 id="overloading-unary-operators">overloading unary operators</h3>
+<ul>
+<li>in both cases (prefix &amp; postfix) operand 1 generates the  call to the operator function (i.e operand 1 is passed through this)</li>
+</ul>
+<h4 id="case-1-prefix-form">case 1: prefix form;</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">//.h file:</span>
+<span class="hljs-built_in">complex</span> <span class="hljs-keyword">operator</span> ++();
+
+<span class="hljs-comment">// .cpp file</span>
+<span class="hljs-built_in">complex</span> <span class="hljs-built_in">complex</span>::<span class="hljs-keyword">operator</span> ++(){
+real++;
+<span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;
+} 
+</div></code></pre>
+<h4 id="case-2postfix-form">case 2:postfix form:</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">//.h file:</span>
+<span class="hljs-built_in">complex</span> <span class="hljs-keyword">operator</span> ++(<span class="hljs-keyword">int</span>);
+<span class="hljs-comment">// .cpp file</span>
+<span class="hljs-built_in">complex</span> <span class="hljs-built_in">complex</span>::<span class="hljs-keyword">operator</span> ++(<span class="hljs-keyword">int</span>){
+<span class="hljs-built_in">complex</span> temp;
+temp=*<span class="hljs-keyword">this</span>;
+real++;
+<span class="hljs-keyword">return</span> temp;
+} 
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">//.h file:</span>
+<span class="hljs-keyword">friend</span> ostream&amp; <span class="hljs-keyword">operator</span>&lt;&lt;(ostream&amp; os, <span class="hljs-keyword">const</span> Complex&amp; c);
+
+<span class="hljs-comment">//.cpp</span>
+
+<span class="hljs-comment">//main()</span>
+    <span class="hljs-function">Complex <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>;
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Complex number: "</span> &lt;&lt; c &lt;&lt; <span class="hljs-built_in">endl</span>;
+</div></code></pre>
+<h3 id="casting-operator">Casting operator</h3>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// Cast Complex → double (magnitude)</span>
+    <span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">double</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>(real * real + imag * imag);
+    }
+
+    <span class="hljs-comment">// Cast Complex → string</span>
+    <span class="hljs-function"><span class="hljs-keyword">operator</span> <span class="hljs-title">string</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>{
+        <span class="hljs-keyword">return</span> to_string(real) + <span class="hljs-string">" + "</span> + to_string(imag) + <span class="hljs-string">"i"</span>;
+    }
+    <span class="hljs-comment">// main </span>
+    <span class="hljs-function">Complex <span class="hljs-title">c</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>)</span></span>;
+    <span class="hljs-keyword">double</span> mag = c;        <span class="hljs-comment">// cast to double</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Magnitude: "</span> &lt;&lt; mag &lt;&lt; <span class="hljs-built_in">endl</span>;
+    <span class="hljs-built_in">string</span> s = c;          <span class="hljs-comment">// cast to string</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"String form: "</span> &lt;&lt; s &lt;&lt; <span class="hljs-built_in">endl</span>;
+</div></code></pre>
+
+</body>
+</html>

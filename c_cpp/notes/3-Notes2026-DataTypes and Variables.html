@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>3-Notes2026-DataTypes and Variables.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="table-of-content">Table of Content</h2>
+<ul>
+<li><a href="#table-of-content">Table of Content</a>
+<ul>
+<li><a href="#what-is-c">What is C++?</a></li>
+<li><a href="#getting-started---write-our-first-hello-world-c-program">Getting Started - Write our First Hello-world C++ Program</a>
+<ul>
+<li><a href="#step-1-write-the-source-code">Step 1: Write the Source Code:</a></li>
+<li><a href="#step-2-build-the-executable-code-compile-and-link-aka-build-the-source-code-hellocpp-into-executable-code-helloexe-in-windows-or-hello-in-unixlinuxmac">Step 2: Build the Executable Code: Compile and Link (aka Build) the source code &quot;hello.cpp&quot; into executable code (&quot;hello.exe&quot; in Windows or &quot;hello&quot; in UNIX/Linux/Mac).</a></li>
+<li><a href="#step-3-run-the-executable-code-execute-run-the-program">Step 3: Run the Executable Code: Execute (Run) the program.</a></li>
+</ul>
+</li>
+<li><a href="#variables">Variables</a>
+<ul>
+<li><a href="#what-is-variable">what is Variable</a></li>
+<li><a href="#important-notes">important Notes</a></li>
+<li><a href="#name-resolution-in-c">Name Resolution in C++</a>
+<ul>
+<li><a href="#rule-of-thumb">Rule of Thumb:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#output-and-input">Output and Input</a>
+<ul>
+<li><a href="#io-in-c-input--output">I/O in C (Input / Output)</a>
+<ul>
+<li><a href="#output-in-c--printf">Output in C → printf()</a>
+<ul>
+<li><a href="#common-format-specifiers">Common Format Specifiers:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#output-in-c--printf-1">Output in C++ → printf()</a></li>
+<li><a href="#input-in-c--scanf">Input in C → scanf()</a></li>
+<li><a href="#input-in-c--cin">Input in C++ → cin</a></li>
+</ul>
+</li>
+<li><a href="#datatypes">DataTypes</a>
+<ul>
+<li><a href="#what-are-data-types-in-c">What Are Data Types in C++?</a></li>
+<li><a href="#datatypes-1">DataTypes</a>
+<ul>
+<li><a href="#1-basic-built-in-data-types">🧩1. Basic (Built-in) Data Types</a></li>
+<li><a href="#-2-derived-data-types">🧮 2. Derived Data Types</a></li>
+<li><a href="#-3-user-defined-data-types">🧱 3. User-Defined Data Types</a></li>
+<li><a href="#-4-type-modifiers">🧮 4. Type Modifiers</a></li>
+<li><a href="#summary-table">summary Table</a></li>
+</ul>
+</li>
+<li><a href="#qualifiers--modifiers">Qualifiers / Modifiers</a></li>
+<li><a href="#c-specific--extended-types">C++ Specific / Extended Types</a></li>
+</ul>
+</li>
+<li><a href="#overflow">OverFlow</a>
+<ul>
+<li><a href="#what-is-overflow">What is Overflow?</a></li>
+<li><a href="#why-does-overflow-happen">Why Does Overflow Happen?</a></li>
+<li><a href="#visual-representation-of-signed-overflow">Visual Representation of signed Overflow</a></li>
+<li><a href="#visual-representation-of-unsigned-overflow">Visual Representation of unsigned Overflow</a></li>
+<li><a href="#examples">Examples</a>
+<ul>
+<li><a href="#example-1-signed-char-overflow">Example 1: Signed Char Overflow</a></li>
+<li><a href="#example-2-integer-overflow">Example 2: Integer Overflow</a></li>
+<li><a href="#example-3-multiplication-overflow">Example 3: Multiplication Overflow</a></li>
+<li><a href="#example-4-signedunsigned-mixing">Example 4: Signed/Unsigned Mixing</a></li>
+<li><a href="#example-5-loop-counter-overflow">Example 5: Loop Counter Overflow</a></li>
+</ul>
+</li>
+<li><a href="#detection-and-prevention">Detection and Prevention</a>
+<ul>
+<li><a href="#enable-compiler-warnings">Enable compiler warnings</a></li>
+<li><a href="#use-larger-data-types">Use Larger Data Types</a></li>
+<li><a href="#validate-input-ranges">Validate input ranges</a></li>
+<li><a href="#use-safe-arithmetic-functions-check-before-operations">Use safe arithmetic functions (Check Before Operations)</a></li>
+<li><a href="#avoid-mixing-signed-and-unsigned">Avoid mixing signed and unsigned</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#implicitly-auto-conversion-and-explicitly-casting">Implicitly (Auto Conversion) and Explicitly casting</a>
+<ul>
+<li><a href="#implicitly-casting">Implicitly Casting</a></li>
+<li><a href="#explicitly-casting">Explicitly Casting</a></li>
+<li><a href="#examples-1">Examples</a>
+<ul>
+<li><a href="#1-narrowing-conversion-int--char">1. Narrowing Conversion (int → char)</a></li>
+<li><a href="#2integer-promotion--signed-vs-unsigned">2.Integer Promotion / Signed vs Unsigned</a></li>
+<li><a href="#3floating-point-to-integer-truncation">3.Floating-Point to Integer Truncation</a></li>
+<li><a href="#4implicit-conversion--integer-division-pitfall">4.implicit conversion / integer division pitfall</a></li>
+<li><a href="#5mixed-type-arithmetic">5.Mixed-Type Arithmetic</a></li>
+<li><a href="#6boolean-conversion-pitfall">6.Boolean Conversion Pitfall</a></li>
+<li><a href="#7implicit-conversion-in-function-calls">7.Implicit Conversion in Function Calls</a></li>
+<li><a href="#8-pointer-casting-cc-excplicit">8. Pointer Casting (C/C++) (Excplicit)</a></li>
+<li><a href="#how-to-avoid-implicit-conversion-problems">How to Avoid Implicit Conversion Problems</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#typedef-in-cc">Typedef in C/C++</a>
+<ul>
+<li><a href="#why-use-typedef">Why Use typedef?</a></li>
+<li><a href="#examples-of-typedef">Examples of typedef</a></li>
+<li><a href="#use-cases">Use Cases</a>
+<ul>
+<li><a href="#platform-independent-code">Platform-Independent Code</a></li>
+</ul>
+</li>
+<li><a href="#common-use--structs-pointers-function-pointers">Common use : Structs, pointers, function pointers</a></li>
+<li><a href="#standard-fixed-width-data-types">Standard Fixed-Width Data Types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="what-is-c">What is C++?</h3>
+<ul>
+<li>
+<p>A high-performance programming language</p>
+</li>
+<li>
+<p>Used for system programming, games, applications, robotics, etc.</p>
+</li>
+<li>
+<p>Supports procedural, object-oriented, and generic programmin</p>
+</li>
+</ul>
+<h3 id="getting-started---write-our-first-hello-world-c-program">Getting Started - Write our First Hello-world C++ Program</h3>
+<h4 id="step-1-write-the-source-code">Step 1: Write the Source Code:</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">/*
+ * First C++ program that says hello (hello.cpp)
+ */</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;    // Needed to perform IO operations (C++ Library)</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt; // Needed to Perform IO Operation (C Library)</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+ 
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{                        <span class="hljs-comment">// Program entry point</span>
+   <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"hello, world"</span> &lt;&lt; <span class="hljs-built_in">endl</span>;  <span class="hljs-comment">// Say Hello</span>
+   <span class="hljs-built_in">printf</span>(<span class="hljs-string">"hello, world\n"</span>); <span class="hljs-comment">//say Hello </span>
+   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;                        <span class="hljs-comment">// Terminate main()</span>
+}                                   <span class="hljs-comment">// End of main function</span>
+</div></code></pre>
+<ul>
+<li>#include <iostream> → allows input/output</li>
+<li>using namespace std; → lets us use - - cout without std::cout</li>
+<li>int main() → program starts here</li>
+<li>cout &lt;&lt; ... → prints output</li>
+<li>printf() → prints output</li>
+<li>return 0; → ends the program</li>
+</ul>
+<h4 id="step-2-build-the-executable-code-compile-and-link-aka-build-the-source-code-%22hellocpp%22-into-executable-code-%22helloexe%22-in-windows-or-%22hello%22-in-unixlinuxmac">Step 2: Build the Executable Code: Compile and Link (aka Build) the source code &quot;hello.cpp&quot; into executable code (&quot;hello.exe&quot; in Windows or &quot;hello&quot; in UNIX/Linux/Mac).</h4>
+<ul>
+<li>On IDE (such as CodeBlocks), push the &quot;Build&quot; button.</li>
+<li>On Text editor with the GNU GCC compiler, start a CMD Shell (Windows) or Terminal (UNIX/Linux/Mac) and issue these commands:
+<ul>
+<li>Windows (CMD shell) - Build &quot;hello.cpp&quot; into &quot;hello.exe&quot;<pre class="hljs"><code><div>&gt; g++ -o hello.exe hello.cpp
+</div></code></pre>
+</li>
+<li>UNIX/Linux/Mac (Bash shell) - Build &quot;hello.cpp&quot; into &quot;hello&quot;<pre class="hljs"><code><div>$ g++ -o hello hello.cpp
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="step-3-run-the-executable-code-execute-run-the-program">Step 3: Run the Executable Code: Execute (Run) the program.</h4>
+<ul>
+<li>
+<p>On IDE (such as CodeBlocks), push the &quot;Run&quot; button.</p>
+</li>
+<li>
+<p>On Text Editor with GNU GCC compiler, issue these command from CMD Shell (Windows) or Terminal (UNIX/Linux/Mac):</p>
+<ul>
+<li>Windows (CMD shell) - Run &quot;hello.exe&quot; (.exe is optional)<pre class="hljs"><code><div>&gt; hello
+    hello, world
+</div></code></pre>
+</li>
+<li>UNIX/Linux/Mac (Bash shell) - Run &quot;hello&quot; (./ denotes the current directory)<pre class="hljs"><code><div>$ ./hello
+hello, world
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="variables">Variables</h3>
+<h4 id="what-is-variable">what is Variable</h4>
+<ul>
+<li>
+<p>variables are used to store values.</p>
+</li>
+<li>
+<p>A variable is a named storage location that holds a value that can be modified during the execution of the program.</p>
+</li>
+<li>
+<p>variable is a container for data. Before using it, you must declare it by specifying:</p>
+<ul>
+<li>Data type (int, float, char, etc.)</li>
+<li>Variable name</li>
+<li>(Optional) Initial value</li>
+</ul>
+</li>
+<li>
+<p>Variables must be declared before they are used.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> x; 
+</div></code></pre>
+</li>
+<li>
+<p>The declaration of a variable consists of specifying its type and name. For example:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> x = <span class="hljs-number">5</span>;
+<span class="hljs-comment">//This initializes the variable `x` with the value `5`.</span>
+</div></code></pre>
+</li>
+<li>
+<p>Variables can also be reassigned a value later in the program. For example:</p>
+<pre class="hljs"><code><div> <span class="hljs-keyword">int</span> x = <span class="hljs-number">5</span>;
+ x = <span class="hljs-number">10</span>;
+ This reassigns the variable `x` with the value `<span class="hljs-number">10</span>`.
+</div></code></pre>
+</li>
+<li>
+<p>In C++, variables can also be declared with the <code>const</code> keyword, which means that the variable cannot be modified after it is initialized. For example:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> x = <span class="hljs-number">5</span>;
+<span class="hljs-comment">//This declares a constant variable `x` with the value `5`, which cannot be modified later in the program.</span>
+</div></code></pre>
+</li>
+</ul>
+<h4 id="variable-naming-rules-in-cc">Variable Naming Rules in C/C++</h4>
+<ul>
+<li>Can contain letters, digits, and underscores</li>
+<li>Must NOT start with a digit
+<ul>
+<li>int 1value;//invalid</li>
+<li>int value1;//valid</li>
+</ul>
+</li>
+<li>No special characters except underscore
+Not allowed: @, #, -, *, etc.</li>
+<li>Cannot use C/C++ keywords
+<ul>
+<li>Keywords like int, return, class, float cannot be variable names.
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_o-RoKPOCYa_3LeYGZ_ZmfKI3dz-f7LNoXyiR2_1UEMQxuQ_VwH2ItfJveMrrXzh0P6zYHCI-7j-g_ov9rhGlAdvHfHS1bGbuXTzpdGOXWVVPQHINxmyo67dJ9VEQY8UOuMd0Yo_fOdSU/s1600/c%252B%252B_keywords.png" width="50%"></li>
+</ul>
+</li>
+<li>No spaces allowed</li>
+<li>Should be meaningful (good practice)
+Not a rule but recommended.</li>
+<li>Length is technically unlimited (but avoid too long names)</li>
+</ul>
+<p>Compilers allow long names, but short and meaningful names are better.</p>
+<h5 id="examples">Examples</h5>
+<ul>
+<li>Examples: Valid Variable Names</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> age;
+<span class="hljs-keyword">float</span> salary2024;
+<span class="hljs-keyword">char</span> _grade;
+<span class="hljs-keyword">double</span> PI_value; 
+</div></code></pre>
+<ul>
+<li>Examples: Invalid Variable Names</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> <span class="hljs-number">2</span>count;
+<span class="hljs-keyword">float</span> my-value;
+<span class="hljs-keyword">char</span> <span class="hljs-class"><span class="hljs-keyword">class</span>;</span>   <span class="hljs-comment">// keyword</span>
+<span class="hljs-keyword">int</span> total amount;  <span class="hljs-comment">// space not allowed</span>
+</div></code></pre>
+<h4 id="important-notes">important Notes</h4>
+<ul>
+<li>
+<p>C/C++ allows you to name a variable the same as a function because the compiler treats functions and variables differently in scope.</p>
+</li>
+<li>
+<p>you can declare a variable with the same name, you cannot use the original function properly in that scope anymore.</p>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+    <span class="hljs-keyword">int</span> <span class="hljs-built_in">printf</span> = <span class="hljs-number">5</span>;  <span class="hljs-comment">// technically allowed</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, <span class="hljs-built_in">printf</span>);  <span class="hljs-comment">// This will cause an error</span>
+    <span class="hljs-comment">/*
+        The compiler sees printf as a variable (an int) in this scope.
+        But then you try to call printf("%d\n", printf);, which expects printf to be a function.
+        Result: compiler error.
+    
+    */</span>
+    <span class="hljs-keyword">int</span> <span class="hljs-built_in">cout</span> = <span class="hljs-number">10</span>;   <span class="hljs-comment">// legal but shadows std::cout</span>
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello"</span>; <span class="hljs-comment">// ❌ Error: 'cout' is now an int, not ostream</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span>&lt;&lt;<span class="hljs-string">"Hello"</span>; <span class="hljs-comment">//✅ Works perfectly. Using std::cout explicitly bypasses the local cout variable.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; 
+}
+</div></code></pre>
+<h4 id="name-resolution-in-c">Name Resolution in C++</h4>
+<table>
+<thead>
+<tr>
+<th>Name Used</th>
+<th>Resolved To</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cout</code></td>
+<td>local <code>int cout = 10</code></td>
+<td>Cannot use <code>&lt;&lt;</code> on int ❌</td>
+</tr>
+<tr>
+<td><code>std::cout</code></td>
+<td>library <code>std::cout</code></td>
+<td>Can output text ✅</td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div>Global Scope / Library:
+┌───────────────────────┐
+│ std::cout (ostream)   │
+└───────────────────────┘
+           ▲
+           │ accessible via std::cout
+           │
+Local Scope (inside main):
+┌───────────────────────┐
+│ int cout = 10;        │  &lt;<span class="hljs-comment">-- shadows std::cout</span>
+└───────────────────────┘
+           │
+           │ When you write "cout" alone:
+           ▼
+Compiler uses local variable (int), not std::cout
+</div></code></pre>
+<h5 id="rule-of-thumb">Rule of Thumb:</h5>
+<ul>
+<li>Never name variables the same as standard library functions.</li>
+<li>It “shadows” the function, leading to confusing errors.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Can you use a built-in name?</th>
+<th>Result</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int printf = 5;</code></td>
+<td>Compiles, but shadows the function</td>
+<td>❌ Avoid</td>
+</tr>
+<tr>
+<td><code>int main = 10;</code></td>
+<td>Compiles, but can break function calls</td>
+<td>❌ Avoid</td>
+</tr>
+<tr>
+<td><code>int myPrintf = 5;</code></td>
+<td>Perfectly safe</td>
+<td>✅ Recommended</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output-and-input">Output and Input</h3>
+<h4 id="io-in-c-input--output">I/O in C (Input / Output)</h4>
+<h5 id="output-in-c-%E2%86%92-printf">Output in C → printf()</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-comment">//printf("format string", values);</span>
+
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"Age = %d"</span>, age);
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"Age: %d Height: %f"</span>, age, h);
+</div></code></pre>
+<h6 id="common-format-specifiers">Common Format Specifiers:</h6>
+<table>
+<thead>
+<tr>
+<th>Specifier</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%d</code>, <code>%i</code></td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>%f</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td><code>%lf</code></td>
+<td>double</td>
+</tr>
+<tr>
+<td><code>%c</code></td>
+<td>char</td>
+</tr>
+<tr>
+<td><code>%s</code></td>
+<td>string</td>
+</tr>
+<tr>
+<td><code>%u</code></td>
+<td>unsigned int</td>
+</tr>
+<tr>
+<td><code>%p</code></td>
+<td>pointer address</td>
+</tr>
+<tr>
+<td><code>%x</code>, <code>%X</code></td>
+<td>hex number</td>
+</tr>
+</tbody>
+</table>
+<h4 id="output-in-c-%E2%86%92-printf">Output in C++ → printf()</h4>
+<ul>
+<li>C++ uses streams from:
+#include &lt;iostream&gt;</li>
+<li>syntax</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">//cout syntax </span>
+<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Sting..."</span> ;
+<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Age: "</span> &lt;&lt; age;
+<span class="hljs-comment">//New line:</span>
+<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello\n"</span>;
+<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Hello"</span> &lt;&lt; <span class="hljs-built_in">endl</span>;
+
+</div></code></pre>
+<ul>
+<li>Uses the insertion operator &lt;&lt;</li>
+<li>Type-safe (no format specifiers needed)</li>
+</ul>
+<h4 id="input-in-c-%E2%86%92-scanf">Input in C → scanf()</h4>
+<pre class="hljs"><code><div><span class="hljs-comment">//scanf("format", &amp;variable);</span>
+<span class="hljs-comment">//Address of (&amp;) is required, except for strings.</span>
+<span class="hljs-keyword">int</span> age;
+<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%d"</span>, &amp;age);
+<span class="hljs-comment">//Reading string</span>
+<span class="hljs-keyword">char</span> name[<span class="hljs-number">20</span>];
+<span class="hljs-built_in">scanf</span>(<span class="hljs-string">"%s"</span>, name);
+</div></code></pre>
+<h4 id="input-in-c-%E2%86%92-cin">Input in C++ → cin</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> age ;
+<span class="hljs-built_in">cin</span> &gt;&gt; age;
+<span class="hljs-keyword">int</span> a,b,c; 
+<span class="hljs-comment">//Reading multiple inputs:</span>
+<span class="hljs-built_in">cin</span> &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+
+<span class="hljs-comment">//Read string </span>
+<span class="hljs-comment">//Using cin (stops at space)</span>
+<span class="hljs-built_in">string</span> name;
+<span class="hljs-built_in">cin</span> &gt;&gt; name;
+
+<span class="hljs-comment">//Using getline() (reads full line)</span>
+<span class="hljs-built_in">string</span> name;
+getline(<span class="hljs-built_in">cin</span>, name);
+
+
+<span class="hljs-comment">//Often you need cin.ignore() before getline if mixed with other inputs.</span>
+
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>C (<code>printf</code>, <code>scanf</code>)</th>
+<th>C++ (<code>cout</code>, <code>cin</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Header</td>
+<td><code>&lt;stdio.h&gt;</code></td>
+<td><code>&lt;iostream&gt;</code></td>
+</tr>
+<tr>
+<td>Style</td>
+<td>Procedural</td>
+<td>Object-oriented</td>
+</tr>
+<tr>
+<td>Safety</td>
+<td>Not type-safe</td>
+<td>Type-safe</td>
+</tr>
+<tr>
+<td>Formatting</td>
+<td>Easy, powerful</td>
+<td>Harder (needs <code>&lt;iomanip&gt;</code>)</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Generally faster</td>
+<td>Slightly slower</td>
+</tr>
+<tr>
+<td>Custom type support</td>
+<td>No</td>
+<td>Yes (operator overloading)</td>
+</tr>
+<tr>
+<td>Mixed usage</td>
+<td>Allowed</td>
+<td>Avoid mixing with printf/scanf</td>
+</tr>
+</tbody>
+</table>
+<h3 id="datatypes">DataTypes</h3>
+<h4 id="what-are-data-types-in-c">What Are Data Types in C++?</h4>
+<p>In C++, a data type defines:</p>
+<ul>
+<li>The type of data a variable can store</li>
+<li>The amount of memory required</li>
+<li>The operations that can be performed on that data</li>
+</ul>
+<hr>
+<h4 id="datatypes">DataTypes</h4>
+<pre><code class="language-mermaid"><div class="mermaid">graph TD
+    A[C++ Data Types] --> B[Built-in Primitive]
+    A --> C[Derived]
+    A --> D[User-defined]
+
+    B --> B1[int]
+    B --> B2[float]
+    B --> B3[double]
+    B --> B4[char]
+    B --> B5[bool]
+    B --> B6[void]
+
+    C --> C1[array]
+    C --> C2[pointer]
+    C --> C3[reference]
+    C --> C4[function]
+
+    D --> D1[struct]
+    D --> D2[class]
+    D --> D3[union]
+    D --> D4[enum]
+    D --> D5[typedef/using]
+</div></code></pre>
+<hr>
+<h5 id="%F0%9F%A7%A91-basic-built-in-data-types">🧩1. Basic (Built-in) Data Types</h5>
+<table>
+<thead>
+<tr>
+<th><strong>Type</strong></th>
+<th><strong>Size (Typical)</strong></th>
+<th><strong>Range</strong></th>
+<th><strong>Example</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code></td>
+<td>4 bytes</td>
+<td>–2,147,483,648 to 2,147,483,647</td>
+<td><code>int age = 25;</code></td>
+<td>Integer (whole number)</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>4 bytes</td>
+<td>~3.4e−38 to 3.4e+38</td>
+<td><code>float temp = 36.6;</code></td>
+<td>Decimal (single precision)</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>8 bytes</td>
+<td>~1.7e−308 to 1.7e+308</td>
+<td><code>double pi = 3.14159;</code></td>
+<td>Decimal (double precision)</td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td>1 byte</td>
+<td>-128 to 127 (ASCII)</td>
+<td><code>char grade = 'A';</code></td>
+<td>Single character</td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td>1 byte</td>
+<td><code>true</code> / <code>false</code></td>
+<td><code>bool isOn = true;</code></td>
+<td>Boolean logic value</td>
+</tr>
+<tr>
+<td><code>void</code></td>
+<td>—</td>
+<td>—</td>
+<td>Used in functions</td>
+<td>Represents &quot;no value&quot;</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 id="%F0%9F%A7%AE-2-derived-data-types">🧮 2. Derived Data Types</h5>
+<p>These are based on built-in types.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Type</strong></th>
+<th><strong>Example</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Array</strong></td>
+<td><code>int marks[5];</code></td>
+<td>Collection of elements of same type</td>
+</tr>
+<tr>
+<td><strong>Pointer</strong></td>
+<td><code>int *ptr;</code></td>
+<td>Stores memory address of another variable</td>
+</tr>
+<tr>
+<td><strong>Function</strong></td>
+<td><code>int add(int a, int b);</code></td>
+<td>Returns a value of a data type</td>
+</tr>
+<tr>
+<td><strong>Reference</strong></td>
+<td><code>int &amp;ref = x;</code></td>
+<td>Alias for another variable</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>C &amp; C++</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Array</td>
+<td>Yes</td>
+<td>Fixed-size collection of elements</td>
+</tr>
+<tr>
+<td>Pointer</td>
+<td>Yes</td>
+<td>Holds memory address</td>
+</tr>
+<tr>
+<td>Reference</td>
+<td>C++ only</td>
+<td>Alias to another variable</td>
+</tr>
+<tr>
+<td>Struct</td>
+<td>Yes</td>
+<td>Group of variables</td>
+</tr>
+<tr>
+<td>Union</td>
+<td>Yes</td>
+<td>Same memory for multiple types</td>
+</tr>
+<tr>
+<td>Enum</td>
+<td>Yes</td>
+<td>Named integral constants</td>
+</tr>
+<tr>
+<td>Class</td>
+<td>C++ only</td>
+<td>Encapsulates data + functions</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 id="%F0%9F%A7%B1-3-user-defined-data-types">🧱 3. User-Defined Data Types</h5>
+<p>You can create your own data structures using these.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Type</strong></th>
+<th><strong>Example</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>struct</code></td>
+<td><code>struct Student { int id; char name[20]; };</code></td>
+<td>Combines variables of different types</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td><code>class Car { public: int speed; };</code></td>
+<td>Combines data and functions (OOP)</td>
+</tr>
+<tr>
+<td><code>enum</code></td>
+<td><code>enum Color { Red, Green, Blue };</code></td>
+<td>Defines named integer constants</td>
+</tr>
+<tr>
+<td><code>union</code></td>
+<td><code>union Data { int i; float f; };</code></td>
+<td>Shares the same memory space for all members</td>
+</tr>
+<tr>
+<td><code>typedef</code> / <code>using</code></td>
+<td><code>typedef unsigned int uint;</code></td>
+<td>Creates an alias for a data type</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 id="%F0%9F%A7%AE-4-type-modifiers">🧮 4. Type Modifiers</h5>
+<p>C++ allows modifiers to adjust the size and range of basic types.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Modifier</strong></th>
+<th><strong>Applied To</strong></th>
+<th><strong>Example</strong></th>
+<th><strong>Typical Size</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>signed</code></td>
+<td><code>int</code>, <code>char</code></td>
+<td><code>signed int x;</code></td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td><code>unsigned</code></td>
+<td><code>int</code>, <code>char</code></td>
+<td><code>unsigned int y;</code></td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td><code>int</code></td>
+<td><code>short int s;</code></td>
+<td>2 bytes</td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td><code>int</code>, <code>double</code></td>
+<td><code>long int l;</code></td>
+<td>8 bytes</td>
+</tr>
+<tr>
+<td><code>long long</code></td>
+<td><code>int</code></td>
+<td><code>long long n;</code></td>
+<td>8 bytes or more</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 id="summary-table">summary Table</h5>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Example Types</th>
+<th>Typical Size</th>
+<th>Stored As</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Basic</strong></td>
+<td><code>int</code>, <code>char</code>, <code>float</code>, <code>bool</code></td>
+<td>1–8 bytes</td>
+<td>Binary numbers</td>
+</tr>
+<tr>
+<td><strong>Derived</strong></td>
+<td><code>array</code>, <code>pointer</code>, <code>reference</code>, <code>function</code></td>
+<td>Varies</td>
+<td>Depends on base type</td>
+</tr>
+<tr>
+<td><strong>User-defined</strong></td>
+<td><code>struct</code>, <code>class</code>, <code>enum</code>, <code>union</code></td>
+<td>Varies</td>
+<td>Combination of data types</td>
+</tr>
+<tr>
+<td><strong>Modifiers</strong></td>
+<td><code>short</code>, <code>long</code>, <code>unsigned</code></td>
+<td>Adjust base type</td>
+<td>Alters size/range</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="qualifiers--modifiers">Qualifiers / Modifiers</h4>
+<table>
+<thead>
+<tr>
+<th>Qualifier</th>
+<th>Effect</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>signed</code></td>
+<td>Ensures signed representation</td>
+<td><code>signed int x;</code></td>
+</tr>
+<tr>
+<td><code>unsigned</code></td>
+<td>Only positive values</td>
+<td><code>unsigned int y;</code></td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>Smaller storage</td>
+<td><code>short int z;</code></td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td>Larger storage</td>
+<td><code>long int w;</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Typical Size</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>char</code></td>
+<td>Character</td>
+<td>1 byte</td>
+<td>Stores a single character; signed or unsigned</td>
+</tr>
+<tr>
+<td><code>int</code></td>
+<td>Integer</td>
+<td>4 bytes (platform-dependent)</td>
+<td>Stores whole numbers</td>
+</tr>
+<tr>
+<td><code>short</code></td>
+<td>Short integer</td>
+<td>2 bytes</td>
+<td>Smaller range than int</td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td>Long integer</td>
+<td>4–8 bytes</td>
+<td>Larger range than int</td>
+</tr>
+<tr>
+<td><code>long long</code></td>
+<td>Long long integer</td>
+<td>8 bytes</td>
+<td>For very large integers</td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td>Single-precision floating point</td>
+<td>4 bytes</td>
+<td>Stores decimal numbers</td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>Double-precision floating point</td>
+<td>8 bytes</td>
+<td>More precision than float</td>
+</tr>
+<tr>
+<td><code>long double</code></td>
+<td>Extended-precision floating point</td>
+<td>8–16 bytes</td>
+<td>Platform dependent</td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td>Boolean</td>
+<td>1 byte (C++ only)</td>
+<td><code>true</code> or <code>false</code></td>
+</tr>
+</tbody>
+</table>
+<pre class="hljs"><code><div><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> u = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> big = <span class="hljs-number">1234567890123</span>;
+</div></code></pre>
+<hr>
+<h4 id="c-specific--extended-types">C++ Specific / Extended Types</h4>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>wchar_t</code></td>
+<td>Wide character for Unicode</td>
+</tr>
+<tr>
+<td><code>char16_t</code></td>
+<td>UTF-16 character</td>
+</tr>
+<tr>
+<td><code>char32_t</code></td>
+<td>UTF-32 character</td>
+</tr>
+<tr>
+<td><code>auto</code></td>
+<td>Type deduced from initializer</td>
+</tr>
+<tr>
+<td><code>nullptr_t</code></td>
+<td>Type of <code>nullptr</code></td>
+</tr>
+<tr>
+<td><code>std::string</code></td>
+<td>String class (not in C)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="overflow">OverFlow</h3>
+<h4 id="what-is-overflow">What is Overflow?</h4>
+<ul>
+<li>Overflow occurs when an arithmetic operation produces a result that exceeds the maximum (or minimum) value that can be stored in a given data type.</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">graph LR
+    A[Value within range] --> B{Operation}
+    B --> C{Result > MAX?}
+    C -->|Yes| D[Overflow!]
+    C -->|No| E[Valid Result]
+    B --> F{Result < MIN?}
+    F -->|Yes| G[Underflow!]
+    F -->|No| E
+</div></code></pre>
+<h4 id="why-does-overflow-happen">Why Does Overflow Happen?</h4>
+<p>Each data type has a <strong>fixed size</strong> in memory:</p>
+<ul>
+<li><code>char</code>: 1 byte (8 bits)</li>
+<li><code>int</code>: 4 bytes (32 bits) on most systems</li>
+<li><code>long long</code>: 8 bytes (64 bits)</li>
+</ul>
+<h4 id="visual-representation-of-signed-overflow">Visual Representation of signed Overflow</h4>
+<pre class="hljs"><code><div>Signed char range: -128 to 127
+
+    -128  -127  ...  -1   0   1   ...  126  127
+      ↑                                      ↑
+      MIN                                   MAX
+      
+127 + 1 = ?
+    ↓
+Wraps around to -128
+</div></code></pre>
+<h4 id="visual-representation-of-unsigned-overflow">Visual Representation of unsigned Overflow</h4>
+<pre class="hljs"><code><div>Unsigned char range: 0 to 255
+
+    0   1   2   ...  254  255
+    ↑                      ↑
+   MIN                    MAX
+   
+255 + 1 = 0 (wraps around)
+0 - 1 = 255 (wraps around)
+</div></code></pre>
+<h4 id="examples">Examples</h4>
+<h5 id="example-1-signed-char-overflow">Example 1: Signed Char Overflow</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">signed</span> <span class="hljs-keyword">char</span> x = <span class="hljs-number">127</span>; <span class="hljs-comment">// Maximum value for signed char</span>
+<span class="hljs-comment">//</span>
+x = x + <span class="hljs-number">1</span>; <span class="hljs-comment">//OverFlow!!  </span>
+<span class="hljs-comment">//x=-128 (wraps to minimum value)</span>
+<span class="hljs-comment">// `signed char` range: -128 to 127</span>
+<span class="hljs-comment">// 127 + 1 = 128, but 128 &gt; 127 (MAX)</span>
+<span class="hljs-comment">// Wraps around to -128 (minimum value)</span>
+
+<span class="hljs-keyword">signed</span> <span class="hljs-keyword">char</span> x = <span class="hljs-number">-128</span>; 
+x=-x;<span class="hljs-comment">//OverFlow!!   </span>
+<span class="hljs-comment">// `signed char` range: -128 to 127</span>
+<span class="hljs-comment">// --128 = 128, but 128 &gt; 127 (MAX)</span>
+<span class="hljs-comment">// Wraps around to -128 (minimum value)</span>
+
+
+
+</div></code></pre>
+<h5 id="example-2-integer-overflow">Example 2: Integer Overflow</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;climits&gt;</span></span>
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> max_int = INT_MAX;  <span class="hljs-comment">// 2,147,483,647</span>
+    
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"INT_MAX = "</span> &lt;&lt; max_int &lt;&lt; <span class="hljs-built_in">endl</span>;
+    <span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"INT_MAX + 1 = "</span> &lt;&lt; max_int + <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-built_in">endl</span>;
+    <span class="hljs-comment">// Output: -2,147,483,648 (wraps to INT_MIN)</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<h5 id="example-3-multiplication-overflow">Example 3: Multiplication Overflow</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> a = <span class="hljs-number">100000</span>;
+<span class="hljs-keyword">int</span> b = <span class="hljs-number">100000</span>;
+<span class="hljs-keyword">int</span> c = a * b; <span class="hljs-comment">//Logical Error : OverFlow </span>
+<span class="hljs-comment">//a * b = 100000 × 100000 = 10,000,000,000</span>
+<span class="hljs-comment">//But a 32-bit signed int can hold values only up to 2,147,483,647</span>
+<span class="hljs-comment">// So the multiplication overflows and wraps around, producing an incorrect (and seemingly random) negative number.</span>
+<span class="hljs-comment">// How to fix it</span>
+<span class="hljs-comment">// Use a larger integer type:</span>
+<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> o=(<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>)<span class="hljs-number">10000</span>*<span class="hljs-number">10000</span>;
+</div></code></pre>
+<h5 id="example-4-signedunsigned-mixing">Example 4: Signed/Unsigned Mixing</h5>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">int</span> signed_val = <span class="hljs-number">-1</span>;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> unsigned_val = <span class="hljs-number">1</span>;
+    <span class="hljs-comment">// Dangerous comparison!</span>
+    <span class="hljs-keyword">if</span> (signed_val &lt; unsigned_val) {
+        <span class="hljs-comment">// This won't execute!</span>
+        <span class="hljs-comment">// -1 is converted to 4,294,967,295</span>
+        <span class="hljs-comment">// So -1 &gt; 1 in this comparison!</span>
+    }
+</div></code></pre>
+<h5 id="example-5-loop-counter-overflow">Example 5: Loop Counter Overflow</h5>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">255</span>; i++) {
+        <span class="hljs-comment">// This loop never ends!</span>
+        <span class="hljs-comment">// When i = 255, i++ wraps to 0</span>
+        <span class="hljs-comment">// Condition i &lt;= 255 is always true</span>
+    }
+    
+    <span class="hljs-comment">// Correct way:</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">255</span>; i++) {
+        <span class="hljs-comment">// Loop ends when i = 254</span>
+    }
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i = <span class="hljs-number">0</span>; i &lt;= <span class="hljs-number">255</span>; i++) {
+        <span class="hljs-comment">// This loop never ends!</span>
+        <span class="hljs-comment">// When i = 255, i++ wraps to 0</span>
+        <span class="hljs-comment">// Condition i &lt;= 255 is always true</span>
+    }
+    
+    <span class="hljs-comment">// Correct way:</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">255</span>; i++) {
+        <span class="hljs-comment">// Loop ends when i = 254</span>
+    }
+    
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i = <span class="hljs-number">5</span>; i &gt; <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-comment">// This loop never ends!</span>
+        <span class="hljs-comment">// When i = 0, i-- wraps to 255</span>
+        <span class="hljs-comment">// Condition i &gt;= 255 is always true</span>
+    }
+    
+    <span class="hljs-comment">// Correct way:</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i = <span class="hljs-number">5</span>; i &gt;= <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-comment">// Loop ends when i = 0</span>
+    }
+    <span class="hljs-comment">//or </span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> i = <span class="hljs-number">5</span>; i != <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-comment">// Ends correctly when i wraps to 0</span>
+    }
+    <span class="hljs-comment">//or </span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">signed</span> <span class="hljs-keyword">char</span> i = <span class="hljs-number">5</span>; i &gt; <span class="hljs-number">0</span>; i--) {
+        <span class="hljs-comment">// Ends correctly when i wraps to -1</span>
+    }   
+    
+</div></code></pre>
+<h4 id="detection-and-prevention">Detection and Prevention</h4>
+<h5 id="enable-compiler-warnings">Enable compiler warnings</h5>
+<pre class="hljs"><code><div><span class="hljs-comment"># Enable overflow warnings</span>
+g++ -Wall -Wextra -Wconversion -Woverflow program.cpp
+<span class="hljs-comment"># Enable runtime sanitizers (detects undefined behavior)</span>
+ g++ -fsanitize=undefined program.cpp
+</div></code></pre>
+<h5 id="use-larger-data-types">Use Larger Data Types</h5>
+<pre class="hljs"><code><div>    <span class="hljs-comment">// Problem: int overflow</span>
+    <span class="hljs-keyword">int</span> a = <span class="hljs-number">100000</span>;
+    <span class="hljs-keyword">int</span> b = <span class="hljs-number">100000</span>;
+    <span class="hljs-keyword">int</span> result1 = a * b;  <span class="hljs-comment">// Overflow!</span>
+    
+    <span class="hljs-comment">// Solution: use long long</span>
+    <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> result2 = (<span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span>)a * b;  <span class="hljs-comment">// No overflow</span>
+</div></code></pre>
+<h5 id="validate-input-ranges">Validate input ranges</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (value &gt; INT_MAX / <span class="hljs-number">2</span>) {
+    <span class="hljs-comment">// Handle potential overflow</span>
+}
+</div></code></pre>
+<h5 id="use-safe-arithmetic-functions-check-before-operations">Use safe arithmetic functions (Check Before Operations)</h5>
+<pre class="hljs"><code><div> <span class="hljs-comment">//use  #include &lt;climits&gt; ==&gt; INT_MAX</span>
+<span class="hljs-comment">// Check before operation</span>
+<span class="hljs-keyword">if</span> (a &gt; INT_MAX - b) {
+    <span class="hljs-comment">// Handle overflow</span>
+} <span class="hljs-keyword">else</span> {
+    result = a + b;
+}
+</div></code></pre>
+<h5 id="avoid-mixing-signed-and-unsigned">Avoid mixing signed and unsigned</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> a = <span class="hljs-number">-1</span>;
+<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> b = <span class="hljs-number">1</span>;
+<span class="hljs-comment">// Dangerous: a will be converted to unsigned</span>
+</div></code></pre>
+<hr>
+<h3 id="implicitly-auto-conversion-and-explicitly-casting">Implicitly (Auto Conversion) and Explicitly casting</h3>
+<pre><code class="language-Mermaid"><div class="mermaid">flowchart LR
+    A[Start] --> B{Is there a type difference?}
+    
+    %% Implicit Conversion Path
+    B -- No --> C[Continue Program]
+    B -- Yes --> D{Is it safe to convert? Widening}
+    D -- Yes --> E[Auto-convert value Implicit Conversion]
+    E --> C
+    D -- No --> F[Compiler Warning/Error]
+    F --> C
+
+    %% Explicit Conversion Path
+    G[Programmer applies cast Explicit Conversion] --> H[Compiler converts value]
+    H --> C
+
+    %% Connect Explicit path to Start
+    A --> G
+</div></code></pre>
+<h4 id="implicitly-casting">Implicitly Casting</h4>
+<p>Happens automatically by the compiler.</p>
+<ul>
+<li>Also called type promotion.</li>
+<li>Usually occurs when:
+<ul>
+<li>Assigning a smaller data type to a larger data type (e.g., int → float).</li>
+<li>Using different types in expressions (e.g., int + float → float).</li>
+</ul>
+</li>
+<li>Rule: No data loss for widening conversion (small → large type).</li>
+</ul>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+    <span class="hljs-keyword">double</span> b = a; <span class="hljs-comment">// implicit conversion from int → double</span>
+
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">42</span>;
+    <span class="hljs-keyword">float</span> f = i; <span class="hljs-comment">// implicit conversion from int → float</span>
+    
+    <span class="hljs-keyword">char</span> c = <span class="hljs-string">'A'</span>;
+    <span class="hljs-keyword">int</span> ascii = c; <span class="hljs-comment">// implicit conversion from char → int  </span>
+
+    <span class="hljs-keyword">int</span> i=<span class="hljs-number">2</span>; 
+    <span class="hljs-keyword">float</span> f; 
+    f=i+<span class="hljs-number">3.14159</span>; <span class="hljs-comment">// i is promoted to float </span>
+
+    short <span class="hljs-keyword">int</span> x=<span class="hljs-number">0xAB07</span>; 
+    <span class="hljs-keyword">char</span> y=x; <span class="hljs-comment">//0x07    </span>
+
+
+</div></code></pre>
+<h4 id="explicitly-casting">Explicitly Casting</h4>
+<ul>
+<li>Explicit conversion (also called type casting) is when the programmer manually converts a value from one data type to another.</li>
+<li>Syntax:<pre class="hljs"><code><div>    <span class="hljs-comment">//C-Style Cast</span>
+    (type) value
+    <span class="hljs-comment">//C++-Style Cast</span>
+    <span class="hljs-keyword">static_cast</span>&lt;type&gt;(a)
+</div></code></pre>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th><code>(double)a / b</code></th>
+<th><code>static_cast&lt;double&gt;(a) / b</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Syntax</td>
+<td>C-style</td>
+<td>C++-style</td>
+</tr>
+<tr>
+<td>Safety</td>
+<td>Can cast anything (even unrelated types)</td>
+<td>Type-checked, only valid conversions</td>
+</tr>
+<tr>
+<td>Readability</td>
+<td>Less explicit</td>
+<td>Very explicit, safer</td>
+</tr>
+<tr>
+<td>Compiler warnings</td>
+<td>Less likely to warn</td>
+<td>Helps compiler catch mistakes</td>
+</tr>
+<tr>
+<td>Recommended</td>
+<td>Legacy / quick code</td>
+<td>Modern C++ best practice</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>The programmer forces the conversion, even if it might lead to data loss or truncation.</p>
+</li>
+<li>
+<p>It is usually required when automatic (implicit) conversion is not safe.</p>
+</li>
+<li>
+<p>Key idea: “I, the programmer, take responsibility for converting this value.”</p>
+</li>
+<li>
+<p>When you cast a value, the compiler converts it to the specified type.</p>
+</li>
+<li>
+<p>Can be widening (safe) or narrowing (may lose information).</p>
+</li>
+<li>
+<p>Example Types:</p>
+<ul>
+<li>Widening: int → float</li>
+<li>Narrowing: float → int, long → char</li>
+</ul>
+</li>
+<li>
+<p>Explicit conversion is manual: (type)value.</p>
+</li>
+<li>
+<p>Use when: Implicit conversion is unsafe or not allowed.</p>
+</li>
+<li>
+<p>Be careful: It can cause data loss, overflow, or undefined behavior.</p>
+</li>
+<li>
+<p>Common use cases:</p>
+<ul>
+<li>Converting float → int</li>
+<li>Pointer type conversions</li>
+<li>Widening numeric types for calculations</li>
+</ul>
+</li>
+</ul>
+<h4 id="examples">Examples</h4>
+<h5 id="1-narrowing-conversion-int-%E2%86%92-char">1. Narrowing Conversion (int → char)</h5>
+<pre class="hljs"><code><div><span class="hljs-comment">// Example2 : Implicit Conversion &amp; overflow </span>
+<span class="hljs-keyword">int</span>  r = <span class="hljs-number">134</span>;
+<span class="hljs-comment">//signed char → range: -128 to 127</span>
+<span class="hljs-comment">//unsigned char → range: 0 to 255</span>
+<span class="hljs-keyword">char</span> m = r;<span class="hljs-comment">// Implicit conversion from int → char truncates higher bits.</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d \n"</span>,m); <span class="hljs-comment">// 134 - 256 = -122</span>
+</div></code></pre>
+<ul>
+<li>Explanation:
+<ul>
+<li>char usually stores -128 to 127 (signed char)</li>
+<li>300 % 256 = 44 → c = 44</li>
+<li>Implicit truncation occurs; no compiler error by default</li>
+</ul>
+</li>
+<li>Problem  : Data loss, unexpected value.</li>
+<li>Solution : Use explicit cast and check range:<pre class="hljs"><code><div>    <span class="hljs-keyword">if</span>(x &gt;= <span class="hljs-number">-128</span> &amp;&amp; x &lt;= <span class="hljs-number">127</span>) c = (<span class="hljs-keyword">char</span>)(x);
+    <span class="hljs-comment">//or</span>
+    <span class="hljs-keyword">if</span>(x &gt;= <span class="hljs-number">-128</span> &amp;&amp; x &lt;= <span class="hljs-number">127</span>) c = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">char</span>&gt;(x);
+</div></code></pre>
+</li>
+<li>This doesn’t generate an error or warning by default.</li>
+<li>The compiler assumes this is intentional, since C++ is designed to allow type promotion in arithmetic and assignments.</li>
+<li>Warnings may appear only if you enable stricter compiler flags:<pre class="hljs"><code><div>    g++ -Wall -Wextra -Wconversion example.cpp
+    -Wall → common warnings
+    -Wextra → extra warnings
+    -Wconversion → warns about implicit conversions that might lose data
+</div></code></pre>
+</li>
+</ul>
+<h5 id="2integer-promotion--signed-vs-unsigned">2.Integer Promotion / Signed vs Unsigned</h5>
+<pre class="hljs"><code><div><span class="hljs-comment">//Integer Promotion / Signed vs Unsigned</span>
+<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">int</span> b = <span class="hljs-number">-20</span>;
+<span class="hljs-keyword">if</span> (a + b &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">// 10-20 =-10 ??</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Positive\n"</span>;
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"Negative\n"</span>;
+</div></code></pre>
+<ul>
+<li>b is promoted to unsigned int → large positive number</li>
+<li>a + b &gt; 0 evaluates true, even though logically 10 + (-20) &lt; 0</li>
+<li>Problem: Silent logical errors due to signed/unsigned mix.</li>
+<li>solution :<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (<span class="hljs-keyword">int</span>(a) + b &gt; <span class="hljs-number">0</span>)
+</div></code></pre>
+</li>
+</ul>
+<h5 id="3floating-point-to-integer-truncation">3.Floating-Point to Integer Truncation</h5>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">double</span> pi = <span class="hljs-number">3.14159</span>;
+    <span class="hljs-keyword">int</span> n = pi;  <span class="hljs-comment">// implicit conversion</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; n &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+</div></code></pre>
+<ul>
+<li>Explanation: Implicit conversion truncates fractional part; no rounding.</li>
+<li>Problem: Data loss and silent precision errors.</li>
+<li>Solution: Use explicit cast and round if needed:<pre class="hljs"><code><div>  <span class="hljs-keyword">int</span> n = (<span class="hljs-keyword">int</span>)(pi + <span class="hljs-number">0.5</span>); <span class="hljs-comment">// rounding</span>
+</div></code></pre>
+</li>
+</ul>
+<h5 id="4implicit-conversion--integer-division-pitfall">4.implicit conversion / integer division pitfall</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+<span class="hljs-keyword">int</span> b = <span class="hljs-number">3</span>;
+<span class="hljs-keyword">float</span> c = a / b;  <span class="hljs-comment">// int /int = int </span>
+<span class="hljs-comment">// or </span>
+<span class="hljs-keyword">double</span> d = a / b;
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">// 3</span>
+</div></code></pre>
+<ul>
+<li>Both operands are integers, so C++ performs integer division first.
+10 / 3 = 3  (fraction .333 is discarded)</li>
+<li>Correct Way to Get Floating-Point Division<pre class="hljs"><code><div>   <span class="hljs-keyword">float</span> c = (<span class="hljs-keyword">float</span>)a / b;  <span class="hljs-comment">// float /int = float </span>
+</div></code></pre>
+</li>
+</ul>
+<h5 id="5mixed-type-arithmetic">5.Mixed-Type Arithmetic</h5>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">5</span>;
+    <span class="hljs-keyword">double</span> b = <span class="hljs-number">2.5</span>;
+    <span class="hljs-keyword">double</span> c = a / b; <span class="hljs-comment">// implicit conversion of int → double</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; <span class="hljs-comment">//</span>
+</div></code></pre>
+<ul>
+<li>Works fine usually</li>
+<li>But in int / int vs int / double, the type promotion may surprise developers</li>
+</ul>
+<h5 id="6boolean-conversion-pitfall">6.Boolean Conversion Pitfall</h5>
+<pre class="hljs"><code><div><span class="hljs-keyword">int</span> x = <span class="hljs-number">5</span>;
+<span class="hljs-keyword">if</span> (x = <span class="hljs-number">0</span>) <span class="hljs-comment">// mistake: = instead of ==</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"True\n"</span>;
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">"False\n"</span>;
+</div></code></pre>
+<ul>
+<li>Explanation:
+<ul>
+<li>x = 0 → implicit conversion to false</li>
+<li>This is syntactically valid, compiler often warns with -Wall</li>
+<li>Problem: Silent logical error.</li>
+<li>Solution: Use comparison:<pre class="hljs"><code><div>    <span class="hljs-keyword">if</span> (x == <span class="hljs-number">0</span>)
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="7implicit-conversion-in-function-calls">7.Implicit Conversion in Function Calls</h5>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printChar</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span> </span>{ <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>; }
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">200</span>;
+    printChar(x);  <span class="hljs-comment">// implicit conversion int -&gt; char</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<ul>
+<li>char may overflow; prints unexpected character</li>
+<li>Compiler usually no warning unless -Wconversion enabled</li>
+</ul>
+<h5 id="8-pointer-casting-cc-excplicit">8. Pointer Casting (C/C++) (Excplicit)</h5>
+<pre class="hljs"><code><div>    <span class="hljs-keyword">void</span> *ptr;
+    <span class="hljs-keyword">int</span> x = <span class="hljs-number">10</span>;
+    ptr = &amp;x; 
+    <span class="hljs-keyword">int</span> *p = (<span class="hljs-keyword">int</span>*)ptr;  <span class="hljs-comment">// Explicit cast from void* to int*</span>
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d\n"</span>, *p);  <span class="hljs-comment">// Output: 10</span>
+</div></code></pre>
+<ul>
+<li>In C/C++, sometimes you need to cast void* pointers back to the original type.</li>
+</ul>
+<h5 id="how-to-avoid-implicit-conversion-problems">How to Avoid Implicit Conversion Problems</h5>
+<pre class="hljs"><code><div>g++ -Wall -Wextra -Wconversion example.cpp
+</div></code></pre>
+<ul>
+<li>Use explicit casts when converting types.</li>
+<li>Avoid mixing signed/unsigned integers.</li>
+<li>Be careful with floating-point → integer conversions.</li>
+<li>Use modern C++ constructs like static_cast, narrow_cast (C++20) for clarity.
+int n = static_cast<int>(pi + 0.5);
+if (static_cast<int>(a) + b &gt; 0)</li>
+</ul>
+<h3 id="typedef-in-cc">Typedef in C/C++</h3>
+<ul>
+<li>
+<p>In C/C++, the keyword typedef is used to create a new name (alias) for an existing data type.</p>
+</li>
+<li>
+<p>It doesn’t create a new type, it just renames an existing one to make code easier to read and maintain.</p>
+</li>
+</ul>
+<pre><code class="language-Mermaid"><div class="mermaid">flowchart LR
+    A["Start"] --> B["Existing Data Type"]
+    B --> C["Use typedef keyword"]
+    C --> D["Create Alias (New Name)"]
+    D --> E["Use Alias Instead of Original Type"]
+    
+    E --> F{"Examples?"}
+    F --> F1["typedef unsigned int uint"]
+    F --> F2["typedef struct {...} Student"]
+    F --> F3["typedef int* IntPtr"]
+    F --> F4["typedef int (*FuncPtr)(int,int)"]
+
+    F1 --> G1["uint age = 25;"]
+    F2 --> G2["Student s1;"]
+    F3 --> G3["IntPtr p = &x;"]
+    F4 --> G4["FuncPtr addFn = add;"]
+
+    style A fill:#f2f2f2,stroke:#333,stroke-width:1px
+    style D fill:#d0f0c0,stroke:#333,stroke-width:1px
+    style E fill:#c0e0ff,stroke:#333,stroke-width:1px
+    style F fill:#fdd,stroke:#333,stroke-width:1px
+</div></code></pre>
+<h4 id="why-use-typedef">Why Use typedef?</h4>
+<ul>
+<li>Makes complex declarations easier to read.</li>
+<li>Improves code portability (you can redefine types for different platforms).</li>
+<li>Makes code cleaner and self-documenting.</li>
+<li>Cleaner, readable, portable code</li>
+</ul>
+<h4 id="examples-of-typedef">Examples of typedef</h4>
+<pre class="hljs"><code><div><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> u8;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> short <span class="hljs-keyword">int</span> u16;<span class="hljs-comment">//2byte</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> short <span class="hljs-keyword">int</span> u16;<span class="hljs-comment">//2byte</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span>  <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> u32;<span class="hljs-comment">//2byte</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> u64;<span class="hljs-comment">//2byte</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">signed</span> <span class="hljs-keyword">char</span> s8;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">signed</span> short <span class="hljs-keyword">int</span> s16;<span class="hljs-comment">//2byte</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">signed</span> short <span class="hljs-keyword">int</span> s16;<span class="hljs-comment">//2byte</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">signed</span>  <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> s32;<span class="hljs-comment">//2byte</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">signed</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span> s64;<span class="hljs-comment">//2byte</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">float</span> f32;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">double</span> f64;
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">double</span> f128;
+</div></code></pre>
+<h4 id="use-cases">Use Cases</h4>
+<h5 id="platform-independent-code">Platform-Independent Code</h5>
+<ul>
+<li>Makes code portable across systems where data type sizes differ.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> _WIN32</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> ulong;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> ulong;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+</div></code></pre>
+<h4 id="common-use--structs-pointers-function-pointers">Common use : Structs, pointers, function pointers</h4>
+<p><strong>Structs</strong></p>
+<ul>
+<li>Cleaner and shorter syntax.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Without typedef:</th>
+<th>With typedef:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>struct Student {<br>    char name[50];<br>    int age;<br>};<br><br>struct Student s1;</td>
+<td>typedef struct {<br>    char name[50];<br>    int age;<br>} Student;<br><br>Student s1; <br> // No need to write 'struct' keyword</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pointers</strong></p>
+<ul>
+<li>Makes pointer declarations more readable.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">int</span>* IntPtr;
+
+<span class="hljs-keyword">int</span> a = <span class="hljs-number">10</span>;
+IntPtr p = &amp;a;  <span class="hljs-comment">// same as: int* p = &amp;a;</span>
+<span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>, *p);
+</div></code></pre>
+<p><strong>Function Pointers</strong></p>
+<ul>
+<li>typedef makes function pointer declarations much simpler.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">int</span> <span class="hljs-params">(*Operation)</span><span class="hljs-params">(<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>)</span></span>;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span>{ <span class="hljs-keyword">return</span> a + b; }
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+    Operation op = add;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"%d"</span>, op(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>)); <span class="hljs-comment">// Output: 8</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</div></code></pre>
+<p><strong>Alias for Complex Template Types (C++)</strong></p>
+<ul>
+<li>Easier than writing std::vector<int> everywhere.</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; IntVector;
+
+IntVector nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>};
+</div></code></pre>
+<h4 id="standard-fixed-width-data-types">Standard Fixed-Width Data Types</h4>
+<p>Purpose of &lt;stdint.h&gt; / <cstdint></p>
+<p>Both headers define fixed-width integer types — portable types that have a guaranteed number of bits.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Using &lt;stdint.h&gt;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdint.h&gt;</span></span>
+<span class="hljs-keyword">int32_t</span> a = <span class="hljs-number">10</span>;   <span class="hljs-comment">// Works directly (global namespace)</span>
+
+<span class="hljs-comment">// Using &lt;cstdint&gt;</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdint&gt;</span></span>
+<span class="hljs-built_in">std</span>::<span class="hljs-keyword">int32_t</span> b = <span class="hljs-number">20</span>;  <span class="hljs-comment">// Must use std:: prefix</span>
+</div></code></pre>
+<ul>
+<li>Portable Code
+<ul>
+<li>Same behavior on Windows, Linux, or embedded systems, since uint8_t is always 1 byte.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-Mermaid"><div class="mermaid">graph TD
+    A[ '<'stdint'>' / '<'stdint.h'>' ] --> B["Fixed-Width Integer Types"]
+    B --> C1["int8_t / uint8_t (8-bit)"]
+    B --> C2["int16_t / uint16_t (16-bit)"]
+    B --> C3["int32_t / uint32_t (32-bit)"]
+    B --> C4["int64_t / uint64_t (64-bit)"]
+    B --> D["Special Types"]
+    D --> D1["intptr_t / uintptr_t"]
+    D --> D2["int_fast8_t / int_least8_t"]
+
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th><strong>Type</strong></th>
+<th><strong>Meaning</strong></th>
+<th><strong>Header</strong></th>
+<th><strong>Portable Size</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int8_t</code> / <code>uint8_t</code></td>
+<td>8-bit signed/unsigned</td>
+<td><code>&lt;stdint.h&gt;</code> / <code>&lt;cstdint&gt;</code></td>
+<td>✅ Yes</td>
+</tr>
+<tr>
+<td><code>int16_t</code> / <code>uint16_t</code></td>
+<td>16-bit signed/unsigned</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>int32_t</code> / <code>uint32_t</code></td>
+<td>32-bit signed/unsigned</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>int64_t</code> / <code>uint64_t</code></td>
+<td>64-bit signed/unsigned</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>intptr_t</code> / <code>uintptr_t</code></td>
+<td>Holds pointer values</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
