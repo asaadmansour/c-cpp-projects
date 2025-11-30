@@ -46,3 +46,16 @@ void Stack::display() {
     }
     cout << "\n";
 }
+Stack& Stack::operator=(const Stack& other) {
+    if(this == &other) {
+        return *this;
+    }
+    delete[] ptr;
+    size = other.size;
+    top = other.top;
+    ptr = new int[size];
+    for(int i = 0; i <= top; i++) {
+        ptr[i] = other.ptr[i];
+    }
+    return *this;
+}

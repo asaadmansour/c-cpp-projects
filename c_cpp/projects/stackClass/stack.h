@@ -17,5 +17,6 @@ class Stack {
     int peek();
     int getSize();
     void display();
+    Stack& operator=(const Stack& other);
 };
 #endif
