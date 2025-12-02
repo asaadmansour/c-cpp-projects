@@ -10,7 +10,7 @@ class line {
         Point end;
     public:
         line();
-        line(int xStartPoint,int xEndPoint,int yStartPoint,int yEndPoint);
+        line(int xStartPoint,int yStartPoint,int xEndPoint,int yEndPoint);
         void setXStartPoint(int number);
         void setYStartPoint(int number);
         void setXEndPoint(int number);
