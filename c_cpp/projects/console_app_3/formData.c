@@ -1,6 +1,37 @@
 #include "formData.h"
+#include "input.h"
 #include <stdio.h>
 #include <string.h>
+
+int read_input_with_esc(char* buffer, int max_length) {
+    int pos = 0;
+    buffer[0] = '\0';
+    
+    while (1) {
+        int ch = input_getch();
+        
+        if (ch == 27) {
+            return -1;
+        }
+        
+        if (ch == '\n' || ch == '\r' || ch == 10 || ch == 13) {
+            buffer[pos] = '\0';
+            printf("\n");
+            return pos;
+        }
+        
+        if (ch == 127 || ch == 8) {
+            if (pos > 0) {
+                pos--;
+                printf("\b \b");
+            }
+        }
+        else if (ch >= 32 && ch < 127 && pos < max_length - 1) {
+            buffer[pos++] = ch;
+            printf("%c", ch);
+        }
+    }
+}
 
 FormData form_data_create(void) {
     FormData d;
@@ -33,13 +64,17 @@ int form_data_validate(const FormData* data) {
 int form_data_input(FormData* data) {
     if (!data) return 0;
 
+    printf(" (Press ESC to cancel and return to menu)\n\n");
+
     int valid = 0;
     int i;
     
     while (!valid) {
         printf(" Enter name: ");
-        fgets(data->name, MAX_NAME_LENGTH, stdin);
-        data->name[strcspn(data->name, "\n")] = '\0';
+        if (read_input_with_esc(data->name, MAX_NAME_LENGTH) == -1) {
+            printf("\n Cancelled. Returning to menu...\n");
+            return 0;
+        }
         
         i = 0;
         while (data->name[i] == ' ') i++;
@@ -71,8 +106,10 @@ int form_data_input(FormData* data) {
     valid = 0;
     while (!valid) {
         printf(" Enter email: ");
-        fgets(data->email, MAX_EMAIL_LENGTH, stdin);
-        data->email[strcspn(data->email, "\n")] = '\0';
+        if (read_input_with_esc(data->email, MAX_EMAIL_LENGTH) == -1) {
+            printf("\n Cancelled. Returning to menu...\n");
+            return 0;
+        }
         
         i = 0;
         while (data->email[i] == ' ') i++;
@@ -116,8 +153,10 @@ int form_data_input(FormData* data) {
     valid = 0;
     while (!valid) {
         printf(" Enter phone: ");
-        fgets(data->phone, MAX_PHONE_LENGTH, stdin);
-        data->phone[strcspn(data->phone, "\n")] = '\0';
+        if (read_input_with_esc(data->phone, MAX_PHONE_LENGTH) == -1) {
+            printf("\n Cancelled. Returning to menu...\n");
+            return 0;
+        }
         
         i = 0;
         while (data->phone[i] == ' ') i++;
@@ -154,8 +193,10 @@ int form_data_input(FormData* data) {
     while (!valid) {
         printf(" Enter age: ");
         char age_buffer[20];
-        fgets(age_buffer, 20, stdin);
-        age_buffer[strcspn(age_buffer, "\n")] = '\0';
+        if (read_input_with_esc(age_buffer, 20) == -1) {
+            printf("\n Cancelled. Returning to menu...\n");
+            return 0;
+        }
         
         i = 0;
         while (age_buffer[i] == ' ') i++;
