@@ -5,7 +5,8 @@
 enum Type {
         INT,
         FLOAT,
-        STRING
+        STRING,
+        BOOL
     };
 
 class ElementWrapper {
@@ -32,6 +33,12 @@ public:
             throw std::runtime_error("Cannot convert to char*: element is not a string");
         return (char*)data;
     }
+    
+    operator bool() const {
+        if(dataType != BOOL) 
+            throw std::runtime_error("Cannot convert to bool: element is not a bool");
+        return *(bool*)data;
+    }
 };
 
 class List {
@@ -47,16 +54,21 @@ private:
     void resize();
     bool isInteger(const char* str);
     bool isFloat(const char* str);
+    bool isBool(const char* str);
+    bool hasExpression(const char* str);
+    int evaluateExpression(const char* str);
 public:
     List();
     ~List();
     void append(const int value);
     void append(const float value);
     void append(const char* str);
+    void append(const bool value);
     void appendAuto(const char* input);
     void set(int index, const int value);
     void set(int index, const float value);
     void set(int index, const char* str);
+    void set(int index, const bool value);
     void print();
     int getSize();
     ElementWrapper operator[](int index) const;

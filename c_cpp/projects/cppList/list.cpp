@@ -15,6 +15,8 @@ List::~List() {
                 delete (float*)elements[i].data;   
             } else if(elements[i].dataType == STRING) {
                 delete[] (char*)elements[i].data;  
+            } else if(elements[i].dataType == BOOL) {
+                delete (bool*)elements[i].data;
             }
         }
     delete[] elements; 
@@ -62,6 +64,15 @@ void List::append(const char* str){
     elements[size].dataType = STRING;
     size++; 
 }
+
+void List::append(const bool value){
+    if(size == capacity) 
+        resize();
+    bool *stored = new bool(value);
+    elements[size].data = stored;
+    elements[size].dataType = BOOL;
+    size++;
+}
 void List::print() {
     for(int i=0;i<size;i++) {
         if(elements[i].dataType == INT) {
@@ -70,6 +81,8 @@ void List::print() {
             cout << *(float*)(elements[i].data);
         } else if(elements[i].dataType == STRING) {
             cout << (char*)elements[i].data;
+        } else if(elements[i].dataType == BOOL) {
+            cout << (*(bool*)elements[i].data ? "true" : "false");
         }
         if(i < size - 1) {
             cout << ",";  
@@ -125,6 +138,8 @@ void List::set(int index, const char* str) {
         delete (float*)elements[index].data;
     } else if(elements[index].dataType == STRING) {
         delete[] (char*)elements[index].data;
+    } else if(elements[index].dataType == BOOL) {
+        delete (bool*)elements[index].data;
     }
     int len = 0;
     while (str[len] != '\0') {
@@ -137,6 +152,23 @@ void List::set(int index, const char* str) {
     newStr[len] = '\0';
     elements[index].data = newStr;
     elements[index].dataType = STRING;
+}
+
+void List::set(int index, const bool value) {
+    if(index < 0 || index >= size) 
+        throw out_of_range("Index out of bounds");
+    if(elements[index].dataType == INT) {
+        delete (int*)elements[index].data;
+    } else if(elements[index].dataType == FLOAT) {
+        delete (float*)elements[index].data;
+    } else if(elements[index].dataType == STRING) {
+        delete[] (char*)elements[index].data;
+    } else if(elements[index].dataType == BOOL) {
+        delete (bool*)elements[index].data;
+    }
+    bool *stored = new bool(value);
+    elements[index].data = stored;
+    elements[index].dataType = BOOL;
 }
 bool List::isInteger(const char* str) {
     int i = 0;
@@ -184,8 +216,82 @@ bool List::isFloat(const char* str) {
     
     return hasDecimal;  
 }
+bool List::isBool(const char* str) {
+    
+    if(str[0] == 't' && str[1] == 'r' && str[2] == 'u' && str[3] == 'e' && str[4] == '\0') {
+        return true;
+    }
+    
+    if(str[0] == 'f' && str[1] == 'a' && str[2] == 'l' && str[3] == 's' && str[4] == 'e' && str[5] == '\0') {
+        return true;
+    }
+    return false;
+}
+
+bool List::hasExpression(const char* str) {
+    
+    for(int i = 0; str[i] != '\0'; i++) {
+      
+        if(i > 0 && (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int List::evaluateExpression(const char* str) {
+    
+    int result = 0;
+    int currentNum = 0;
+    char operation = '+';
+    
+    for(int i = 0; str[i] != '\0'; i++) {
+        if(str[i] >= '0' && str[i] <= '9') {
+            currentNum = currentNum * 10 + (str[i] - '0');
+        } else if(str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/') {
+            
+            if(operation == '+') {
+                result += currentNum;
+            } else if(operation == '-') {
+                result -= currentNum;
+            } else if(operation == '*') {
+                result *= currentNum;
+            } else if(operation == '/') {
+                if(currentNum != 0) result /= currentNum;
+            }
+            
+            operation = str[i];
+            currentNum = 0;
+        }
+    }
+    
+    
+    if(operation == '+') {
+        result += currentNum;
+    } else if(operation == '-') {
+        result -= currentNum;
+    } else if(operation == '*') {
+        result *= currentNum;
+    } else if(operation == '/') {
+        if(currentNum != 0) result /= currentNum;
+    }
+    
+    return result;
+}
+
 void List::appendAuto(const char* input) {
-    if(isInteger(input)) {
+    
+    if(isBool(input)) {
+        bool value = (input[0] == 't'); 
+        append(value);
+    }
+    
+    else if(hasExpression(input)) {
+        int value = evaluateExpression(input);
+        append(value);
+    }
+    
+    else if(isInteger(input)) {
         
         int value = 0;
         int i = 0;

@@ -25,15 +25,20 @@ int main() {
     for(int i = 0; i < l.getSize(); i++) {
         cout << "Element " << i+1 << ": ";
         try {
-            int val = l[i];
-            cout << val << " (int)" << endl;
+            bool val = l[i];
+            cout << (val ? "true" : "false") << " (bool)" << endl;
         } catch(...) {
             try {
-                float val = l[i];
-                cout << val << " (float)" << endl;
+                int val = l[i];
+                cout << val << " (int)" << endl;
             } catch(...) {
-                char* val = l[i];
-                cout << val << " (string)" << endl;
+                try {
+                    float val = l[i];
+                    cout << val << " (float)" << endl;
+                } catch(...) {
+                    char* val = l[i];
+                    cout << val << " (string)" << endl;
+                }
             }
         }
     }
