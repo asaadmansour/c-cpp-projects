@@ -42,6 +42,11 @@ int main() {
             continue;
         }
         
+        if(buffer[i] == '0' && buffer[i+1] >= '0' && buffer[i+1] <= '9') {
+            cout << "Invalid input. Please enter a number.\n";
+            continue;
+        }
+        
         numElements = 0;
         while(buffer[i] >= '0' && buffer[i] <= '9') {
             numElements = numElements * 10 + (buffer[i] - '0');
