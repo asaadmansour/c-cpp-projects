@@ -5,6 +5,7 @@ class geoshape {
         int dim1;
         int dim2;
     public:
+        virtual ~geoshape() = default;
         virtual int calculateArea() = 0;
 };
 #endif

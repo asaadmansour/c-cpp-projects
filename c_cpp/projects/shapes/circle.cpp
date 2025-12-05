@@ -9,5 +9,5 @@ int Circle::getRadius() {
 }
 
 int Circle::calculateArea() {
-    return 3.14 * dim1 * dim1;
+    return (314 * dim1 * dim1) / 100;  // Using integer approximation of PI
 }
